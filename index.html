@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Probabilidad implícita de reelección — Milei 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0E1A2B;
+    --paper:#E7E9E2;
+    --ink:#1B2430;
+    --ink-soft:#4A5262;
+    --line-dark:#2A3B52;
+    --green:#4F7B67;
+    --wine:#8B3A3A;
+    --ochre:#B8863B;
+    --text-on-navy:#E9E7DC;
+    --text-on-navy-dim:#9AA6B8;
+    --focus:#B8863B;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--navy);
+    color:var(--text-on-navy);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:64px 24px 96px;}
+  h1,h2,.num{font-family:'Newsreader', serif;font-weight:500;letter-spacing:-0.01em;}
+  a{color:var(--ochre);}
+  .meta{color:var(--text-on-navy-dim);font-size:0.92rem;margin:0 0 6px;}
+  h1{font-size:clamp(1.7rem, 4vw, 2.35rem);line-height:1.2;margin:0 0 18px;}
+  .lede{font-size:1.05rem;color:var(--text-on-navy-dim);max-width:62ch;margin:0 0 48px;}
+  .lede strong{color:var(--text-on-navy);font-weight:500;}
+  section{margin-bottom:56px;}
+  h2{font-size:1.15rem;font-style:italic;margin:0 0 22px;font-weight:500;}
+
+  .hero{
+    background:var(--paper);color:var(--ink);border-radius:2px;
+    padding:36px 36px 30px;display:flex;flex-wrap:wrap;gap:28px;
+    align-items:flex-end;justify-content:space-between;
+  }
+  .hero-figure .num{font-size:clamp(3.2rem, 11vw, 4.6rem);line-height:1;color:var(--ink);}
+  .hero-figure .num small{font-size:0.32em;font-family:'IBM Plex Sans', sans-serif;color:var(--ink-soft);font-weight:500;margin-left:6px;}
+  .hero-figure .caption{margin-top:10px;font-size:0.92rem;color:var(--ink-soft);max-width:36ch;}
+  .hero-range{font-family:'IBM Plex Mono', monospace;font-size:0.85rem;color:var(--ink-soft);text-align:right;padding-bottom:6px;}
+  .hero-range .range-val{display:block;font-size:1.1rem;color:var(--ink);margin-top:4px;}
+
+  .chart-empty{
+    border:1px dashed var(--line-dark);padding:28px;font-size:0.92rem;
+    color:var(--text-on-navy-dim);text-align:center;
+  }
+  svg.chart{width:100%;height:auto;overflow:visible;}
+  .chart-line{fill:none;stroke:var(--green);stroke-width:2;}
+  .chart-dot{fill:var(--green);}
+  .chart-axis{stroke:var(--line-dark);stroke-width:1;}
+  .chart-label{font-family:'IBM Plex Mono', monospace;font-size:11px;fill:var(--text-on-navy-dim);}
+
+  .axis{position:relative;height:2px;background:var(--line-dark);margin:56px 6px 0;}
+  .axis-labels{display:flex;justify-content:space-between;font-family:'IBM Plex Mono', monospace;font-size:0.78rem;color:var(--text-on-navy-dim);margin-top:8px;}
+  .marker{position:absolute;top:0;transform:translate(-50%,-50%);width:11px;height:11px;border-radius:50%;border:2px solid var(--navy);}
+  .marker-label{position:absolute;top:-38px;transform:translateX(-50%);white-space:nowrap;font-size:0.82rem;text-align:center;line-height:1.3;}
+  .marker-label .pct{display:block;font-family:'IBM Plex Mono', monospace;font-weight:500;}
+  .m-model{background:var(--green);} .m-poly{background:var(--ochre);}
+  .m-ditella{background:var(--text-on-navy-dim);} .m-naive{background:var(--wine);}
+
+  .ledger{border-top:1px solid var(--line-dark);}
+  .step{display:grid;grid-template-columns:28px 1fr auto;gap:16px;padding:18px 0;border-bottom:1px solid var(--line-dark);align-items:baseline;}
+  .step .n{font-family:'IBM Plex Mono', monospace;color:var(--text-on-navy-dim);font-size:0.85rem;}
+  .step .desc{font-size:0.96rem;}
+  .step .desc .tick{font-family:'IBM Plex Mono', monospace;background:var(--line-dark);color:var(--text-on-navy);padding:1px 6px;border-radius:3px;font-size:0.85rem;}
+  .step .val{font-family:'IBM Plex Mono', monospace;font-size:1rem;text-align:right;white-space:nowrap;}
+  .step .sub{display:block;color:var(--text-on-navy-dim);font-size:0.82rem;margin-top:3px;}
+
+  .controls{margin-top:28px;background:rgba(255,255,255,0.03);border:1px solid var(--line-dark);padding:24px;border-radius:2px;}
+  .controls p{margin:0 0 20px;font-size:0.92rem;color:var(--text-on-navy-dim);}
+  .field{margin-bottom:18px;} .field:last-child{margin-bottom:0;}
+  .field label{display:flex;justify-content:space-between;font-size:0.9rem;margin-bottom:8px;}
+  .field label span:last-child{font-family:'IBM Plex Mono', monospace;color:var(--text-on-navy);}
+  input[type=range]{width:100%;accent-color:var(--ochre);}
+  input[type=range]:focus-visible{outline:2px solid var(--focus);outline-offset:3px;}
+  .result-line{margin-top:22px;padding-top:18px;border-top:1px solid var(--line-dark);display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:10px;}
+  .result-line .num{font-size:1.9rem;color:var(--text-on-navy);}
+  .result-line .lbl{font-size:0.85rem;color:var(--text-on-navy-dim);max-width:32ch;}
+
+  .notes{font-size:0.92rem;color:var(--text-on-navy-dim);}
+  .notes p{margin:0 0 14px;}
+  .notes strong{color:var(--text-on-navy);font-weight:500;}
+  footer{border-top:1px solid var(--line-dark);padding-top:28px;font-size:0.85rem;color:var(--text-on-navy-dim);}
+  footer p{margin:0 0 8px;}
+
+  @media (max-width:560px){
+    .hero{flex-direction:column;align-items:flex-start;}
+    .hero-range{text-align:left;}
+    .marker-label{font-size:0.72rem;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="meta" id="updatedMeta">Cargando datos del día…</p>
+  <h1>¿Cuánto le está asignando el mercado a la reelección de Milei?</h1>
+  <p class="lede">Un indicador diario, calculado a partir de tasas <strong>forward</strong> implícitas en bonos soberanos: en vez de mirar el riesgo país de hoy, aísla lo que el mercado espera para el corredor <strong>2027–2028</strong>, el tramo donde se define el resultado electoral.</p>
+
+  <section>
+    <div class="hero">
+      <div class="hero-figure">
+        <div class="num" id="heroNum">–<small>%</small></div>
+        <p class="caption">Probabilidad implícita de que Javier Milei sea reelecto en octubre de 2027, según el riesgo país forward de hoy.</p>
+      </div>
+      <div class="hero-range">
+        último dato
+        <span class="range-val" id="heroDate">–</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Evolución diaria</h2>
+    <div id="chartContainer">
+      <div class="chart-empty">La serie se va a ir completando a medida que la automatización corra, un dato por día hábil.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Comparado con otras lecturas del mercado</h2>
+    <div class="axis" id="axis">
+      <div class="marker m-naive" style="left:85%">
+        <div class="marker-label" style="color:var(--wine)">Riesgo país spot<span class="pct">≈85%</span></div>
+      </div>
+      <div class="marker m-poly" id="polyMarker" style="left:52%">
+        <div class="marker-label" style="color:var(--ochre)">Polymarket<span class="pct" id="polyPct">≈52%</span></div>
+      </div>
+      <div class="marker m-model" id="modelMarker" style="left:46%">
+        <div class="marker-label" style="color:var(--green)">Este modelo<span class="pct" id="modelPct">≈46%</span></div>
+      </div>
+      <div class="marker m-ditella" id="icgMarker" style="left:41%">
+        <div class="marker-label" style="color:var(--text-on-navy-dim)" id="icgLabel">ICG (UTDT)<span class="pct" id="icgPct">≈41%</span></div>
+      </div>
+    </div>
+    <div class="axis-labels"><span>0%</span><span>50%</span><span>100%</span></div>
+    <p class="notes" style="margin-top:36px">El método de tasa spot (Fernando Marull / FMyA) usa el riesgo país de hoy tal cual, sin separar cuánto de ese riesgo corresponde a la incertidumbre pre-electoral y cuánto al resultado en sí — por eso tiende a sobreestimar la probabilidad. La tasa forward corrige eso, y el resultado queda más cerca de la intención de voto que mide el ICG de la UTDT y de la cotización de Polymarket.</p>
+    <p class="notes">El ICG mide confianza en el gobierno, no probabilidad de nada. La cifra de arriba es una intención de voto estimada (calibrada con una regresión contra 13 elecciones pasadas, no la multiplicación cruda por 20), sin pasar por el sistema de balotaje — hacerlo exigiría estimarle también un número a la oposición, y esa complicación no vale la pena. Se muestra a propósito como referencia de intención de voto, no como una tercera probabilidad a la par de las otras dos.</p>
+  </section>
+
+  <section>
+    <h2>Cómo se calcula</h2>
+    <div class="ledger" id="ledger">
+      <div class="step"><div class="n">1</div><div class="desc">TIR de <span class="tick">AO27C</span>, vence 29/10/2027</div><div class="val" id="stepY27">–</div></div>
+      <div class="step"><div class="n">2</div><div class="desc">TIR de <span class="tick">AO28C</span>, vence 31/10/2028</div><div class="val" id="stepY28">–</div></div>
+      <div class="step"><div class="n">3</div><div class="desc">Tasa forward implícita entre ambos vencimientos<span class="sub">(1+y28)^t28 = (1+y27)^t27 · (1+f)^(t28−t27)</span></div><div class="val" id="stepFsob">–</div></div>
+      <div class="step"><div class="n">4</div><div class="desc">Forward de la curva UST para el mismo tramo<span class="sub">interpolado sobre CMT 1–2–3 años</span></div><div class="val" id="stepFust">–</div></div>
+      <div class="step"><div class="n">5</div><div class="desc">Riesgo país forward implícito<span class="sub">forward soberano menos forward libre de riesgo</span></div><div class="val" id="stepRp">–</div></div>
+    </div>
+
+    <div class="controls">
+      <p>El último paso pasa el riesgo país forward por una regla de tres entre dos escenarios de referencia. Esa elección es una hipótesis del analista, no un dato de mercado — movela y mirá cuánto cambia el resultado.</p>
+      <div class="field">
+        <label for="milei"><span>Riesgo país si gana Milei (pb)</span><span id="mileiVal">250</span></label>
+        <input type="range" id="milei" min="100" max="500" step="10" value="250">
+      </div>
+      <div class="field">
+        <label for="peron"><span>Riesgo país si gana la oposición dura (pb)</span><span id="peronVal">2.000</span></label>
+        <input type="range" id="peron" min="1200" max="2500" step="50" value="2000">
+      </div>
+      <div class="result-line">
+        <div class="num" id="liveResult">–</div>
+        <div class="lbl">probabilidad implícita con estos dos supuestos, aplicada al riesgo país forward del último dato</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="notes">
+    <h2>Lo que este número no dice</h2>
+    <p>Un riesgo país forward no es una encuesta ni una probabilidad "pura": incluye prima por plazo, liquidez y convexidad de los bonos, además de la lectura política del mercado. La conversión a probabilidad depende de dos anclas subjetivas (arriba) que cualquier analista puede fijar distinto — es la misma cuenta que separa la lectura de GMA Capital de la de Marull, y acá se puede auditar en lugar de darla por cerrada.</p>
+  </section>
+
+  <footer>
+    <p>Bonos: InvertirOnline. Curva UST: U.S. Department of the Treasury. Referencias de contraste: FMyA / Fernando Marull (riesgo país spot, ago-2026), Polymarket, Índice de Confianza en el Gobierno — Universidad Torcuato Di Tella.</p>
+    <p>Modelo y desarrollo: Gabriel Silva. Actualización automática diaria vía GitHub Actions.</p>
+  </footer>
+
+</div>
+
+<script>
+  let RP_FORWARD_BPS = 1193.5; // fallback si todavía no cargó el histórico
+
+  function fmtInt(n){ return n.toLocaleString('es-AR'); }
+  function fmtDate(iso){
+    const d = new Date(iso + 'T00:00:00');
+    return d.toLocaleDateString('es-AR', {day:'numeric', month:'short', year:'numeric'});
+  }
+
+  function recompute(){
+    const m = parseFloat(document.getElementById('milei').value);
+    const p = parseFloat(document.getElementById('peron').value);
+    document.getElementById('mileiVal').textContent = fmtInt(m);
+    document.getElementById('peronVal').textContent = fmtInt(p);
+    let prob = (p - RP_FORWARD_BPS) / (p - m);
+    prob = Math.max(0, Math.min(1, prob));
+    document.getElementById('liveResult').textContent =
+      (prob*100).toLocaleString('es-AR', {minimumFractionDigits:1, maximumFractionDigits:1}) + '%';
+    document.getElementById('modelPct').textContent = '≈' + Math.round(prob*100) + '%';
+    document.getElementById('modelMarker').style.left = (prob*100) + '%';
+  }
+
+  function drawChart(history){
+    const w = 700, h = 220, padL = 30, padR = 10, padT = 10, padB = 24;
+    const xs = history.map(h => new Date(h.date + 'T00:00:00').getTime());
+    const ys = history.map(h => h.prob_milei);
+    const xMin = Math.min(...xs), xMax = Math.max(...xs);
+    const yMin = 0, yMax = 100;
+    const x = t => padL + (w - padL - padR) * (xMax === xMin ? 0.5 : (t - xMin) / (xMax - xMin));
+    const y = v => padT + (h - padT - padB) * (1 - (v - yMin) / (yMax - yMin));
+
+    const points = history.map(rec => `${x(new Date(rec.date+'T00:00:00').getTime())},${y(rec.prob_milei)}`).join(' ');
+    const first = history[0], last = history[history.length-1];
+
+    const svg = `
+      <svg class="chart" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+        <line class="chart-axis" x1="${padL}" y1="${y(50)}" x2="${w-padR}" y2="${y(50)}" stroke-dasharray="2,3"/>
+        <text class="chart-label" x="${padL-6}" y="${y(100)+4}" text-anchor="end">100%</text>
+        <text class="chart-label" x="${padL-6}" y="${y(50)+4}" text-anchor="end">50%</text>
+        <text class="chart-label" x="${padL-6}" y="${y(0)+4}" text-anchor="end">0%</text>
+        <line class="chart-axis" x1="${padL}" y1="${padT}" x2="${padL}" y2="${h-padB}"/>
+        <polyline class="chart-line" points="${points}"/>
+        <circle class="chart-dot" cx="${x(new Date(last.date+'T00:00:00').getTime())}" cy="${y(last.prob_milei)}" r="3.5"/>
+        <text class="chart-label" x="${x(new Date(first.date+'T00:00:00').getTime())}" y="${h-6}" text-anchor="start">${fmtDate(first.date)}</text>
+        <text class="chart-label" x="${x(new Date(last.date+'T00:00:00').getTime())}" y="${h-6}" text-anchor="end">${fmtDate(last.date)}</text>
+      </svg>`;
+    document.getElementById('chartContainer').innerHTML = svg;
+  }
+
+  async function loadIcg(){
+    try{
+      const res = await fetch('data/icg_history.json', {cache:'no-store'});
+      if(!res.ok) return;
+      const hist = await res.json();
+      if(!Array.isArray(hist) || hist.length === 0) return;
+      const last = hist[hist.length - 1];
+      document.getElementById('icgMarker').style.left = last.voto_calibrado + '%';
+      document.getElementById('icgPct').textContent = '≈' + Math.round(last.voto_calibrado) + '%';
+      document.getElementById('icgLabel').innerHTML =
+        `ICG (UTDT, ${last.periodo})<span class="pct" id="icgPct">≈${Math.round(last.voto_calibrado)}%</span>`;
+    } catch(e){ /* si falla, se queda con el valor por defecto del HTML */ }
+  }
+
+  async function loadPolymarket(){
+    try{
+      const res = await fetch('data/polymarket_history.json', {cache:'no-store'});
+      if(!res.ok) return;
+      const hist = await res.json();
+      if(!Array.isArray(hist) || hist.length === 0) return;
+      const last = hist[hist.length - 1];
+      document.getElementById('polyMarker').style.left = last.prob_milei + '%';
+      document.getElementById('polyPct').textContent = '≈' + Math.round(last.prob_milei) + '%';
+    } catch(e){ /* si falla, se queda con el valor por defecto del HTML */ }
+  }
+
+  async function init(){
+    loadIcg();
+    loadPolymarket();
+    try{
+      const res = await fetch('data/history.json', {cache:'no-store'});
+      if(!res.ok) throw new Error('no history yet');
+      const history = await res.json();
+      if(!Array.isArray(history) || history.length === 0) throw new Error('empty history');
+
+      const last = history[history.length-1];
+      RP_FORWARD_BPS = last.riesgo_pais_forward_bps;
+
+      document.getElementById('updatedMeta').textContent =
+        `Actualizado el ${fmtDate(last.date)}, con datos de mercado del cierre del día.`;
+      document.getElementById('heroNum').innerHTML = last.prob_milei.toFixed(0) + '<small>%</small>';
+      document.getElementById('heroDate').textContent = fmtDate(last.date);
+      document.getElementById('stepY27').textContent = last.ao27c_tir.toFixed(2) + '%';
+      document.getElementById('stepY28').textContent = last.ao28c_tir.toFixed(2) + '%';
+      document.getElementById('stepFsob').textContent = last.forward_soberano.toFixed(1) + '%';
+      document.getElementById('stepFust').textContent = last.forward_ust.toFixed(1) + '%';
+      document.getElementById('stepRp').textContent = '≈' + Math.round(last.riesgo_pais_forward_bps).toLocaleString('es-AR') + ' pb';
+
+      document.getElementById('milei').value = last.milei_anchor_bps || 250;
+      document.getElementById('peron').value = last.peronismo_anchor_bps || 2000;
+
+      if(history.length >= 2){
+        drawChart(history);
+      } else {
+        document.getElementById('chartContainer').innerHTML =
+          '<div class="chart-empty">Todavía hay un solo dato cargado — el gráfico va a aparecer apenas la automatización sume el segundo.</div>';
+      }
+    } catch(e){
+      document.getElementById('updatedMeta').textContent = 'Sin datos disponibles todavía.';
+    }
+    recompute();
+  }
+
+  document.getElementById('milei').addEventListener('input', recompute);
+  document.getElementById('peron').addEventListener('input', recompute);
+  init();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+[
+  {
+    "date": "2026-09-04",
+    "ao27c_tir": 7.316,
+    "ao28c_tir": 11.244,
+    "forward_soberano": 15.882,
+    "forward_ust": 3.946,
+    "riesgo_pais_forward_bps": 1193.5,
+    "milei_anchor_bps": 250,
+    "peronismo_anchor_bps": 2000,
+    "prob_milei": 46.13,
+    "nota": "Dato semilla cargado a mano por Claude a partir de datos en vivo de IOL y treasury.gov, antes de activar la automatización diaria."
+  }
+]

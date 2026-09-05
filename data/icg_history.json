@@ -1,0 +1,10 @@
+[
+  {
+    "fecha_deteccion": "2026-09-05",
+    "periodo": "Agosto 2026",
+    "icg": 2.06,
+    "voto_naive": 41.2,
+    "voto_calibrado": 40.02,
+    "nota": "Dato semilla cargado a mano por Claude, a partir de la publicación de UTDT de agosto 2026, antes de activar el chequeo automático diario."
+  }
+]
