@@ -145,7 +145,6 @@
 
   <section>
     <h2>Cómo se calcula el modelo de bonos</h2>
-    <p class="notes" style="margin-bottom:24px">Para comprobar el paso 4 a mano: entrá a <a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026" target="_blank" rel="noopener">la tabla oficial del Tesoro de EE.UU.</a>, buscá la última fila (fecha más reciente) y anotá las columnas "1 Yr", "2 Yr" y "3 Yr". Esos tres números son los que se muestran abajo, junto con a qué valor interpolado dan una vez ajustados al plazo exacto de cada bono (AO27C vence en ≈1,15 años desde hoy, AO28C en ≈2,15 años) — interpolación lineal simple entre los dos puntos de la curva más cercanos.</p>
     <div class="ledger" id="ledger">
       <div class="step"><div class="n">1</div><div class="desc">TIR de <span class="tick">AO27C</span>, vence 29/10/2027</div><div class="val" id="stepY27">–</div></div>
       <div class="step"><div class="n">2</div><div class="desc">TIR de <span class="tick">AO28C</span>, vence 31/10/2028</div><div class="val" id="stepY28">–</div></div>
@@ -154,6 +153,10 @@
       <div class="step"><div class="n">5</div><div class="desc">Riesgo país forward implícito<span class="sub">forward soberano menos forward libre de riesgo</span></div><div class="val" id="stepRp">–</div></div>
       <div class="step"><div class="n">6</div><div class="desc">Probabilidad implícita<span class="sub">p = (RP_oposición − RP_forward) / (RP_oposición − RP_Milei), con los anclajes de abajo</span></div><div class="val" id="stepProb">–</div></div>
     </div>
+
+    <p class="notes" style="margin-top:20px">Para comprobar el paso 4 a mano: entrá a <a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026" target="_blank" rel="noopener">la tabla oficial del Tesoro de EE.UU.</a>, buscá la última fila (fecha más reciente) y anotá las columnas "1 Yr", "2 Yr" y "3 Yr" — son los tres números que ves arriba en "curva:".</p>
+    <p class="notes">¿Por qué interpolar? El Tesoro solo publica tasas para plazos redondos (1, 2, 3 años...), pero AO27C vence en 1,145 años, no en 1 año exacto. Interpolar es estimar qué tasa habría a ese plazo intermedio, trazando una línea recta entre el punto de 1 año y el de 2 años: como 1,145 está un 14,5% del camino entre 1 y 2, la tasa estimada también se mueve un 14,5% del camino entre las dos tasas conocidas. Con tus números de hoy: 4,13% + 0,145 × (4,37% − 4,13%) = 4,165%. Mismo cálculo para AO28C (2,153 años), pero entre los puntos de 2 y 3 años.</p>
+    <p class="notes">Una vez interpolados esos dos puntos (4,165% y 4,382%), se les aplica exactamente la misma fórmula del paso 3 — no un promedio simple — para sacar la tasa forward implícita entre ellos. Por eso el resultado (4,6%) no queda entre 4,165% y 4,382%: una tasa forward compensa que el tramo más corto rinde menos, así que tiene que ser más alta que ambos puntos para que capitalizar el tramo corto y después el forward dé lo mismo que capitalizar directo al plazo largo.</p>
 
     <div class="controls">
       <p>El último paso pasa el riesgo país forward por una regla de tres entre dos escenarios de referencia. Esa elección es una hipótesis del analista, no un dato de mercado — movela y mirá cuánto cambia el resultado.</p>
