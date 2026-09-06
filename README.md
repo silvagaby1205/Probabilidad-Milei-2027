@@ -1,7 +1,7 @@
 # Probabilidad implícita de reelección — Milei 2027
 
-Calcula día a día, a partir de tasas forward de bonos soberanos, la probabilidad
-que el mercado le asigna a la reelección de Milei en 2027. Metodología completa
+Calcula día a día, desde cuatro ángulos distintos, la probabilidad que el
+mercado le asigna a la reelección de Milei en 2027. Metodología completa
 explicada en el propio sitio (`index.html`).
 
 ## Puesta en marcha (una sola vez)
@@ -24,41 +24,41 @@ explicada en el propio sitio (`index.html`).
    funciona antes de dejarlo en automático:
    Actions → "Actualización diaria de probabilidad" → Run workflow.
 
-   Revisá el log. Si algo falla, lo más probable es que sea uno de estos dos
-   puntos (están marcados con un comentario en `calc/calc.py`):
-   - El nombre del campo de precio que devuelve el endpoint de cotización de IOL.
-   - El nombre de los campos de la curva UST en el feed de treasury.gov.
+   Revisá el log de cada paso. El único que usa tus credenciales es el de
+   bonos; los otros tres (ICG, Polymarket, spot) son APIs públicas sin login.
 
-   El script imprime la respuesta cruda en el error si alguno de los dos falla,
-   así que se ajusta rápido.
-
-6. A partir de ahí, corre solo todos los días hábiles a las 18:00 ART y va
-   sumando un punto por día a `data/history.json`, que es lo que lee el sitio.
+6. A partir de ahí, corre solo todos los días hábiles a las 18:00 ART.
 
 ## Estructura
 
 ```
-index.html                  → el sitio (no necesita build, es HTML plano)
-data/history.json           → serie histórica del modelo de bonos (la actualiza el workflow)
-data/icg_history.json       → serie del ICG de la UTDT, un registro por mes publicado
+index.html                   → el sitio (no necesita build, es HTML plano)
+data/history.json            → serie del modelo de bonos (forward)
+data/icg_history.json        → serie del ICG de la UTDT, un registro por mes publicado
 data/polymarket_history.json → serie diaria del precio de Polymarket
-calc/calc.py                → el cálculo diario del forward de bonos
-calc/icg_calc.py            → el chequeo diario del ICG (solo escribe si UTDT publicó algo nuevo)
-calc/polymarket_calc.py     → el precio diario de Polymarket
-.github/workflows/          → la automatización (corre los tres scripts todos los días)
+data/spot_history.json       → serie diaria del método spot (Marull/FMyA)
+calc/calc.py                 → forward de bonos (necesita IOL_USER / IOL_PASS)
+calc/icg_calc.py             → chequeo diario del ICG (solo escribe si UTDT publicó algo nuevo)
+calc/polymarket_calc.py      → precio diario de Polymarket
+calc/spot_calc.py            → riesgo país spot del día, con los anclajes de Marull
+.github/workflows/           → la automatización (corre los cuatro scripts todos los días)
 ```
 
-`calc/icg_calc.py` y `calc/polymarket_calc.py` no necesitan ningún Secret
-nuevo — ambas fuentes son públicas. Son las piezas menos probadas de las
-tres: no pude previsualizar en vivo ni el Excel de UTDT ni la respuesta
-exacta de la API de Polymarket, así que en la primera corrida conviene
-mirar el log de esos dos pasos puntuales. Si no encuentran el dato,
-imprimen lo que sí encontraron para ajustar el filtro en un par de minutos.
+Solo `calc.py` necesita Secrets (tus credenciales de IOL). Los otros tres
+usan APIs públicas sin autenticación:
+- ICG y riesgo país spot: [ArgentinaDatos](https://argentinadatos.com/docs.html) (`api.argentinadatos.com`)
+- Polymarket: Gamma API (`gamma-api.polymarket.com`)
 
-## Ajustar los supuestos del modelo
+De estos dos, **Polymarket es el que menos pude verificar en vivo** — no
+pude confirmar de antemano el slug exacto del evento ni el formato final de
+la respuesta. Si falla en la primera corrida, el script imprime lo que sí
+encontró para ajustar el filtro en un par de minutos.
 
-`MILEI_ANCHOR_BPS` y `PERONISMO_ANCHOR_BPS` en `calc/calc.py` son los dos
-escenarios de referencia (250 pb y 2.000 pb, siguiendo la convención de
-GMA Capital / FMyA). Cambiarlos ahí cambia el dato que se guarda; el sitio
-también deja moverlos con los sliders, pero solo para explorar — el valor que
-queda guardado en el histórico es siempre el que define el script.
+## Ajustar los supuestos de cada modelo
+
+- `MILEI_ANCHOR_BPS` / `PERONISMO_ANCHOR_BPS` en `calc/calc.py`: anclajes del modelo de bonos (250 / 2.000 pb).
+- `MILEI_ANCHOR` / `MODERADO_ANCHOR` / `EXTREMO_ANCHOR` en `calc/spot_calc.py`: anclajes del método spot, siguiendo la lámina de Marull/FMyA (200 / 800 / 2.000 pb).
+
+El sitio también deja mover los anclajes del modelo de bonos con sliders,
+pero solo para explorar — el valor que queda guardado en el histórico es
+siempre el que define el script.
