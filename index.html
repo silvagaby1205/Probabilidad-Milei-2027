@@ -18,6 +18,7 @@
     --wine:#8B3A3A;
     --wine-light:#B8726F;
     --ochre:#B8863B;
+    --steel:#7C93B3;
     --text-on-navy:#E9E7DC;
     --text-on-navy-dim:#9AA6B8;
     --focus:#B8863B;
@@ -56,10 +57,8 @@
     border:1px dashed var(--line-dark);padding:28px;font-size:0.92rem;
     color:var(--text-on-navy-dim);text-align:center;
   }
-  #chartContainer{position:relative;}
+  #chartContainer, #icgChartContainer{position:relative;}
   svg.chart{width:100%;height:auto;overflow:visible;display:block;}
-  .chart-line{fill:none;stroke:var(--green);stroke-width:2;}
-  .chart-dot{fill:var(--green);}
   .hit-dot{cursor:pointer;}
   .chart-tooltip{
     position:absolute;pointer-events:none;transform:translate(-50%,-135%);
@@ -69,18 +68,11 @@
   }
   .chart-axis{stroke:var(--line-dark);stroke-width:1;}
   .chart-label{font-family:'IBM Plex Mono', monospace;font-size:11px;fill:var(--text-on-navy-dim);}
-
-  .axis{position:relative;height:2px;background:var(--line-dark);margin:56px 6px 0;}
-  .axis-labels{display:flex;justify-content:space-between;font-family:'IBM Plex Mono', monospace;font-size:0.78rem;color:var(--text-on-navy-dim);margin-top:8px;}
-  .marker{position:absolute;top:0;transform:translate(-50%,-50%);width:11px;height:11px;border-radius:50%;border:2px solid var(--navy);}
-  .marker-label{position:absolute;top:-38px;transform:translateX(-50%);white-space:nowrap;font-size:0.82rem;text-align:center;line-height:1.3;transition:top 0.15s;}
-  .marker-label .pct{display:block;font-family:'IBM Plex Mono', monospace;font-weight:500;}
-  .marker-label .pct-sub{display:block;font-size:0.68rem;opacity:0.7;font-weight:400;font-family:'IBM Plex Sans', sans-serif;}
-  .m-model{background:var(--green);} .m-poly{background:var(--ochre);}
-  .m-ditella{background:var(--text-on-navy-dim);} .m-naive{background:var(--wine);}
-  .chart-line-dashed{stroke-dasharray:4,3;opacity:0.65;}
-  .chart-dot-est{fill:var(--navy);stroke:var(--green);stroke-width:1.3;}
+  .chart-line-dashed{stroke-dasharray:4,3;opacity:0.6;}
   .chart-caption{font-size:0.78rem;color:var(--text-on-navy-dim);margin-top:10px;}
+  .chart-legend{display:flex;flex-wrap:wrap;gap:10px 20px;margin-top:16px;font-size:0.82rem;color:var(--text-on-navy-dim);}
+  .legend-item{display:inline-flex;align-items:center;gap:6px;}
+  .legend-swatch{width:10px;height:10px;border-radius:50%;display:inline-block;flex:none;}
 
   .ledger{border-top:1px solid var(--line-dark);}
   .step{display:grid;grid-template-columns:28px 1fr auto;gap:16px;padding:18px 0;border-bottom:1px solid var(--line-dark);align-items:baseline;}
@@ -110,7 +102,6 @@
   @media (max-width:560px){
     .hero{flex-direction:column;align-items:flex-start;}
     .hero-range{text-align:left;}
-    .marker-label{font-size:0.72rem;}
   }
 </style>
 </head>
@@ -135,43 +126,25 @@
   </section>
 
   <section>
-    <h2>Evolución diaria</h2>
+    <h2>Evolución diaria de los cuatro modelos</h2>
     <div id="chartContainer">
-      <div class="chart-empty">La serie se va a ir completando a medida que la automatización corra, un dato por día hábil.</div>
+      <div class="chart-empty">La serie se va a ir completando a medida que la automatización corra.</div>
     </div>
+    <div class="chart-legend" id="chartLegend"></div>
+    <p class="chart-caption" id="chartCaption" style="display:none">Tramo punteado: leído a ojo del gráfico que publicó GMA Capital (mayo–agosto 2026), con la curva UST asumida constante — no calculado desde precios crudos. Tramo sólido: calculado día a día desde el lanzamiento del sitio, con datos reales.</p>
+    <p class="notes" style="margin-top:20px">El modelo de bonos tiene historia desde mayo porque se pudo reconstruir de un gráfico ya publicado; Polymarket y el spot arrancan el día que se automatizaron, así que por ahora son apenas unos días de serie. El método spot depende por completo de a quién se imagine como rival: contra un PJ extremo da un número muy alto, contra una oposición moderada da casi la mitad — ninguno de los dos separa cuánto del riesgo país de hoy es incertidumbre pre-electoral y cuánto es el resultado en sí. La tasa forward sí lo hace, y por eso queda más moderada y más cerca de Polymarket.</p>
   </section>
 
   <section>
-    <h2>Comparado con otras lecturas del mercado</h2>
-    <div class="axis" id="axis">
-      <div class="marker m-naive" id="naiveExtMarker" style="left:85%">
-        <div class="marker-label" style="color:var(--wine)">Spot vs. PJ extremo<span class="pct" id="naiveExtPct">≈85%</span></div>
-      </div>
-      <div class="marker m-naive" id="naiveModMarker" style="left:55%;background:var(--wine-light);">
-        <div class="marker-label" style="color:var(--wine-light)">Spot vs. moderado<span class="pct" id="naiveModPct">≈55%</span></div>
-      </div>
-      <div class="marker m-poly" id="polyMarker" style="left:52%">
-        <div class="marker-label" style="color:var(--ochre)">Polymarket<span class="pct" id="polyPct">≈52%</span></div>
-      </div>
-      <div class="marker m-model" id="modelMarker" style="left:46%">
-        <div class="marker-label" style="color:var(--green)">Este modelo<span class="pct" id="modelPct">≈46%</span></div>
-      </div>
-      <div class="marker m-ditella" id="icgMarker" style="left:40%">
-        <div class="marker-label" style="color:var(--text-on-navy-dim)">
-          <span id="icgLabelText">ICG ajustado (UTDT)</span>
-          <span class="pct" id="icgPct">≈40%</span>
-          <span class="pct-sub" id="icgSub">(41,2% sin ajustar)</span>
-        </div>
-      </div>
+    <h2>Intención de voto (ICG, no es una probabilidad)</h2>
+    <div id="icgChartContainer">
+      <div class="chart-empty">Cargando…</div>
     </div>
-    <div class="axis-labels"><span>0%</span><span>50%</span><span>100%</span></div>
-    <p class="notes" style="margin-top:36px">El método de tasa spot (Fernando Marull / FMyA) usa el riesgo país de hoy tal cual, con sus propios anclajes (Milei 200 pb, oposición moderada 800 pb, PJ extremo 2.000 pb) — pero el resultado depende por completo de a quién se imagine como rival: contra un PJ extremo da un número muy alto, contra una oposición moderada da casi la mitad. Ninguna de las dos separa cuánto del riesgo país de hoy corresponde a la incertidumbre pre-electoral y cuánto al resultado en sí; la tasa forward sí lo hace, y por eso el resultado queda más moderado y más cerca de Polymarket.</p>
-    <p class="notes">Los cinco números de esta franja se actualizan solos, con distinta frecuencia: el modelo de bonos y Polymarket todos los días, el spot de Marull todos los días (mismo riesgo país, dos supuestos de rival), y el ICG una vez por mes, cuando la UTDT publica.</p>
-    <p class="notes">El ICG mide confianza en el gobierno, no probabilidad de nada. La cifra de arriba es una intención de voto estimada con la regresión de la nota de Ámbito (16,59 + 0,569 × ICG×20), no la multiplicación cruda por 20 — por eso muestra también el número sin ajustar. No pasa por el sistema de balotaje: estimarle un número a la oposición para eso agregaba más complicación de la que vale la pena.</p>
+    <p class="notes" style="margin-top:20px">El ICG de la UTDT mide confianza en el gobierno, no intención de voto directa ni probabilidad de nada. La cifra que se grafica acá es una conversión ajustada con la regresión de una nota de Ámbito (16,59 + 0,569 × ICG×20), no la multiplicación cruda por 20 — el número sin ajustar se muestra al pasar el mouse. No pasa por el sistema de balotaje: estimarle un número a la oposición para eso agregaba más complicación de la que vale la pena, así que queda deliberadamente separado de los cuatro modelos de arriba.</p>
   </section>
 
   <section>
-    <h2>Cómo se calcula</h2>
+    <h2>Cómo se calcula el modelo de bonos</h2>
     <div class="ledger" id="ledger">
       <div class="step"><div class="n">1</div><div class="desc">TIR de <span class="tick">AO27C</span>, vence 29/10/2027</div><div class="val" id="stepY27">–</div></div>
       <div class="step"><div class="n">2</div><div class="desc">TIR de <span class="tick">AO28C</span>, vence 31/10/2028</div><div class="val" id="stepY28">–</div></div>
@@ -199,11 +172,11 @@
 
   <section class="notes">
     <h2>Lo que este número no dice</h2>
-    <p>Un riesgo país forward no es una encuesta ni una probabilidad "pura": incluye prima por plazo, liquidez y convexidad de los bonos, además de la lectura política del mercado. La conversión a probabilidad depende de dos anclas subjetivas (arriba) que cualquier analista puede fijar distinto — es la misma cuenta que separa la lectura de GMA Capital de la de Marull, y acá se puede auditar en lugar de darla por cerrada.</p>
+    <p>Un riesgo país forward no es una encuesta ni una probabilidad "pura": incluye prima por plazo, liquidez y convexidad de los bonos, además de la lectura política del mercado. La conversión a probabilidad depende de dos anclas subjetivas (arriba) que cualquier analista puede fijar distinto — es la misma cuenta que separa la lectura de GMA Capital de la de Marull, y acá se puede auditar en lugar de darla por cerrada. Ojo con la intuición: si estirás el ancla de Milei hacia un escenario todavía más optimista, el dato de hoy queda relativamente más lejos de ese extremo y la probabilidad calculada puede bajar, aunque el escenario en sí sea "mejor" — la fórmula mide posición relativa entre los dos anclajes, no qué tan bueno es cada uno.</p>
   </section>
 
   <footer>
-    <p>Bonos: InvertirOnline. Curva UST: U.S. Department of the Treasury. Referencias de contraste: FMyA / Fernando Marull (riesgo país spot, ago-2026), Polymarket, Índice de Confianza en el Gobierno — Universidad Torcuato Di Tella.</p>
+    <p>Bonos: InvertirOnline. Curva UST: U.S. Department of the Treasury. Riesgo país spot e ICG: ArgentinaDatos. Polymarket: Gamma API. Método spot inspirado en FMyA / Fernando Marull.</p>
     <p>Modelo y desarrollo: Gabriel Silva. Actualización automática diaria vía GitHub Actions.</p>
   </footer>
 
@@ -224,29 +197,6 @@
     return s.charAt(0).toUpperCase() + s.slice(1);
   }
 
-  function layoutMarkers(){
-    const ids = ['naiveExtMarker','naiveModMarker','polyMarker','modelMarker','icgMarker'];
-    const items = ids
-      .map(id => document.getElementById(id))
-      .filter(Boolean)
-      .map(el => ({el, pct: parseFloat(el.style.left)}))
-      .sort((a,b) => a.pct - b.pct);
-    let prevPct = null, tier = 0, maxTier = 0;
-    items.forEach(item => {
-      if(prevPct !== null && (item.pct - prevPct) <= 15){
-        tier += 1;
-      } else {
-        tier = 0;
-      }
-      maxTier = Math.max(maxTier, tier);
-      const label = item.el.querySelector('.marker-label');
-      if(label) label.style.top = (-38 - tier*30) + 'px';
-      prevPct = item.pct;
-    });
-    const axis = document.getElementById('axis');
-    if(axis) axis.style.marginTop = (56 + maxTier*30) + 'px';
-  }
-
   function recompute(){
     const m = parseFloat(document.getElementById('milei').value);
     const p = parseFloat(document.getElementById('peron').value);
@@ -256,59 +206,12 @@
     prob = Math.max(0, Math.min(1, prob));
     document.getElementById('liveResult').textContent =
       (prob*100).toLocaleString('es-AR', {minimumFractionDigits:1, maximumFractionDigits:1}) + '%';
-    document.getElementById('modelPct').textContent = '≈' + Math.round(prob*100) + '%';
-    document.getElementById('modelMarker').style.left = (prob*100) + '%';
-    layoutMarkers();
   }
 
-  function drawChart(history){
-    const w = 700, h = 220, padL = 30, padR = 10, padT = 10, padB = 24;
-    const xs = history.map(h => new Date(h.date + 'T00:00:00').getTime());
-    const xMin = Math.min(...xs), xMax = Math.max(...xs);
-    const yMin = 0, yMax = 100;
-    const x = t => padL + (w - padL - padR) * (xMax === xMin ? 0.5 : (t - xMin) / (xMax - xMin));
-    const y = v => padT + (h - padT - padB) * (1 - (v - yMin) / (yMax - yMin));
-    const px = rec => x(new Date(rec.date+'T00:00:00').getTime());
-
-    let segments = '';
-    for(let i=0;i<history.length-1;i++){
-      const a = history[i], b = history[i+1];
-      const dashed = a.estimado || b.estimado;
-      segments += `<line class="chart-line ${dashed ? 'chart-line-dashed' : ''}" x1="${px(a)}" y1="${y(a.prob_milei)}" x2="${px(b)}" y2="${y(b.prob_milei)}"/>`;
-    }
-    const dots = history.map((rec, i) => {
-      const info = `${fmtDate(rec.date)}: ${rec.prob_milei}% (${rec.estimado ? 'estimado del gráfico de GMA' : 'calculado del día'})`;
-      return `<circle class="${rec.estimado ? 'chart-dot-est' : 'chart-dot'}" cx="${px(rec)}" cy="${y(rec.prob_milei)}" r="${rec.estimado ? 2.5 : 3.5}"/>` +
-             `<circle class="hit-dot" data-info="${info.replace(/"/g,'&quot;')}" cx="${px(rec)}" cy="${y(rec.prob_milei)}" r="10" fill="transparent"/>`;
-    }).join('');
-
-    const first = history[0], last = history[history.length-1];
-    const hayEstimados = history.some(h => h.estimado);
-
-    const svg = `
-      <svg class="chart" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
-        <line class="chart-axis" x1="${padL}" y1="${y(50)}" x2="${w-padR}" y2="${y(50)}" stroke-dasharray="2,3"/>
-        <text class="chart-label" x="${padL-6}" y="${y(100)+4}" text-anchor="end">100%</text>
-        <text class="chart-label" x="${padL-6}" y="${y(50)+4}" text-anchor="end">50%</text>
-        <text class="chart-label" x="${padL-6}" y="${y(0)+4}" text-anchor="end">0%</text>
-        <line class="chart-axis" x1="${padL}" y1="${padT}" x2="${padL}" y2="${h-padB}"/>
-        ${segments}
-        ${dots}
-        <text class="chart-label" x="${px(first)}" y="${h-6}" text-anchor="start">${fmtDate(first.date)}</text>
-        <text class="chart-label" x="${px(last)}" y="${h-6}" text-anchor="end">${fmtDate(last.date)}</text>
-      </svg>
-      <div class="chart-tooltip" id="chartTooltip"></div>
-      ${hayEstimados ? '<p class="chart-caption">Tramo punteado (mayo–agosto): leído a ojo del gráfico que publicó GMA Capital, con la curva UST asumida constante — no calculado desde precios crudos. Tramo sólido: calculado día a día desde el lanzamiento del sitio, con precios y curva UST reales.</p>' : ''}`;
-    document.getElementById('chartContainer').innerHTML = svg;
-    attachTooltips(w, h);
-  }
-
-  function attachTooltips(viewW, viewH){
-    const container = document.getElementById('chartContainer');
-    const svgEl = container.querySelector('svg.chart');
-    const tooltip = document.getElementById('chartTooltip');
-    if(!svgEl || !tooltip) return;
-
+  function attachTooltips(containerId, tooltipId, viewW, viewH){
+    const container = document.getElementById(containerId);
+    const tooltip = document.getElementById(tooltipId);
+    if(!container || !tooltip) return;
     container.querySelectorAll('.hit-dot').forEach(dot => {
       const show = () => {
         const cx = parseFloat(dot.getAttribute('cx'));
@@ -323,94 +226,167 @@
       dot.addEventListener('pointerdown', show);
       dot.addEventListener('pointerleave', hide);
     });
-
-    // Tocar afuera de un punto, en celular, cierra el tooltip abierto.
     container.addEventListener('pointerdown', (e) => {
       if(!e.target.classList.contains('hit-dot')) tooltip.style.opacity = '0';
     });
   }
 
-  async function loadIcg(){
-    try{
-      const res = await fetch('data/icg_history.json', {cache:'no-store'});
-      if(!res.ok) return;
-      const hist = await res.json();
-      if(!Array.isArray(hist) || hist.length === 0) return;
-      const last = hist[hist.length - 1];
-      document.getElementById('icgMarker').style.left = last.voto_calibrado + '%';
-      document.getElementById('icgLabelText').textContent = `ICG ajustado (UTDT, ${fmtMes(last.periodo)})`;
-      document.getElementById('icgPct').textContent = '≈' + Math.round(last.voto_calibrado) + '%';
-      document.getElementById('icgSub').textContent =
-        `(${last.voto_naive.toLocaleString('es-AR', {minimumFractionDigits:1, maximumFractionDigits:1})}% sin ajustar)`;
-      layoutMarkers();
-    } catch(e){ /* si falla, se queda con el valor por defecto del HTML */ }
+  function drawMultiChart(series){
+    const container = document.getElementById('chartContainer');
+    const legend = document.getElementById('chartLegend');
+    const allPoints = series.flatMap(s => s.points.map(p => ({...p, seriesName: s.name})));
+    if(allPoints.length < 2){
+      container.innerHTML = '<div class="chart-empty">Todavía no hay suficientes datos para graficar. Va a aparecer apenas se acumulen más días.</div>';
+      legend.innerHTML = '';
+      return;
+    }
+
+    const w = 700, h = 300, padL = 32, padR = 10, padT = 14, padB = 26;
+    const dates = allPoints.map(p => p.date).sort();
+    const dateMinStr = dates[0], dateMaxStr = dates[dates.length - 1];
+    const tMin = new Date(dateMinStr + 'T00:00:00').getTime();
+    const tMax = new Date(dateMaxStr + 'T00:00:00').getTime();
+    const x = t => padL + (w - padL - padR) * (tMax === tMin ? 0.5 : (t - tMin) / (tMax - tMin));
+    const y = v => padT + (h - padT - padB) * (1 - v / 100);
+    const px = p => x(new Date(p.date + 'T00:00:00').getTime());
+
+    let linesSvg = '', dotsSvg = '';
+    let hayEstimados = false;
+
+    series.forEach(s => {
+      const pts = s.points.filter(p => p.value !== null && p.value !== undefined);
+      for(let i = 0; i < pts.length - 1; i++){
+        const a = pts[i], b = pts[i+1];
+        const dashed = a.estimado || b.estimado;
+        if(dashed) hayEstimados = true;
+        linesSvg += `<line class="${dashed ? 'chart-line-dashed' : ''}" stroke="${s.color}" stroke-width="2" fill="none" x1="${px(a)}" y1="${y(a.value)}" x2="${px(b)}" y2="${y(b.value)}"/>`;
+      }
+      pts.forEach(p => {
+        const tag = p.estimado ? ' (estimado del gráfico de GMA)' : '';
+        const info = `${s.name} — ${fmtDate(p.date)}: ${p.value}%${tag}`;
+        const fill = p.estimado ? 'var(--navy)' : s.color;
+        dotsSvg += `<circle cx="${px(p)}" cy="${y(p.value)}" r="${p.estimado ? 2.2 : 3.2}" fill="${fill}" stroke="${s.color}" stroke-width="${p.estimado ? 1.2 : 0}"/>`;
+        dotsSvg += `<circle class="hit-dot" data-info="${info.replace(/"/g,'&quot;')}" cx="${px(p)}" cy="${y(p.value)}" r="9" fill="transparent"/>`;
+      });
+    });
+
+    const svg = `
+      <svg class="chart" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+        <line class="chart-axis" x1="${padL}" y1="${y(50)}" x2="${w-padR}" y2="${y(50)}" stroke-dasharray="2,3"/>
+        <text class="chart-label" x="${padL-6}" y="${y(100)+4}" text-anchor="end">100%</text>
+        <text class="chart-label" x="${padL-6}" y="${y(50)+4}" text-anchor="end">50%</text>
+        <text class="chart-label" x="${padL-6}" y="${y(0)+4}" text-anchor="end">0%</text>
+        <line class="chart-axis" x1="${padL}" y1="${padT}" x2="${padL}" y2="${h-padB}"/>
+        ${linesSvg}
+        ${dotsSvg}
+        <text class="chart-label" x="${padL}" y="${h-6}" text-anchor="start">${fmtDate(dateMinStr)}</text>
+        <text class="chart-label" x="${w-padR}" y="${h-6}" text-anchor="end">${fmtDate(dateMaxStr)}</text>
+      </svg>
+      <div class="chart-tooltip" id="chartTooltip"></div>`;
+    container.innerHTML = svg;
+    attachTooltips('chartContainer', 'chartTooltip', w, h);
+
+    legend.innerHTML = series
+      .filter(s => s.points.length > 0)
+      .map(s => `<span class="legend-item"><span class="legend-swatch" style="background:${s.color}"></span>${s.name}</span>`)
+      .join('');
+
+    const caption = document.getElementById('chartCaption');
+    if(caption) caption.style.display = hayEstimados ? 'block' : 'none';
   }
 
-  async function loadPolymarket(){
-    try{
-      const res = await fetch('data/polymarket_history.json', {cache:'no-store'});
-      if(!res.ok) return;
-      const hist = await res.json();
-      if(!Array.isArray(hist) || hist.length === 0) return;
-      const last = hist[hist.length - 1];
-      document.getElementById('polyMarker').style.left = last.prob_milei + '%';
-      document.getElementById('polyPct').textContent = '≈' + Math.round(last.prob_milei) + '%';
-      layoutMarkers();
-    } catch(e){ /* si falla, se queda con el valor por defecto del HTML */ }
+  function drawIcgChart(hist){
+    const container = document.getElementById('icgChartContainer');
+    if(!Array.isArray(hist) || hist.length === 0){
+      container.innerHTML = '<div class="chart-empty">Sin datos del ICG todavía.</div>';
+      return;
+    }
+    if(hist.length === 1){
+      const last = hist[0];
+      container.innerHTML = `<div class="chart-empty">Por ahora hay un solo dato cargado: <strong style="color:var(--text-on-navy)">${fmtMes(last.periodo)} — ${last.voto_calibrado}% ajustado</strong> (${last.voto_naive}% sin ajustar). El gráfico va a empezar a dibujar la evolución apenas la UTDT publique el mes siguiente.</div>`;
+      return;
+    }
+
+    const w = 700, h = 200, padL = 32, padR = 10, padT = 14, padB = 26;
+    const dates = hist.map(h => h.periodo).sort();
+    const tMin = new Date(dates[0] + 'T00:00:00').getTime();
+    const tMax = new Date(dates[dates.length-1] + 'T00:00:00').getTime();
+    const x = t => padL + (w - padL - padR) * (tMax === tMin ? 0.5 : (t - tMin) / (tMax - tMin));
+    const y = v => padT + (h - padT - padB) * (1 - v / 100);
+    const px = rec => x(new Date(rec.periodo + 'T00:00:00').getTime());
+
+    let linesSvg = '', dotsSvg = '';
+    for(let i = 0; i < hist.length - 1; i++){
+      const a = hist[i], b = hist[i+1];
+      linesSvg += `<line stroke="var(--steel)" stroke-width="2" fill="none" x1="${px(a)}" y1="${y(a.voto_calibrado)}" x2="${px(b)}" y2="${y(b.voto_calibrado)}"/>`;
+    }
+    hist.forEach(rec => {
+      const info = `${fmtMes(rec.periodo)}: ${rec.voto_calibrado}% ajustado (${rec.voto_naive}% sin ajustar)`;
+      dotsSvg += `<circle cx="${px(rec)}" cy="${y(rec.voto_calibrado)}" r="3.2" fill="var(--steel)"/>`;
+      dotsSvg += `<circle class="hit-dot" data-info="${info.replace(/"/g,'&quot;')}" cx="${px(rec)}" cy="${y(rec.voto_calibrado)}" r="9" fill="transparent"/>`;
+    });
+
+    const svg = `
+      <svg class="chart" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+        <line class="chart-axis" x1="${padL}" y1="${y(50)}" x2="${w-padR}" y2="${y(50)}" stroke-dasharray="2,3"/>
+        <text class="chart-label" x="${padL-6}" y="${y(100)+4}" text-anchor="end">100%</text>
+        <text class="chart-label" x="${padL-6}" y="${y(50)+4}" text-anchor="end">50%</text>
+        <text class="chart-label" x="${padL-6}" y="${y(0)+4}" text-anchor="end">0%</text>
+        <line class="chart-axis" x1="${padL}" y1="${padT}" x2="${padL}" y2="${h-padB}"/>
+        ${linesSvg}
+        ${dotsSvg}
+        <text class="chart-label" x="${padL}" y="${h-6}" text-anchor="start">${fmtMes(dates[0])}</text>
+        <text class="chart-label" x="${w-padR}" y="${h-6}" text-anchor="end">${fmtMes(dates[dates.length-1])}</text>
+      </svg>
+      <div class="chart-tooltip" id="icgChartTooltip"></div>`;
+    container.innerHTML = svg;
+    attachTooltips('icgChartContainer', 'icgChartTooltip', w, h);
   }
 
-  async function loadSpot(){
+  async function fetchJson(path){
     try{
-      const res = await fetch('data/spot_history.json', {cache:'no-store'});
-      if(!res.ok) return;
-      const hist = await res.json();
-      if(!Array.isArray(hist) || hist.length === 0) return;
-      const last = hist[hist.length - 1];
-      document.getElementById('naiveExtMarker').style.left = last.prob_vs_extremo + '%';
-      document.getElementById('naiveExtPct').textContent = '≈' + Math.round(last.prob_vs_extremo) + '%';
-      document.getElementById('naiveModMarker').style.left = last.prob_vs_moderado + '%';
-      document.getElementById('naiveModPct').textContent = '≈' + Math.round(last.prob_vs_moderado) + '%';
-      layoutMarkers();
-    } catch(e){ /* si falla, se queda con el valor por defecto del HTML */ }
+      const res = await fetch(path, {cache:'no-store'});
+      if(!res.ok) return [];
+      const data = await res.json();
+      return Array.isArray(data) ? data : [];
+    } catch(e){ return []; }
   }
 
   async function init(){
-    layoutMarkers();
-    loadIcg();
-    loadPolymarket();
-    loadSpot();
-    try{
-      const res = await fetch('data/history.json', {cache:'no-store'});
-      if(!res.ok) throw new Error('no history yet');
-      const history = await res.json();
-      if(!Array.isArray(history) || history.length === 0) throw new Error('empty history');
+    const [history, poly, spot, icg] = await Promise.all([
+      fetchJson('data/history.json'),
+      fetchJson('data/polymarket_history.json'),
+      fetchJson('data/spot_history.json'),
+      fetchJson('data/icg_history.json'),
+    ]);
 
-      const last = history[history.length-1];
+    if(history.length > 0){
+      const last = history[history.length - 1];
       RP_FORWARD_BPS = last.riesgo_pais_forward_bps;
-
       document.getElementById('updatedMeta').textContent =
         `Actualizado el ${fmtDate(last.date)}, con datos de mercado del cierre del día.`;
       document.getElementById('heroNum').innerHTML = last.prob_milei.toFixed(0) + '<small>%</small>';
       document.getElementById('heroDate').textContent = fmtDate(last.date);
-      document.getElementById('stepY27').textContent = last.ao27c_tir.toFixed(2) + '%';
-      document.getElementById('stepY28').textContent = last.ao28c_tir.toFixed(2) + '%';
-      document.getElementById('stepFsob').textContent = last.forward_soberano.toFixed(1) + '%';
-      document.getElementById('stepFust').textContent = last.forward_ust.toFixed(1) + '%';
+      if(last.ao27c_tir != null) document.getElementById('stepY27').textContent = last.ao27c_tir.toFixed(2) + '%';
+      if(last.ao28c_tir != null) document.getElementById('stepY28').textContent = last.ao28c_tir.toFixed(2) + '%';
+      if(last.forward_soberano != null) document.getElementById('stepFsob').textContent = last.forward_soberano.toFixed(1) + '%';
+      if(last.forward_ust != null) document.getElementById('stepFust').textContent = last.forward_ust.toFixed(1) + '%';
       document.getElementById('stepRp').textContent = '≈' + Math.round(last.riesgo_pais_forward_bps).toLocaleString('es-AR') + ' pb';
-
       document.getElementById('milei').value = last.milei_anchor_bps || 250;
       document.getElementById('peron').value = last.peronismo_anchor_bps || 2000;
-
-      if(history.length >= 2){
-        drawChart(history);
-      } else {
-        document.getElementById('chartContainer').innerHTML =
-          '<div class="chart-empty">Todavía hay un solo dato cargado — el gráfico va a aparecer apenas la automatización sume el segundo.</div>';
-      }
-    } catch(e){
+    } else {
       document.getElementById('updatedMeta').textContent = 'Sin datos disponibles todavía.';
     }
     recompute();
+
+    const series = [
+      {name:'Tasas forward', color:'var(--green)', points: history.map(h => ({date:h.date, value:h.prob_milei, estimado: !!h.estimado}))},
+      {name:'Polymarket', color:'var(--ochre)', points: poly.map(h => ({date:h.date, value:h.prob_milei}))},
+      {name:'Spot vs. PJ extremo', color:'var(--wine)', points: spot.map(h => ({date:h.date, value:h.prob_vs_extremo}))},
+      {name:'Spot vs. moderado', color:'var(--wine-light)', points: spot.map(h => ({date:h.date, value:h.prob_vs_moderado}))},
+    ];
+    drawMultiChart(series);
+    drawIcgChart(icg);
   }
 
   document.getElementById('milei').addEventListener('input', recompute);
