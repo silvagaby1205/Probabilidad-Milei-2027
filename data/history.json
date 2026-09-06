@@ -1,15 +1,92 @@
 [
-  {"date": "2026-05-20", "forward_soberano": 14.2, "riesgo_pais_forward_bps": 1025.0, "prob_milei": 55.7, "estimado": true, "nota": "Estimado a partir del gráfico publicado por GMA Capital (AO28 vs AO27), con forward UST asumido constante en 3,95%. No calculado desde precios crudos."},
-  {"date": "2026-05-29", "forward_soberano": 14.5, "riesgo_pais_forward_bps": 1055.0, "prob_milei": 54.0, "estimado": true, "nota": "Estimado a partir del gráfico publicado por GMA Capital (AO28 vs AO27), con forward UST asumido constante en 3,95%. No calculado desde precios crudos."},
-  {"date": "2026-06-10", "forward_soberano": 14.6, "riesgo_pais_forward_bps": 1065.0, "prob_milei": 53.4, "estimado": true, "nota": "Estimado a partir del gráfico publicado por GMA Capital (AO28 vs AO27), con forward UST asumido constante en 3,95%. No calculado desde precios crudos."},
-  {"date": "2026-06-19", "forward_soberano": 13.0, "riesgo_pais_forward_bps": 905.0, "prob_milei": 62.6, "estimado": true, "nota": "Estimado a partir del gráfico publicado por GMA Capital (AO28 vs AO27), con forward UST asumido constante en 3,95%. No calculado desde precios crudos."},
-  {"date": "2026-06-28", "forward_soberano": 11.5, "riesgo_pais_forward_bps": 755.0, "prob_milei": 71.1, "estimado": true, "nota": "Estimado a partir del gráfico publicado por GMA Capital (AO28 vs AO27), con forward UST asumido constante en 3,95%. No calculado desde precios crudos."},
-  {"date": "2026-07-07", "forward_soberano": 12.5, "riesgo_pais_forward_bps": 855.0, "prob_milei": 65.4, "estimado": true, "nota": "Estimado a partir del gráfico publicado por GMA Capital (AO28 vs AO27), con forward UST asumido constante en 3,95%. No calculado desde precios crudos."},
-  {"date": "2026-07-16", "forward_soberano": 12.8, "riesgo_pais_forward_bps": 885.0, "prob_milei": 63.7, "estimado": true, "nota": "Estimado a partir del gráfico publicado por GMA Capital (AO28 vs AO27), con forward UST asumido constante en 3,95%. No calculado desde precios crudos."},
-  {"date": "2026-07-25", "forward_soberano": 11.0, "riesgo_pais_forward_bps": 705.0, "prob_milei": 74.0, "estimado": true, "nota": "Estimado a partir del gráfico publicado por GMA Capital (AO28 vs AO27), con forward UST asumido constante en 3,95%. No calculado desde precios crudos."},
-  {"date": "2026-08-03", "forward_soberano": 13.3, "riesgo_pais_forward_bps": 935.0, "prob_milei": 60.9, "estimado": true, "nota": "Estimado a partir del gráfico publicado por GMA Capital (AO28 vs AO27), con forward UST asumido constante en 3,95%. No calculado desde precios crudos."},
-  {"date": "2026-08-12", "forward_soberano": 14.0, "riesgo_pais_forward_bps": 1005.0, "prob_milei": 56.9, "estimado": true, "nota": "Estimado a partir del gráfico publicado por GMA Capital (AO28 vs AO27), con forward UST asumido constante en 3,95%. No calculado desde precios crudos."},
-  {"date": "2026-08-18", "forward_soberano": 15.9, "riesgo_pais_forward_bps": 1195.0, "prob_milei": 46.0, "estimado": true, "nota": "Estimado a partir del gráfico publicado por GMA Capital (AO28 vs AO27), con forward UST asumido constante en 3,95%. No calculado desde precios crudos."},
+  {
+    "date": "2026-05-20",
+    "forward_soberano": 14.2,
+    "riesgo_pais_forward_bps": 1025.0,
+    "prob_milei": 55.7,
+    "estimado": true,
+    "nota": "Estimado a partir del gráfico publicado por GMA Capital (AO28 vs AO27), con forward UST asumido constante en 3,95%. No calculado desde precios crudos."
+  },
+  {
+    "date": "2026-05-29",
+    "forward_soberano": 14.5,
+    "riesgo_pais_forward_bps": 1055.0,
+    "prob_milei": 54.0,
+    "estimado": true,
+    "nota": "Estimado a partir del gráfico publicado por GMA Capital (AO28 vs AO27), con forward UST asumido constante en 3,95%. No calculado desde precios crudos."
+  },
+  {
+    "date": "2026-06-10",
+    "forward_soberano": 14.6,
+    "riesgo_pais_forward_bps": 1065.0,
+    "prob_milei": 53.4,
+    "estimado": true,
+    "nota": "Estimado a partir del gráfico publicado por GMA Capital (AO28 vs AO27), con forward UST asumido constante en 3,95%. No calculado desde precios crudos."
+  },
+  {
+    "date": "2026-06-19",
+    "forward_soberano": 13.0,
+    "riesgo_pais_forward_bps": 905.0,
+    "prob_milei": 62.6,
+    "estimado": true,
+    "nota": "Estimado a partir del gráfico publicado por GMA Capital (AO28 vs AO27), con forward UST asumido constante en 3,95%. No calculado desde precios crudos."
+  },
+  {
+    "date": "2026-06-28",
+    "forward_soberano": 11.5,
+    "riesgo_pais_forward_bps": 755.0,
+    "prob_milei": 71.1,
+    "estimado": true,
+    "nota": "Estimado a partir del gráfico publicado por GMA Capital (AO28 vs AO27), con forward UST asumido constante en 3,95%. No calculado desde precios crudos."
+  },
+  {
+    "date": "2026-07-07",
+    "forward_soberano": 12.5,
+    "riesgo_pais_forward_bps": 855.0,
+    "prob_milei": 65.4,
+    "estimado": true,
+    "nota": "Estimado a partir del gráfico publicado por GMA Capital (AO28 vs AO27), con forward UST asumido constante en 3,95%. No calculado desde precios crudos."
+  },
+  {
+    "date": "2026-07-16",
+    "forward_soberano": 12.8,
+    "riesgo_pais_forward_bps": 885.0,
+    "prob_milei": 63.7,
+    "estimado": true,
+    "nota": "Estimado a partir del gráfico publicado por GMA Capital (AO28 vs AO27), con forward UST asumido constante en 3,95%. No calculado desde precios crudos."
+  },
+  {
+    "date": "2026-07-25",
+    "forward_soberano": 11.0,
+    "riesgo_pais_forward_bps": 705.0,
+    "prob_milei": 74.0,
+    "estimado": true,
+    "nota": "Estimado a partir del gráfico publicado por GMA Capital (AO28 vs AO27), con forward UST asumido constante en 3,95%. No calculado desde precios crudos."
+  },
+  {
+    "date": "2026-08-03",
+    "forward_soberano": 13.3,
+    "riesgo_pais_forward_bps": 935.0,
+    "prob_milei": 60.9,
+    "estimado": true,
+    "nota": "Estimado a partir del gráfico publicado por GMA Capital (AO28 vs AO27), con forward UST asumido constante en 3,95%. No calculado desde precios crudos."
+  },
+  {
+    "date": "2026-08-12",
+    "forward_soberano": 14.0,
+    "riesgo_pais_forward_bps": 1005.0,
+    "prob_milei": 56.9,
+    "estimado": true,
+    "nota": "Estimado a partir del gráfico publicado por GMA Capital (AO28 vs AO27), con forward UST asumido constante en 3,95%. No calculado desde precios crudos."
+  },
+  {
+    "date": "2026-08-18",
+    "forward_soberano": 15.9,
+    "riesgo_pais_forward_bps": 1195.0,
+    "prob_milei": 46.0,
+    "estimado": true,
+    "nota": "Estimado a partir del gráfico publicado por GMA Capital (AO28 vs AO27), con forward UST asumido constante en 3,95%. No calculado desde precios crudos."
+  },
   {
     "date": "2026-09-04",
     "ao27c_tir": 7.316,
@@ -22,5 +99,16 @@
     "prob_milei": 46.13,
     "estimado": false,
     "nota": "Dato semilla cargado a mano por Claude a partir de datos en vivo de IOL y treasury.gov, antes de activar la automatización diaria."
+  },
+  {
+    "date": "2026-09-06",
+    "ao27c_tir": 7.297,
+    "ao28c_tir": 11.228,
+    "forward_soberano": 15.869,
+    "forward_ust": 4.63,
+    "riesgo_pais_forward_bps": 1123.9,
+    "milei_anchor_bps": 250,
+    "peronismo_anchor_bps": 2000,
+    "prob_milei": 50.06
   }
 ]

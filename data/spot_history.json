@@ -6,5 +6,12 @@
     "prob_vs_extremo": 83.9,
     "prob_vs_moderado": 51.7,
     "nota": "Dato semilla cargado a mano por Claude a partir del riesgo país publicado, antes de activar el chequeo automático diario vía la API de ArgentinaDatos."
+  },
+  {
+    "date": "2026-09-06",
+    "fecha_fuente": "2026-09-04",
+    "riesgo_pais": 490.0,
+    "prob_vs_extremo": 83.9,
+    "prob_vs_moderado": 51.7
   }
 ]
