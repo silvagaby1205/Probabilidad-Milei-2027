@@ -145,12 +145,14 @@
 
   <section>
     <h2>Cómo se calcula el modelo de bonos</h2>
+    <p class="notes" style="margin-bottom:24px">Para comprobar el paso 4 a mano: entrá a <a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026" target="_blank" rel="noopener">la tabla oficial del Tesoro de EE.UU.</a>, buscá la última fila (fecha más reciente) y anotá las columnas "1 Yr", "2 Yr" y "3 Yr". Esos tres números son los que se muestran abajo, junto con a qué valor interpolado dan una vez ajustados al plazo exacto de cada bono (AO27C vence en ≈1,15 años desde hoy, AO28C en ≈2,15 años) — interpolación lineal simple entre los dos puntos de la curva más cercanos.</p>
     <div class="ledger" id="ledger">
       <div class="step"><div class="n">1</div><div class="desc">TIR de <span class="tick">AO27C</span>, vence 29/10/2027</div><div class="val" id="stepY27">–</div></div>
       <div class="step"><div class="n">2</div><div class="desc">TIR de <span class="tick">AO28C</span>, vence 31/10/2028</div><div class="val" id="stepY28">–</div></div>
       <div class="step"><div class="n">3</div><div class="desc">Tasa forward implícita entre ambos vencimientos<span class="sub">(1+y28)^t28 = (1+y27)^t27 · (1+f)^(t28−t27)</span></div><div class="val" id="stepFsob">–</div></div>
-      <div class="step"><div class="n">4</div><div class="desc">Forward de la curva UST para el mismo tramo<span class="sub">interpolado sobre CMT 1–2–3 años</span></div><div class="val" id="stepFust">–</div></div>
+      <div class="step"><div class="n">4</div><div class="desc">Forward de la curva UST para el mismo tramo<span class="sub">interpolado linealmente sobre CMT 1–2–3 años</span><span class="sub" id="stepUstDetail"></span></div><div class="val" id="stepFust">–</div></div>
       <div class="step"><div class="n">5</div><div class="desc">Riesgo país forward implícito<span class="sub">forward soberano menos forward libre de riesgo</span></div><div class="val" id="stepRp">–</div></div>
+      <div class="step"><div class="n">6</div><div class="desc">Probabilidad implícita<span class="sub">p = (RP_oposición − RP_forward) / (RP_oposición − RP_Milei), con los anclajes de abajo</span></div><div class="val" id="stepProb">–</div></div>
     </div>
 
     <div class="controls">
@@ -371,7 +373,12 @@
       if(last.ao28c_tir != null) document.getElementById('stepY28').textContent = last.ao28c_tir.toFixed(2) + '%';
       if(last.forward_soberano != null) document.getElementById('stepFsob').textContent = last.forward_soberano.toFixed(1) + '%';
       if(last.forward_ust != null) document.getElementById('stepFust').textContent = last.forward_ust.toFixed(1) + '%';
+      if(last.ust_1y != null){
+        document.getElementById('stepUstDetail').textContent =
+          ` — curva: 1a ${last.ust_1y}% / 2a ${last.ust_2y}% / 3a ${last.ust_3y}% → interpolado a t=${last.t27_years}a: ${last.y27_ust}%, t=${last.t28_years}a: ${last.y28_ust}%`;
+      }
       document.getElementById('stepRp').textContent = '≈' + Math.round(last.riesgo_pais_forward_bps).toLocaleString('es-AR') + ' pb';
+      document.getElementById('stepProb').textContent = last.prob_milei.toFixed(1) + '%';
       document.getElementById('milei').value = last.milei_anchor_bps || 250;
       document.getElementById('peron').value = last.peronismo_anchor_bps || 2000;
     } else {

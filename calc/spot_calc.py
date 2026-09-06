@@ -13,7 +13,12 @@ Corre todos los días junto a los otros cálculos.
 
 import json
 import os
-from datetime import date
+from datetime import datetime
+from zoneinfo import ZoneInfo
+
+
+def hoy_arg():
+    return datetime.now(ZoneInfo("America/Argentina/Buenos_Aires")).date()
 
 import requests
 
@@ -37,7 +42,7 @@ def main():
     rp = float(data["valor"])
 
     record = {
-        "date": date.today().isoformat(),
+        "date": hoy_arg().isoformat(),
         "fecha_fuente": data.get("fecha"),
         "riesgo_pais": rp,
         "prob_vs_extremo": round(prob(EXTREMO_ANCHOR, rp) * 100, 1),

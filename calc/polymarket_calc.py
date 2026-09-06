@@ -16,7 +16,12 @@ dos minutos.
 
 import json
 import os
-from datetime import date
+from datetime import datetime
+from zoneinfo import ZoneInfo
+
+
+def hoy_arg():
+    return datetime.now(ZoneInfo("America/Argentina/Buenos_Aires")).date()
 
 import requests
 
@@ -62,7 +67,7 @@ def find_milei_price():
 def main():
     price = find_milei_price()
     pct = round(price * 100, 2)
-    today = date.today().isoformat()
+    today = hoy_arg().isoformat()
 
     history = []
     if os.path.exists(DATA_PATH):

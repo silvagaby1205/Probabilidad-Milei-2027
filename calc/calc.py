@@ -22,7 +22,8 @@ OJO — cosas para verificar en la primera corrida real:
 import os
 import json
 import xml.etree.ElementTree as ET
-from datetime import date
+from datetime import date, datetime
+from zoneinfo import ZoneInfo
 
 import requests
 
@@ -144,8 +145,15 @@ def forward_rate(y1, t1, y2, t2):
     return ((1 + y2) ** t2 / (1 + y1) ** t1) ** (1 / (t2 - t1)) - 1
 
 
+def hoy_arg():
+    """Fecha de hoy en Argentina — el runner de GitHub Actions corre en UTC,
+    así que usar date.today() a secas puede dar el día siguiente si el
+    workflow corre después de las 21hs UTC (18hs ART)."""
+    return datetime.now(ZoneInfo("America/Argentina/Buenos_Aires")).date()
+
+
 def main():
-    settlement = date.today()
+    settlement = hoy_arg()
     token = iol_token()
 
     p27 = iol_price(token, "AO27C")
@@ -160,7 +168,9 @@ def main():
     f_sob = forward_rate(y27, t27, y28, t28)
 
     curve = ust_curve(settlement.year)
-    f_ust = forward_rate(interp(curve, t27), t27, interp(curve, t28), t28)
+    y27_ust = interp(curve, t27)
+    y28_ust = interp(curve, t28)
+    f_ust = forward_rate(y27_ust, t27, y28_ust, t28)
 
     rp_fwd_bps = (f_sob - f_ust) * 10000
     prob = (PERONISMO_ANCHOR_BPS - rp_fwd_bps) / (PERONISMO_ANCHOR_BPS - MILEI_ANCHOR_BPS)
@@ -171,6 +181,13 @@ def main():
         "ao27c_tir": round(y27 * 100, 3),
         "ao28c_tir": round(y28 * 100, 3),
         "forward_soberano": round(f_sob * 100, 3),
+        "t27_years": round(t27, 3),
+        "t28_years": round(t28, 3),
+        "ust_1y": round(curve[1] * 100, 3) if curve.get(1) is not None else None,
+        "ust_2y": round(curve[2] * 100, 3) if curve.get(2) is not None else None,
+        "ust_3y": round(curve[3] * 100, 3) if curve.get(3) is not None else None,
+        "y27_ust": round(y27_ust * 100, 3),
+        "y28_ust": round(y28_ust * 100, 3),
         "forward_ust": round(f_ust * 100, 3),
         "riesgo_pais_forward_bps": round(rp_fwd_bps, 1),
         "milei_anchor_bps": MILEI_ANCHOR_BPS,

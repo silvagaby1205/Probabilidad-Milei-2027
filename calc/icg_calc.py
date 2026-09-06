@@ -22,7 +22,12 @@ elecciones):
 
 import json
 import os
-from datetime import date
+from datetime import datetime
+from zoneinfo import ZoneInfo
+
+
+def hoy_arg():
+    return datetime.now(ZoneInfo("America/Argentina/Buenos_Aires")).date()
 
 import requests
 
@@ -51,7 +56,7 @@ def main():
         return
 
     record = {
-        "fecha_deteccion": date.today().isoformat(),
+        "fecha_deteccion": hoy_arg().isoformat(),
         "periodo": periodo,
         "icg": round(icg, 3),
         "voto_naive": round(naive, 2),
