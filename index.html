@@ -56,9 +56,17 @@
     border:1px dashed var(--line-dark);padding:28px;font-size:0.92rem;
     color:var(--text-on-navy-dim);text-align:center;
   }
-  svg.chart{width:100%;height:auto;overflow:visible;}
+  #chartContainer{position:relative;}
+  svg.chart{width:100%;height:auto;overflow:visible;display:block;}
   .chart-line{fill:none;stroke:var(--green);stroke-width:2;}
   .chart-dot{fill:var(--green);}
+  .hit-dot{cursor:pointer;}
+  .chart-tooltip{
+    position:absolute;pointer-events:none;transform:translate(-50%,-135%);
+    background:var(--paper);color:var(--ink);font-family:'IBM Plex Mono', monospace;
+    font-size:0.76rem;padding:5px 9px;border-radius:3px;white-space:nowrap;
+    opacity:0;transition:opacity 0.1s;z-index:5;
+  }
   .chart-axis{stroke:var(--line-dark);stroke-width:1;}
   .chart-label{font-family:'IBM Plex Mono', monospace;font-size:11px;fill:var(--text-on-navy-dim);}
 
@@ -210,7 +218,7 @@
     return d.toLocaleDateString('es-AR', {day:'numeric', month:'short', year:'numeric'});
   }
   function fmtMes(periodo){
-    const d = new Date(periodo);
+    const d = new Date(periodo + 'T00:00:00');
     if(isNaN(d)) return periodo;
     const s = d.toLocaleDateString('es-AR', {month:'long', year:'numeric'});
     return s.charAt(0).toUpperCase() + s.slice(1);
@@ -223,17 +231,20 @@
       .filter(Boolean)
       .map(el => ({el, pct: parseFloat(el.style.left)}))
       .sort((a,b) => a.pct - b.pct);
-    let prevPct = null, tier = 0;
+    let prevPct = null, tier = 0, maxTier = 0;
     items.forEach(item => {
-      if(prevPct !== null && (item.pct - prevPct) < 9){
-        tier = tier === 0 ? 1 : 0;
+      if(prevPct !== null && (item.pct - prevPct) <= 15){
+        tier += 1;
       } else {
         tier = 0;
       }
+      maxTier = Math.max(maxTier, tier);
       const label = item.el.querySelector('.marker-label');
-      if(label) label.style.top = (-38 - tier*32) + 'px';
+      if(label) label.style.top = (-38 - tier*30) + 'px';
       prevPct = item.pct;
     });
+    const axis = document.getElementById('axis');
+    if(axis) axis.style.marginTop = (56 + maxTier*30) + 'px';
   }
 
   function recompute(){
@@ -265,9 +276,11 @@
       const dashed = a.estimado || b.estimado;
       segments += `<line class="chart-line ${dashed ? 'chart-line-dashed' : ''}" x1="${px(a)}" y1="${y(a.prob_milei)}" x2="${px(b)}" y2="${y(b.prob_milei)}"/>`;
     }
-    const dots = history.map(rec =>
-      `<circle class="${rec.estimado ? 'chart-dot-est' : 'chart-dot'}" cx="${px(rec)}" cy="${y(rec.prob_milei)}" r="${rec.estimado ? 2.5 : 3.5}"/>`
-    ).join('');
+    const dots = history.map((rec, i) => {
+      const info = `${fmtDate(rec.date)}: ${rec.prob_milei}% (${rec.estimado ? 'estimado del gráfico de GMA' : 'calculado del día'})`;
+      return `<circle class="${rec.estimado ? 'chart-dot-est' : 'chart-dot'}" cx="${px(rec)}" cy="${y(rec.prob_milei)}" r="${rec.estimado ? 2.5 : 3.5}"/>` +
+             `<circle class="hit-dot" data-info="${info.replace(/"/g,'&quot;')}" cx="${px(rec)}" cy="${y(rec.prob_milei)}" r="10" fill="transparent"/>`;
+    }).join('');
 
     const first = history[0], last = history[history.length-1];
     const hayEstimados = history.some(h => h.estimado);
@@ -284,8 +297,37 @@
         <text class="chart-label" x="${px(first)}" y="${h-6}" text-anchor="start">${fmtDate(first.date)}</text>
         <text class="chart-label" x="${px(last)}" y="${h-6}" text-anchor="end">${fmtDate(last.date)}</text>
       </svg>
+      <div class="chart-tooltip" id="chartTooltip"></div>
       ${hayEstimados ? '<p class="chart-caption">Tramo punteado (mayo–agosto): leído a ojo del gráfico que publicó GMA Capital, con la curva UST asumida constante — no calculado desde precios crudos. Tramo sólido: calculado día a día desde el lanzamiento del sitio, con precios y curva UST reales.</p>' : ''}`;
     document.getElementById('chartContainer').innerHTML = svg;
+    attachTooltips(w, h);
+  }
+
+  function attachTooltips(viewW, viewH){
+    const container = document.getElementById('chartContainer');
+    const svgEl = container.querySelector('svg.chart');
+    const tooltip = document.getElementById('chartTooltip');
+    if(!svgEl || !tooltip) return;
+
+    container.querySelectorAll('.hit-dot').forEach(dot => {
+      const show = () => {
+        const cx = parseFloat(dot.getAttribute('cx'));
+        const cy = parseFloat(dot.getAttribute('cy'));
+        tooltip.textContent = dot.getAttribute('data-info');
+        tooltip.style.left = (cx / viewW * 100) + '%';
+        tooltip.style.top = (cy / viewH * 100) + '%';
+        tooltip.style.opacity = '1';
+      };
+      const hide = () => { tooltip.style.opacity = '0'; };
+      dot.addEventListener('pointerenter', show);
+      dot.addEventListener('pointerdown', show);
+      dot.addEventListener('pointerleave', hide);
+    });
+
+    // Tocar afuera de un punto, en celular, cierra el tooltip abierto.
+    container.addEventListener('pointerdown', (e) => {
+      if(!e.target.classList.contains('hit-dot')) tooltip.style.opacity = '0';
+    });
   }
 
   async function loadIcg(){
