@@ -93,6 +93,18 @@
   .result-line .num{font-size:1.9rem;color:var(--text-on-navy);}
   .result-line .lbl{font-size:0.85rem;color:var(--text-on-navy-dim);max-width:32ch;}
 
+  .scenario-btn{
+    background:transparent;border:1px solid var(--line-dark);color:var(--text-on-navy);
+    font-family:'IBM Plex Sans', sans-serif;font-size:0.82rem;padding:8px 14px;
+    border-radius:3px;cursor:pointer;transition:border-color .15s;
+  }
+  .scenario-btn:hover, .scenario-btn:focus-visible{border-color:var(--ochre);outline:none;}
+  .sens-table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono', monospace;font-size:0.8rem;}
+  .sens-table th, .sens-table td{padding:7px 8px;text-align:center;border-bottom:1px solid var(--line-dark);}
+  .sens-table th{color:var(--text-on-navy-dim);font-weight:500;}
+  .sens-table td:first-child, .sens-table th:first-child{text-align:left;color:var(--text-on-navy-dim);}
+  .sens-table .hl{color:var(--green);font-weight:500;}
+
   .notes{font-size:0.92rem;color:var(--text-on-navy-dim);}
   .notes p{margin:0 0 14px;}
   .notes strong{color:var(--text-on-navy);font-weight:500;}
@@ -109,18 +121,21 @@
 <div class="wrap">
 
   <p class="meta" id="updatedMeta">Cargando datos del día…</p>
-  <h1>¿Cuánto le está asignando el mercado a la reelección de Milei?</h1>
-  <p class="lede">Un indicador diario, calculado a partir de tasas <strong>forward</strong> implícitas en bonos soberanos: en vez de mirar el riesgo país de hoy, aísla lo que el mercado espera para el corredor <strong>2027–2028</strong>, el tramo donde se define el resultado electoral.</p>
+  <h1>Probabilidad implícita de reelección de Milei a partir del mercado de bonos</h1>
+  <p class="lede">Indicador diario que usa tasas <strong>forward</strong> implícitas en bonos soberanos argentinos para estimar cuánto del riesgo electoral 2027 está incorporando el mercado, comparado contra Polymarket y otros enfoques. <strong>No es una encuesta ni una predicción personal</strong> — es la transformación de una señal de mercado bajo supuestos explícitos y auditables.</p>
+  <p class="notes" style="margin:-30px 0 40px">Metodología original de <a href="https://www.infobae.com/economia/2026/08/24/cual-es-la-probabilidad-de-que-milei-sea-reelecto-segun-el-precio-de-los-bonos-los-numeros-de-una-financiera-local/" target="_blank" rel="noopener">GMA Capital</a>, reimplementada, automatizada y comparada contra otras señales — <a href="https://github.com/silvagaby1205/Probabilidad-Milei-2027" target="_blank" rel="noopener">detalle completo y atribución en el README</a>.</p>
 
   <section>
     <div class="hero">
       <div class="hero-figure">
         <div class="num" id="heroNum">–<small>%</small></div>
-        <p class="caption">Probabilidad implícita de que Javier Milei sea reelecto en octubre de 2027, según el riesgo país forward de hoy.</p>
+        <p class="caption">Probabilidad implícita según el modelo, escenario base (GMA). Resultado condicionado a los anclajes de riesgo país seleccionados — no es una probabilidad electoral observable ni una encuesta.</p>
       </div>
       <div class="hero-range">
         último dato
         <span class="range-val" id="heroDate">–</span>
+        <span style="display:block;margin-top:14px;font-size:0.8rem">escenario alternativo (Yosovitch/EMBI)</span>
+        <span class="range-val" id="heroAlt">–</span>
       </div>
     </div>
   </section>
@@ -136,11 +151,16 @@
   </section>
 
   <section>
-    <h2>Intención de voto (ICG, no es una probabilidad)</h2>
+    <h2>Indicadores complementarios: intención de voto (ICG)</h2>
     <div id="icgChartContainer">
       <div class="chart-empty">Cargando…</div>
     </div>
-    <p class="notes" style="margin-top:20px">El ICG de la UTDT mide confianza en el gobierno, no intención de voto directa ni probabilidad de nada. La cifra que se grafica acá es una conversión ajustada con la regresión de una nota de Ámbito (16,59 + 0,569 × ICG×20), no la multiplicación cruda por 20 — el número sin ajustar se muestra al pasar el mouse. No pasa por el sistema de balotaje: estimarle un número a la oposición para eso agregaba más complicación de la que vale la pena, así que queda deliberadamente separado de los cuatro modelos de arriba.</p>
+    <p class="notes" style="margin-top:20px">El ICG de la UTDT mide confianza en el gobierno, no intención de voto directa ni probabilidad de nada. La cifra que se grafica acá es una conversión ajustada con la regresión de una nota de Ámbito (16,59 + 0,569 × ICG×20), no la multiplicación cruda por 20 — el número sin ajustar se muestra al pasar el mouse. No pasa por el sistema de balotaje, y queda deliberadamente separado de los cuatro modelos de arriba: no es una probabilidad, es un indicador externo de contexto.</p>
+  </section>
+
+  <section class="notes">
+    <h2>Limitaciones</h2>
+    <p>Una tasa forward no equivale directamente a una probabilidad electoral "pura". El riesgo país soberano incorpora prima por plazo, liquidez y convexidad, además de factores macroeconómicos que no son exclusivamente electorales. El resultado depende de dos anclajes de escenario que son una hipótesis del analista, no un dato de mercado — moverlos cambia el número, como muestra la tabla de sensibilidad de arriba. El tramo estimado de la serie histórica (mayo–agosto 2026) viene de leer un gráfico ya publicado, no de precios crudos propios. Nada de esto invalida la señal — la vuelve una señal entre varias, no un oráculo.</p>
   </section>
 
   <section>
@@ -159,19 +179,28 @@
     <p class="notes">Una vez interpolados esos dos puntos (4,165% y 4,382%), se les aplica exactamente la misma fórmula del paso 3 — no un promedio simple — para sacar la tasa forward implícita entre ellos. Por eso el resultado (4,6%) no queda entre 4,165% y 4,382%: una tasa forward compensa que el tramo más corto rinde menos, así que tiene que ser más alta que ambos puntos para que capitalizar el tramo corto y después el forward dé lo mismo que capitalizar directo al plazo largo.</p>
 
     <div class="controls">
-      <p>El último paso pasa el riesgo país forward por una regla de tres entre dos escenarios de referencia. Esa elección es una hipótesis del analista, no un dato de mercado — movela y mirá cuánto cambia el resultado.</p>
+      <p>El último paso pasa el riesgo país forward por una regla de tres entre dos escenarios de referencia. Esa elección es una hipótesis del analista, no un dato de mercado — movela y mirá cuánto cambia el resultado, o probá el escenario alternativo directamente.</p>
+      <div class="field" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px">
+        <button type="button" id="btnBase" class="scenario-btn">Escenario base (250 / 2.000)</button>
+        <button type="button" id="btnAlt" class="scenario-btn">Escenario alternativo (217 / 1.600)</button>
+      </div>
       <div class="field">
         <label for="milei"><span>Riesgo país si gana Milei (pb)</span><span id="mileiVal">250</span></label>
-        <input type="range" id="milei" min="100" max="500" step="10" value="250">
+        <input type="range" id="milei" min="100" max="500" step="1" value="250">
       </div>
       <div class="field">
         <label for="peron"><span>Riesgo país si gana la oposición dura (pb)</span><span id="peronVal">2.000</span></label>
-        <input type="range" id="peron" min="1200" max="2500" step="50" value="2000">
+        <input type="range" id="peron" min="1200" max="2500" step="1" value="2000">
       </div>
       <div class="result-line">
         <div class="num" id="liveResult">–</div>
         <div class="lbl">probabilidad implícita con estos dos supuestos, aplicada al riesgo país forward del último dato</div>
       </div>
+    </div>
+
+    <div class="controls" style="margin-top:16px">
+      <p style="margin-bottom:14px">Sensibilidad a los escenarios: la misma señal de mercado, con distintos anclajes, con el riesgo país forward del último dato.</p>
+      <table id="sensTable" class="sens-table"></table>
     </div>
   </section>
 
@@ -211,6 +240,30 @@
     prob = Math.max(0, Math.min(1, prob));
     document.getElementById('liveResult').textContent =
       (prob*100).toLocaleString('es-AR', {minimumFractionDigits:1, maximumFractionDigits:1}) + '%';
+  }
+
+  function setScenario(milei, oposicion){
+    document.getElementById('milei').value = milei;
+    document.getElementById('peron').value = oposicion;
+    recompute();
+  }
+
+  function buildSensTable(){
+    const mileis = [150, 200, 217, 250, 300];
+    const oposiciones = [1600, 1800, 2000, 2200];
+    const prob = (m,o) => {
+      let v = (o - RP_FORWARD_BPS) / (o - m);
+      return Math.max(0, Math.min(1, v)) * 100;
+    };
+    let html = '<tr><th>Milei \\ Oposición</th>' + oposiciones.map(o => `<th>${fmtInt(o)} pb</th>`).join('') + '</tr>';
+    mileis.forEach(m => {
+      const isRef = (m === 250);
+      html += `<tr><td>${m} pb</td>` + oposiciones.map(o => {
+        const isCell = isRef && o === 2000;
+        return `<td class="${isCell ? 'hl' : ''}">${prob(m,o).toFixed(1)}%</td>`;
+      }).join('') + '</tr>';
+    });
+    document.getElementById('sensTable').innerHTML = html;
   }
 
   function attachTooltips(containerId, tooltipId, viewW, viewH){
@@ -372,6 +425,7 @@
         `Actualizado el ${fmtDate(last.date)}, con datos de mercado del cierre del día.`;
       document.getElementById('heroNum').innerHTML = last.prob_milei.toFixed(0) + '<small>%</small>';
       document.getElementById('heroDate').textContent = fmtDate(last.date);
+      if(last.prob_milei_alt != null) document.getElementById('heroAlt').textContent = last.prob_milei_alt.toFixed(1) + '%';
       if(last.ao27c_tir != null) document.getElementById('stepY27').textContent = last.ao27c_tir.toFixed(2) + '%';
       if(last.ao28c_tir != null) document.getElementById('stepY28').textContent = last.ao28c_tir.toFixed(2) + '%';
       if(last.forward_soberano != null) document.getElementById('stepFsob').textContent = last.forward_soberano.toFixed(1) + '%';
@@ -388,6 +442,7 @@
       document.getElementById('updatedMeta').textContent = 'Sin datos disponibles todavía.';
     }
     recompute();
+    buildSensTable();
 
     const series = [
       {name:'Tasas forward', color:'var(--green)', points: history.map(h => ({date:h.date, value:h.prob_milei, estimado: !!h.estimado}))},
@@ -401,6 +456,8 @@
 
   document.getElementById('milei').addEventListener('input', recompute);
   document.getElementById('peron').addEventListener('input', recompute);
+  document.getElementById('btnBase').addEventListener('click', () => setScenario(250, 2000));
+  document.getElementById('btnAlt').addEventListener('click', () => setScenario(217, 1600));
   init();
 </script>
 

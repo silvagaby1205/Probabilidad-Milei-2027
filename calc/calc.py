@@ -38,8 +38,15 @@ NS = {
 
 # Escenarios de referencia para la conversión riesgo-país -> probabilidad.
 # Son una hipótesis del analista, no un dato de mercado — se pueden ajustar.
-MILEI_ANCHOR_BPS = 250
-PERONISMO_ANCHOR_BPS = 2000
+# "Base" sigue la convención de GMA Capital / Marull-FMyA. "Alternativo" usa
+# los anclajes que citó Julián Yosovitch (vía PPI): el EMBI+ Global como
+# referencia de "cielo" y 1.600 pb como referencia de "caos" kirchnerista.
+ESCENARIOS = {
+    "base": {"milei": 250, "oposicion": 2000},
+    "alternativo": {"milei": 217, "oposicion": 1600},
+}
+MILEI_ANCHOR_BPS = ESCENARIOS["base"]["milei"]
+PERONISMO_ANCHOR_BPS = ESCENARIOS["base"]["oposicion"]
 
 AO27C = {
     "maturity": date(2027, 10, 29),
@@ -173,8 +180,14 @@ def main():
     f_ust = forward_rate(y27_ust, t27, y28_ust, t28)
 
     rp_fwd_bps = (f_sob - f_ust) * 10000
-    prob = (PERONISMO_ANCHOR_BPS - rp_fwd_bps) / (PERONISMO_ANCHOR_BPS - MILEI_ANCHOR_BPS)
-    prob = max(0.0, min(1.0, prob))
+
+    def prob_con(escenario):
+        m, o = escenario["milei"], escenario["oposicion"]
+        p = (o - rp_fwd_bps) / (o - m)
+        return max(0.0, min(1.0, p))
+
+    prob = prob_con(ESCENARIOS["base"])
+    prob_alt = prob_con(ESCENARIOS["alternativo"])
 
     record = {
         "date": settlement.isoformat(),
@@ -190,9 +203,12 @@ def main():
         "y28_ust": round(y28_ust * 100, 3),
         "forward_ust": round(f_ust * 100, 3),
         "riesgo_pais_forward_bps": round(rp_fwd_bps, 1),
-        "milei_anchor_bps": MILEI_ANCHOR_BPS,
-        "peronismo_anchor_bps": PERONISMO_ANCHOR_BPS,
+        "milei_anchor_bps": ESCENARIOS["base"]["milei"],
+        "peronismo_anchor_bps": ESCENARIOS["base"]["oposicion"],
         "prob_milei": round(prob * 100, 2),
+        "escenario_alt_milei_bps": ESCENARIOS["alternativo"]["milei"],
+        "escenario_alt_oposicion_bps": ESCENARIOS["alternativo"]["oposicion"],
+        "prob_milei_alt": round(prob_alt * 100, 2),
     }
 
     path = os.path.join(os.path.dirname(__file__), "..", "data", "history.json")
