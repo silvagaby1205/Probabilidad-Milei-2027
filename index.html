@@ -158,11 +158,6 @@
     <p class="notes" style="margin-top:20px">El ICG de la UTDT mide confianza en el gobierno, no intención de voto directa ni probabilidad de nada. La cifra que se grafica acá es una conversión ajustada con la regresión de una nota de Ámbito (16,59 + 0,569 × ICG×20), no la multiplicación cruda por 20 — el número sin ajustar se muestra al pasar el mouse. No pasa por el sistema de balotaje, y queda deliberadamente separado de los cuatro modelos de arriba: no es una probabilidad, es un indicador externo de contexto.</p>
   </section>
 
-  <section class="notes">
-    <h2>Limitaciones</h2>
-    <p>Una tasa forward no equivale directamente a una probabilidad electoral "pura". El riesgo país soberano incorpora prima por plazo, liquidez y convexidad, además de factores macroeconómicos que no son exclusivamente electorales. El resultado depende de dos anclajes de escenario que son una hipótesis del analista, no un dato de mercado — moverlos cambia el número, como muestra la tabla de sensibilidad de arriba. El tramo estimado de la serie histórica (mayo–agosto 2026) viene de leer un gráfico ya publicado, no de precios crudos propios. Nada de esto invalida la señal — la vuelve una señal entre varias, no un oráculo.</p>
-  </section>
-
   <section>
     <h2>Cómo se calcula el modelo de bonos</h2>
     <div class="ledger" id="ledger">
@@ -205,8 +200,9 @@
   </section>
 
   <section class="notes">
-    <h2>Lo que este número no dice</h2>
-    <p>Un riesgo país forward no es una encuesta ni una probabilidad "pura": incluye prima por plazo, liquidez y convexidad de los bonos, además de la lectura política del mercado. La conversión a probabilidad depende de dos anclas subjetivas (arriba) que cualquier analista puede fijar distinto — es la misma cuenta que separa la lectura de GMA Capital de la de Marull, y acá se puede auditar en lugar de darla por cerrada. Ojo con la intuición: si estirás el ancla de Milei hacia un escenario todavía más optimista, el dato de hoy queda relativamente más lejos de ese extremo y la probabilidad calculada puede bajar, aunque el escenario en sí sea "mejor" — la fórmula mide posición relativa entre los dos anclajes, no qué tan bueno es cada uno.</p>
+    <h2>Limitaciones</h2>
+    <p>Una tasa forward no equivale directamente a una probabilidad electoral "pura": el riesgo país soberano incorpora prima por plazo, liquidez y convexidad de los bonos, además de factores macroeconómicos que no son exclusivamente electorales. El resultado depende de dos anclajes de escenario — una hipótesis del analista, no un dato de mercado — y moverlos cambia el número, como muestra la tabla de sensibilidad de arriba: es la misma cuenta la que separa la lectura de GMA Capital de la de Marull, no dos metodologías distintas.</p>
+    <p>Ojo con la intuición ahí: si estirás el ancla de Milei hacia un escenario todavía más optimista, el dato de hoy queda relativamente más lejos de ese extremo y la probabilidad calculada puede bajar, aunque el escenario en sí sea "mejor" — la fórmula mide posición relativa entre los dos anclajes, no qué tan bueno es cada uno. El tramo estimado de la serie histórica de bonos (mayo–agosto 2026) viene de leer un gráfico ya publicado, no de precios crudos propios. Nada de esto invalida la señal — la vuelve una señal entre varias, no un oráculo.</p>
   </section>
 
   <footer>
@@ -310,8 +306,10 @@
 
     let linesSvg = '', dotsSvg = '';
     let hayEstimados = false;
+    const n = series.length;
 
-    series.forEach(s => {
+    series.forEach((s, idx) => {
+      const jitter = (idx - (n - 1) / 2) * 3.5;
       const pts = s.points.filter(p => p.value !== null && p.value !== undefined);
       for(let i = 0; i < pts.length - 1; i++){
         const a = pts[i], b = pts[i+1];
@@ -323,8 +321,9 @@
         const tag = p.estimado ? ' (estimado del gráfico de GMA)' : '';
         const info = `${s.name} — ${fmtDate(p.date)}: ${p.value}%${tag}`;
         const fill = p.estimado ? 'var(--navy)' : s.color;
-        dotsSvg += `<circle cx="${px(p)}" cy="${y(p.value)}" r="${p.estimado ? 2.2 : 3.2}" fill="${fill}" stroke="${s.color}" stroke-width="${p.estimado ? 1.2 : 0}"/>`;
-        dotsSvg += `<circle class="hit-dot" data-info="${info.replace(/"/g,'&quot;')}" cx="${px(p)}" cy="${y(p.value)}" r="9" fill="transparent"/>`;
+        const cx = px(p) + jitter;
+        dotsSvg += `<circle cx="${cx}" cy="${y(p.value)}" r="${p.estimado ? 2.2 : 3.2}" fill="${fill}" stroke="${s.color}" stroke-width="${p.estimado ? 1.2 : 0}"/>`;
+        dotsSvg += `<circle class="hit-dot" data-info="${info.replace(/"/g,'&quot;')}" cx="${cx}" cy="${y(p.value)}" r="7" fill="transparent"/>`;
       });
     });
 
