@@ -1,88 +1,10 @@
 [
   {
-    "fecha_deteccion": "2026-09-07",
-    "periodo": "2025-11-01",
-    "icg": 2.47,
-    "voto_naive": 49.4,
-    "voto_calibrado": 44.7,
-    "nota": "Dato histórico real, cargado a mano por Claude a partir de reportes de prensa (Bloomberg Línea, Infobae) y la publicación de la UTDT — no es una estimación aproximada, es la cifra publicada."
-  },
-  {
-    "fecha_deteccion": "2026-09-07",
-    "periodo": "2025-12-01",
-    "icg": 2.46,
-    "voto_naive": 49.2,
-    "voto_calibrado": 44.58,
-    "nota": "Dato histórico real, cargado a mano por Claude a partir de reportes de prensa (Bloomberg Línea, Infobae) y la publicación de la UTDT — no es una estimación aproximada, es la cifra publicada."
-  },
-  {
-    "fecha_deteccion": "2026-09-07",
-    "periodo": "2026-01-01",
-    "icg": 2.4,
-    "voto_naive": 48.0,
-    "voto_calibrado": 43.9,
-    "nota": "Dato histórico real, cargado a mano por Claude a partir de reportes de prensa (Bloomberg Línea, Infobae) y la publicación de la UTDT — no es una estimación aproximada, es la cifra publicada."
-  },
-  {
-    "fecha_deteccion": "2026-09-07",
-    "periodo": "2026-02-01",
-    "icg": 2.38,
-    "voto_naive": 47.6,
-    "voto_calibrado": 43.67,
-    "nota": "Dato histórico real, cargado a mano por Claude a partir de reportes de prensa (Bloomberg Línea, Infobae) y la publicación de la UTDT — no es una estimación aproximada, es la cifra publicada."
-  },
-  {
-    "fecha_deteccion": "2026-09-07",
-    "periodo": "2026-03-01",
-    "icg": 2.3,
-    "voto_naive": 46.0,
-    "voto_calibrado": 42.76,
-    "nota": "Dato histórico real, cargado a mano por Claude a partir de reportes de prensa (Bloomberg Línea, Infobae) y la publicación de la UTDT — no es una estimación aproximada, es la cifra publicada."
-  },
-  {
-    "fecha_deteccion": "2026-09-07",
-    "periodo": "2026-04-01",
-    "icg": 2.02,
-    "voto_naive": 40.4,
-    "voto_calibrado": 39.58,
-    "nota": "Dato histórico real, cargado a mano por Claude a partir de reportes de prensa (Bloomberg Línea, Infobae) y la publicación de la UTDT — no es una estimación aproximada, es la cifra publicada."
-  },
-  {
-    "fecha_deteccion": "2026-09-07",
-    "periodo": "2026-05-01",
-    "icg": 1.99,
-    "voto_naive": 39.8,
-    "voto_calibrado": 39.24,
-    "nota": "Dato histórico real, cargado a mano por Claude a partir de reportes de prensa (Bloomberg Línea, Infobae) y la publicación de la UTDT — no es una estimación aproximada, es la cifra publicada."
-  },
-  {
-    "fecha_deteccion": "2026-09-07",
-    "periodo": "2026-06-01",
-    "icg": 2.07,
-    "voto_naive": 41.4,
-    "voto_calibrado": 40.15,
-    "nota": "Dato histórico real, cargado a mano por Claude a partir de reportes de prensa (Bloomberg Línea, Infobae) y la publicación de la UTDT — no es una estimación aproximada, es la cifra publicada."
-  },
-  {
-    "fecha_deteccion": "2026-09-07",
-    "periodo": "2026-07-01",
-    "icg": 1.94,
-    "voto_naive": 38.8,
-    "voto_calibrado": 38.67,
-    "nota": "Dato histórico real, cargado a mano por Claude a partir de reportes de prensa (Bloomberg Línea, Infobae) y la publicación de la UTDT — no es una estimación aproximada, es la cifra publicada."
-  },
-  {
-    "fecha_deteccion": "2026-09-07",
+    "fecha_deteccion": "2026-09-05",
     "periodo": "2026-08-01",
     "icg": 2.06,
     "voto_naive": 41.2,
-    "voto_calibrado": 40.03
-  },
-  {
-    "fecha_deteccion": "2026-09-08",
-    "periodo": "2026-08-01",
-    "icg": 2.059,
-    "voto_naive": 41.17,
-    "voto_calibrado": 40.02
+    "voto_calibrado": 40.02,
+    "nota": "Dato semilla verificado contra la publicación de UTDT de agosto 2026, antes de activar el chequeo automático diario. La serie histórica completa se muestra con el gráfico oficial de la UTDT (Infogram embebido), no reconstruida por este proyecto."
   }
 ]
