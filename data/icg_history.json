@@ -1,10 +1,2088 @@
 [
   {
-    "fecha_deteccion": "2026-09-05",
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2001-11-01",
+    "icg": 1.036,
+    "voto_naive": 20.72,
+    "voto_calibrado": 28.38
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2001-12-01",
+    "icg": 0.757,
+    "voto_naive": 15.14,
+    "voto_calibrado": 25.2
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2002-01-01",
+    "icg": 1.357,
+    "voto_naive": 27.14,
+    "voto_calibrado": 32.03
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2002-02-01",
+    "icg": 0.983,
+    "voto_naive": 19.66,
+    "voto_calibrado": 27.78
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2002-03-01",
+    "icg": 0.862,
+    "voto_naive": 17.24,
+    "voto_calibrado": 26.4
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2002-04-01",
+    "icg": 0.782,
+    "voto_naive": 15.64,
+    "voto_calibrado": 25.49
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2002-05-01",
+    "icg": 0.467,
+    "voto_naive": 9.34,
+    "voto_calibrado": 21.9
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2002-06-01",
+    "icg": 0.482,
+    "voto_naive": 9.64,
+    "voto_calibrado": 22.08
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2002-07-01",
+    "icg": 0.404,
+    "voto_naive": 8.08,
+    "voto_calibrado": 21.19
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2002-08-01",
+    "icg": 0.424,
+    "voto_naive": 8.48,
+    "voto_calibrado": 21.42
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2002-09-01",
+    "icg": 0.323,
+    "voto_naive": 6.46,
+    "voto_calibrado": 20.27
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2002-10-01",
+    "icg": 0.506,
+    "voto_naive": 10.12,
+    "voto_calibrado": 22.35
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2002-11-01",
+    "icg": 0.718,
+    "voto_naive": 14.36,
+    "voto_calibrado": 24.76
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2002-12-01",
+    "icg": 0.703,
+    "voto_naive": 14.06,
+    "voto_calibrado": 24.59
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2003-01-01",
+    "icg": 0.907,
+    "voto_naive": 18.14,
+    "voto_calibrado": 26.91
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2003-02-01",
+    "icg": 0.829,
+    "voto_naive": 16.58,
+    "voto_calibrado": 26.02
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2003-03-01",
+    "icg": 0.886,
+    "voto_naive": 17.72,
+    "voto_calibrado": 26.67
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2003-04-01",
+    "icg": 0.843,
+    "voto_naive": 16.86,
+    "voto_calibrado": 26.18
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2003-05-01",
+    "icg": 1.219,
+    "voto_naive": 24.38,
+    "voto_calibrado": 30.46
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2003-06-01",
+    "icg": 3.142,
+    "voto_naive": 62.84,
+    "voto_calibrado": 52.35
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2003-07-01",
+    "icg": 3.263,
+    "voto_naive": 65.25,
+    "voto_calibrado": 53.72
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2003-08-01",
+    "icg": 3.195,
+    "voto_naive": 63.91,
+    "voto_calibrado": 52.95
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2003-09-01",
+    "icg": 2.873,
+    "voto_naive": 57.45,
+    "voto_calibrado": 49.28
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2003-10-01",
+    "icg": 2.921,
+    "voto_naive": 58.42,
+    "voto_calibrado": 49.83
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2003-11-01",
+    "icg": 2.785,
+    "voto_naive": 55.69,
+    "voto_calibrado": 48.28
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2003-12-01",
+    "icg": 2.653,
+    "voto_naive": 53.06,
+    "voto_calibrado": 46.78
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2004-01-01",
+    "icg": 2.985,
+    "voto_naive": 59.71,
+    "voto_calibrado": 50.56
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2004-02-01",
+    "icg": 3.316,
+    "voto_naive": 66.33,
+    "voto_calibrado": 54.33
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2004-03-01",
+    "icg": 3.142,
+    "voto_naive": 62.83,
+    "voto_calibrado": 52.34
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2004-04-01",
+    "icg": 2.678,
+    "voto_naive": 53.56,
+    "voto_calibrado": 47.07
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2004-05-01",
+    "icg": 2.635,
+    "voto_naive": 52.71,
+    "voto_calibrado": 46.58
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2004-06-01",
+    "icg": 2.685,
+    "voto_naive": 53.7,
+    "voto_calibrado": 47.14
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2004-07-01",
+    "icg": 2.488,
+    "voto_naive": 49.76,
+    "voto_calibrado": 44.9
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2004-08-01",
+    "icg": 2.071,
+    "voto_naive": 41.43,
+    "voto_calibrado": 40.16
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2004-09-01",
+    "icg": 2.131,
+    "voto_naive": 42.61,
+    "voto_calibrado": 40.84
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2004-10-01",
+    "icg": 2.267,
+    "voto_naive": 45.35,
+    "voto_calibrado": 42.39
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2004-11-01",
+    "icg": 2.46,
+    "voto_naive": 49.2,
+    "voto_calibrado": 44.59
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2004-12-01",
+    "icg": 2.429,
+    "voto_naive": 48.59,
+    "voto_calibrado": 44.24
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2005-01-01",
+    "icg": 2.351,
+    "voto_naive": 47.03,
+    "voto_calibrado": 43.35
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2005-02-01",
+    "icg": 2.387,
+    "voto_naive": 47.73,
+    "voto_calibrado": 43.75
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2005-03-01",
+    "icg": 2.8,
+    "voto_naive": 55.99,
+    "voto_calibrado": 48.45
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2005-04-01",
+    "icg": 2.489,
+    "voto_naive": 49.78,
+    "voto_calibrado": 44.92
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2005-05-01",
+    "icg": 2.371,
+    "voto_naive": 47.41,
+    "voto_calibrado": 43.57
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2005-06-01",
+    "icg": 2.311,
+    "voto_naive": 46.22,
+    "voto_calibrado": 42.89
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2005-07-01",
+    "icg": 2.07,
+    "voto_naive": 41.4,
+    "voto_calibrado": 40.15
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2005-08-01",
+    "icg": 2.42,
+    "voto_naive": 48.4,
+    "voto_calibrado": 44.13
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2005-09-01",
+    "icg": 2.114,
+    "voto_naive": 42.28,
+    "voto_calibrado": 40.64
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2005-10-01",
+    "icg": 2.192,
+    "voto_naive": 43.83,
+    "voto_calibrado": 41.53
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2005-11-01",
+    "icg": 2.422,
+    "voto_naive": 48.43,
+    "voto_calibrado": 44.15
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2005-12-01",
+    "icg": 2.261,
+    "voto_naive": 45.22,
+    "voto_calibrado": 42.32
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2006-01-01",
+    "icg": 2.632,
+    "voto_naive": 52.64,
+    "voto_calibrado": 46.54
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2006-02-01",
+    "icg": 2.622,
+    "voto_naive": 52.44,
+    "voto_calibrado": 46.43
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2006-03-01",
+    "icg": 2.702,
+    "voto_naive": 54.03,
+    "voto_calibrado": 47.34
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2006-04-01",
+    "icg": 2.537,
+    "voto_naive": 50.74,
+    "voto_calibrado": 45.46
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2006-05-01",
+    "icg": 2.496,
+    "voto_naive": 49.93,
+    "voto_calibrado": 45.0
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2006-06-01",
+    "icg": 2.691,
+    "voto_naive": 53.83,
+    "voto_calibrado": 47.22
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2006-07-01",
+    "icg": 2.534,
+    "voto_naive": 50.68,
+    "voto_calibrado": 45.43
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2006-08-01",
+    "icg": 2.412,
+    "voto_naive": 48.24,
+    "voto_calibrado": 44.04
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2006-09-01",
+    "icg": 2.481,
+    "voto_naive": 49.61,
+    "voto_calibrado": 44.82
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2006-10-01",
+    "icg": 2.544,
+    "voto_naive": 50.88,
+    "voto_calibrado": 45.54
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2006-11-01",
+    "icg": 2.438,
+    "voto_naive": 48.77,
+    "voto_calibrado": 44.34
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2006-12-01",
+    "icg": 2.334,
+    "voto_naive": 46.68,
+    "voto_calibrado": 43.15
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2007-01-01",
+    "icg": 2.688,
+    "voto_naive": 53.75,
+    "voto_calibrado": 47.18
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2007-02-01",
+    "icg": 2.584,
+    "voto_naive": 51.67,
+    "voto_calibrado": 45.99
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2007-03-01",
+    "icg": 2.594,
+    "voto_naive": 51.89,
+    "voto_calibrado": 46.12
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2007-04-01",
+    "icg": 2.143,
+    "voto_naive": 42.86,
+    "voto_calibrado": 40.98
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2007-05-01",
+    "icg": 2.229,
+    "voto_naive": 44.59,
+    "voto_calibrado": 41.96
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2007-06-01",
+    "icg": 2.075,
+    "voto_naive": 41.49,
+    "voto_calibrado": 40.2
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2007-07-01",
+    "icg": 1.999,
+    "voto_naive": 39.98,
+    "voto_calibrado": 39.34
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2007-08-01",
+    "icg": 1.864,
+    "voto_naive": 37.27,
+    "voto_calibrado": 37.8
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2007-09-01",
+    "icg": 1.89,
+    "voto_naive": 37.79,
+    "voto_calibrado": 38.09
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2007-10-01",
+    "icg": 1.678,
+    "voto_naive": 33.56,
+    "voto_calibrado": 35.68
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2007-11-01",
+    "icg": 1.981,
+    "voto_naive": 39.62,
+    "voto_calibrado": 39.14
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2007-12-01",
+    "icg": 2.044,
+    "voto_naive": 40.87,
+    "voto_calibrado": 39.85
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2008-01-01",
+    "icg": 2.369,
+    "voto_naive": 47.38,
+    "voto_calibrado": 43.55
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2008-02-01",
+    "icg": 1.977,
+    "voto_naive": 39.54,
+    "voto_calibrado": 39.09
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2008-03-01",
+    "icg": 1.861,
+    "voto_naive": 37.22,
+    "voto_calibrado": 37.77
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2008-04-01",
+    "icg": 1.74,
+    "voto_naive": 34.79,
+    "voto_calibrado": 36.39
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2008-05-01",
+    "icg": 1.334,
+    "voto_naive": 26.69,
+    "voto_calibrado": 31.77
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2008-06-01",
+    "icg": 1.208,
+    "voto_naive": 24.15,
+    "voto_calibrado": 30.33
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2008-07-01",
+    "icg": 1.269,
+    "voto_naive": 25.37,
+    "voto_calibrado": 31.03
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2008-08-01",
+    "icg": 1.395,
+    "voto_naive": 27.89,
+    "voto_calibrado": 32.46
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2008-09-01",
+    "icg": 1.442,
+    "voto_naive": 28.84,
+    "voto_calibrado": 33.0
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2008-10-01",
+    "icg": 1.379,
+    "voto_naive": 27.57,
+    "voto_calibrado": 32.28
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2008-11-01",
+    "icg": 1.428,
+    "voto_naive": 28.56,
+    "voto_calibrado": 32.84
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2008-12-01",
+    "icg": 1.368,
+    "voto_naive": 27.36,
+    "voto_calibrado": 32.16
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2009-01-01",
+    "icg": 1.505,
+    "voto_naive": 30.09,
+    "voto_calibrado": 33.71
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2009-02-01",
+    "icg": 1.375,
+    "voto_naive": 27.5,
+    "voto_calibrado": 32.24
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2009-03-01",
+    "icg": 1.358,
+    "voto_naive": 27.16,
+    "voto_calibrado": 32.04
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2009-04-01",
+    "icg": 1.354,
+    "voto_naive": 27.08,
+    "voto_calibrado": 32.0
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2009-05-01",
+    "icg": 1.322,
+    "voto_naive": 26.43,
+    "voto_calibrado": 31.63
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2009-06-01",
+    "icg": 1.34,
+    "voto_naive": 26.81,
+    "voto_calibrado": 31.84
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2009-07-01",
+    "icg": 1.235,
+    "voto_naive": 24.69,
+    "voto_calibrado": 30.64
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2009-08-01",
+    "icg": 1.111,
+    "voto_naive": 22.22,
+    "voto_calibrado": 29.23
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2009-09-01",
+    "icg": 1.224,
+    "voto_naive": 24.47,
+    "voto_calibrado": 30.52
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2009-10-01",
+    "icg": 1.146,
+    "voto_naive": 22.92,
+    "voto_calibrado": 29.63
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2009-11-01",
+    "icg": 1.159,
+    "voto_naive": 23.17,
+    "voto_calibrado": 29.77
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2009-12-01",
+    "icg": 1.044,
+    "voto_naive": 20.89,
+    "voto_calibrado": 28.47
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2010-01-01",
+    "icg": 1.259,
+    "voto_naive": 25.19,
+    "voto_calibrado": 30.92
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2010-02-01",
+    "icg": 1.187,
+    "voto_naive": 23.74,
+    "voto_calibrado": 30.1
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2010-03-01",
+    "icg": 1.337,
+    "voto_naive": 26.75,
+    "voto_calibrado": 31.81
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2010-04-01",
+    "icg": 1.39,
+    "voto_naive": 27.8,
+    "voto_calibrado": 32.41
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2010-05-01",
+    "icg": 1.592,
+    "voto_naive": 31.84,
+    "voto_calibrado": 34.71
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2010-06-01",
+    "icg": 1.61,
+    "voto_naive": 32.2,
+    "voto_calibrado": 34.91
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2010-07-01",
+    "icg": 1.687,
+    "voto_naive": 33.74,
+    "voto_calibrado": 35.79
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2010-08-01",
+    "icg": 1.796,
+    "voto_naive": 35.93,
+    "voto_calibrado": 37.03
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2010-09-01",
+    "icg": 1.771,
+    "voto_naive": 35.42,
+    "voto_calibrado": 36.75
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2010-10-01",
+    "icg": 1.704,
+    "voto_naive": 34.07,
+    "voto_calibrado": 35.98
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2010-11-01",
+    "icg": 2.422,
+    "voto_naive": 48.44,
+    "voto_calibrado": 44.15
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2010-12-01",
+    "icg": 2.336,
+    "voto_naive": 46.72,
+    "voto_calibrado": 43.18
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2011-01-01",
+    "icg": 2.164,
+    "voto_naive": 43.27,
+    "voto_calibrado": 41.21
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2011-02-01",
+    "icg": 2.179,
+    "voto_naive": 43.57,
+    "voto_calibrado": 41.38
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2011-03-01",
+    "icg": 2.424,
+    "voto_naive": 48.47,
+    "voto_calibrado": 44.17
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2011-04-01",
+    "icg": 2.186,
+    "voto_naive": 43.73,
+    "voto_calibrado": 41.47
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2011-05-01",
+    "icg": 2.339,
+    "voto_naive": 46.78,
+    "voto_calibrado": 43.21
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2011-06-01",
+    "icg": 2.294,
+    "voto_naive": 45.89,
+    "voto_calibrado": 42.7
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2011-07-01",
+    "icg": 2.478,
+    "voto_naive": 49.57,
+    "voto_calibrado": 44.79
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2011-08-01",
+    "icg": 2.246,
+    "voto_naive": 44.92,
+    "voto_calibrado": 42.15
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2011-09-01",
+    "icg": 2.641,
+    "voto_naive": 52.81,
+    "voto_calibrado": 46.64
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2011-10-01",
+    "icg": 2.621,
+    "voto_naive": 52.42,
+    "voto_calibrado": 46.42
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2011-11-01",
+    "icg": 2.622,
+    "voto_naive": 52.44,
+    "voto_calibrado": 46.43
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2011-12-01",
+    "icg": 2.71,
+    "voto_naive": 54.21,
+    "voto_calibrado": 47.44
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2012-01-01",
+    "icg": 2.749,
+    "voto_naive": 54.98,
+    "voto_calibrado": 47.87
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2012-02-01",
+    "icg": 2.558,
+    "voto_naive": 51.15,
+    "voto_calibrado": 45.7
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2012-03-01",
+    "icg": 2.256,
+    "voto_naive": 45.11,
+    "voto_calibrado": 42.26
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2012-04-01",
+    "icg": 1.904,
+    "voto_naive": 38.08,
+    "voto_calibrado": 38.26
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2012-05-01",
+    "icg": 2.142,
+    "voto_naive": 42.83,
+    "voto_calibrado": 40.96
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2012-06-01",
+    "icg": 1.985,
+    "voto_naive": 39.71,
+    "voto_calibrado": 39.18
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2012-07-01",
+    "icg": 1.843,
+    "voto_naive": 36.87,
+    "voto_calibrado": 37.57
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2012-08-01",
+    "icg": 1.804,
+    "voto_naive": 36.08,
+    "voto_calibrado": 37.12
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2012-09-01",
+    "icg": 1.688,
+    "voto_naive": 33.76,
+    "voto_calibrado": 35.8
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2012-10-01",
+    "icg": 1.669,
+    "voto_naive": 33.39,
+    "voto_calibrado": 35.59
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2012-11-01",
+    "icg": 1.687,
+    "voto_naive": 33.74,
+    "voto_calibrado": 35.79
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2012-12-01",
+    "icg": 1.839,
+    "voto_naive": 36.78,
+    "voto_calibrado": 37.52
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2013-01-01",
+    "icg": 1.762,
+    "voto_naive": 35.25,
+    "voto_calibrado": 36.65
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2013-02-01",
+    "icg": 1.831,
+    "voto_naive": 36.63,
+    "voto_calibrado": 37.43
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2013-03-01",
+    "icg": 1.914,
+    "voto_naive": 38.28,
+    "voto_calibrado": 38.37
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2013-04-01",
+    "icg": 1.759,
+    "voto_naive": 35.17,
+    "voto_calibrado": 36.6
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2013-05-01",
+    "icg": 1.42,
+    "voto_naive": 28.4,
+    "voto_calibrado": 32.75
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2013-06-01",
+    "icg": 1.744,
+    "voto_naive": 34.88,
+    "voto_calibrado": 36.44
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2013-07-01",
+    "icg": 1.679,
+    "voto_naive": 33.58,
+    "voto_calibrado": 35.7
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2013-08-01",
+    "icg": 1.869,
+    "voto_naive": 37.38,
+    "voto_calibrado": 37.86
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2013-09-01",
+    "icg": 1.772,
+    "voto_naive": 35.43,
+    "voto_calibrado": 36.75
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2013-10-01",
+    "icg": 1.976,
+    "voto_naive": 39.53,
+    "voto_calibrado": 39.08
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2013-11-01",
+    "icg": 1.847,
+    "voto_naive": 36.94,
+    "voto_calibrado": 37.61
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2013-12-01",
+    "icg": 1.681,
+    "voto_naive": 33.62,
+    "voto_calibrado": 35.72
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2014-01-01",
+    "icg": 1.462,
+    "voto_naive": 29.25,
+    "voto_calibrado": 33.23
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2014-02-01",
+    "icg": 1.385,
+    "voto_naive": 27.7,
+    "voto_calibrado": 32.35
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2014-03-01",
+    "icg": 1.526,
+    "voto_naive": 30.53,
+    "voto_calibrado": 33.96
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2014-04-01",
+    "icg": 1.402,
+    "voto_naive": 28.03,
+    "voto_calibrado": 32.54
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2014-05-01",
+    "icg": 1.512,
+    "voto_naive": 30.24,
+    "voto_calibrado": 33.8
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2014-06-01",
+    "icg": 1.7,
+    "voto_naive": 33.99,
+    "voto_calibrado": 35.93
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2014-07-01",
+    "icg": 1.872,
+    "voto_naive": 37.44,
+    "voto_calibrado": 37.9
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2014-08-01",
+    "icg": 1.821,
+    "voto_naive": 36.42,
+    "voto_calibrado": 37.31
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2014-09-01",
+    "icg": 1.706,
+    "voto_naive": 34.11,
+    "voto_calibrado": 36.0
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2014-10-01",
+    "icg": 1.647,
+    "voto_naive": 32.93,
+    "voto_calibrado": 35.33
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2014-11-01",
+    "icg": 1.603,
+    "voto_naive": 32.06,
+    "voto_calibrado": 34.83
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2014-12-01",
+    "icg": 1.636,
+    "voto_naive": 32.71,
+    "voto_calibrado": 35.2
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2015-01-01",
+    "icg": 1.826,
+    "voto_naive": 36.53,
+    "voto_calibrado": 37.37
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2015-02-01",
+    "icg": 1.653,
+    "voto_naive": 33.06,
+    "voto_calibrado": 35.4
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2015-03-01",
+    "icg": 1.864,
+    "voto_naive": 37.27,
+    "voto_calibrado": 37.8
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2015-04-01",
+    "icg": 1.896,
+    "voto_naive": 37.92,
+    "voto_calibrado": 38.17
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2015-05-01",
+    "icg": 2.091,
+    "voto_naive": 41.81,
+    "voto_calibrado": 40.38
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2015-06-01",
+    "icg": 1.937,
+    "voto_naive": 38.75,
+    "voto_calibrado": 38.64
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2015-07-01",
+    "icg": 2.037,
+    "voto_naive": 40.73,
+    "voto_calibrado": 39.77
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2015-08-01",
+    "icg": 1.917,
+    "voto_naive": 38.35,
+    "voto_calibrado": 38.41
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2015-09-01",
+    "icg": 1.778,
+    "voto_naive": 35.56,
+    "voto_calibrado": 36.82
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2015-10-01",
+    "icg": 1.909,
+    "voto_naive": 38.17,
+    "voto_calibrado": 38.31
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2015-11-01",
+    "icg": 1.749,
+    "voto_naive": 34.98,
+    "voto_calibrado": 36.49
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2015-12-01",
+    "icg": 1.797,
+    "voto_naive": 35.95,
+    "voto_calibrado": 37.05
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2016-01-01",
+    "icg": 3.138,
+    "voto_naive": 62.76,
+    "voto_calibrado": 52.3
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2016-02-01",
+    "icg": 2.862,
+    "voto_naive": 57.24,
+    "voto_calibrado": 49.16
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2016-03-01",
+    "icg": 3.033,
+    "voto_naive": 60.65,
+    "voto_calibrado": 51.1
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2016-04-01",
+    "icg": 2.72,
+    "voto_naive": 54.4,
+    "voto_calibrado": 47.54
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2016-05-01",
+    "icg": 2.622,
+    "voto_naive": 52.45,
+    "voto_calibrado": 46.43
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2016-06-01",
+    "icg": 2.613,
+    "voto_naive": 52.27,
+    "voto_calibrado": 46.33
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2016-07-01",
+    "icg": 2.707,
+    "voto_naive": 54.14,
+    "voto_calibrado": 47.4
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2016-08-01",
+    "icg": 2.521,
+    "voto_naive": 50.43,
+    "voto_calibrado": 45.28
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2016-09-01",
+    "icg": 2.53,
+    "voto_naive": 50.6,
+    "voto_calibrado": 45.38
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2016-10-01",
+    "icg": 2.632,
+    "voto_naive": 52.65,
+    "voto_calibrado": 46.55
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2016-11-01",
+    "icg": 2.516,
+    "voto_naive": 50.32,
+    "voto_calibrado": 45.22
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2016-12-01",
+    "icg": 2.494,
+    "voto_naive": 49.88,
+    "voto_calibrado": 44.97
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2017-01-01",
+    "icg": 2.461,
+    "voto_naive": 49.22,
+    "voto_calibrado": 44.6
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2017-02-01",
+    "icg": 2.35,
+    "voto_naive": 47.0,
+    "voto_calibrado": 43.33
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2017-03-01",
+    "icg": 2.317,
+    "voto_naive": 46.34,
+    "voto_calibrado": 42.96
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2017-04-01",
+    "icg": 2.611,
+    "voto_naive": 52.23,
+    "voto_calibrado": 46.31
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2017-05-01",
+    "icg": 2.517,
+    "voto_naive": 50.34,
+    "voto_calibrado": 45.23
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2017-06-01",
+    "icg": 2.278,
+    "voto_naive": 45.56,
+    "voto_calibrado": 42.51
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2017-07-01",
+    "icg": 2.235,
+    "voto_naive": 44.71,
+    "voto_calibrado": 42.03
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2017-08-01",
+    "icg": 2.532,
+    "voto_naive": 50.64,
+    "voto_calibrado": 45.4
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2017-09-01",
+    "icg": 2.855,
+    "voto_naive": 57.1,
+    "voto_calibrado": 49.08
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2017-10-01",
+    "icg": 2.828,
+    "voto_naive": 56.55,
+    "voto_calibrado": 48.77
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2017-11-01",
+    "icg": 2.967,
+    "voto_naive": 59.33,
+    "voto_calibrado": 50.35
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2017-12-01",
+    "icg": 2.363,
+    "voto_naive": 47.27,
+    "voto_calibrado": 43.49
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2018-01-01",
+    "icg": 2.278,
+    "voto_naive": 45.57,
+    "voto_calibrado": 42.52
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2018-02-01",
+    "icg": 2.32,
+    "voto_naive": 46.4,
+    "voto_calibrado": 42.99
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2018-03-01",
+    "icg": 2.322,
+    "voto_naive": 46.43,
+    "voto_calibrado": 43.01
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2018-04-01",
+    "icg": 2.065,
+    "voto_naive": 41.31,
+    "voto_calibrado": 40.09
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2018-05-01",
+    "icg": 1.938,
+    "voto_naive": 38.76,
+    "voto_calibrado": 38.64
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2018-06-01",
+    "icg": 2.042,
+    "voto_naive": 40.84,
+    "voto_calibrado": 39.83
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2018-07-01",
+    "icg": 2.014,
+    "voto_naive": 40.28,
+    "voto_calibrado": 39.51
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2018-08-01",
+    "icg": 1.944,
+    "voto_naive": 38.89,
+    "voto_calibrado": 38.72
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2018-09-01",
+    "icg": 1.749,
+    "voto_naive": 34.99,
+    "voto_calibrado": 36.5
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2018-10-01",
+    "icg": 1.763,
+    "voto_naive": 35.26,
+    "voto_calibrado": 36.65
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2018-11-01",
+    "icg": 1.767,
+    "voto_naive": 35.35,
+    "voto_calibrado": 36.7
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2018-12-01",
+    "icg": 1.92,
+    "voto_naive": 38.4,
+    "voto_calibrado": 38.44
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2019-01-01",
+    "icg": 1.63,
+    "voto_naive": 32.6,
+    "voto_calibrado": 35.14
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2019-02-01",
+    "icg": 1.79,
+    "voto_naive": 35.8,
+    "voto_calibrado": 36.96
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2019-03-01",
+    "icg": 1.6,
+    "voto_naive": 32.0,
+    "voto_calibrado": 34.8
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2019-04-01",
+    "icg": 1.529,
+    "voto_naive": 30.59,
+    "voto_calibrado": 33.99
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2019-05-01",
+    "icg": 1.614,
+    "voto_naive": 32.29,
+    "voto_calibrado": 34.96
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2019-06-01",
+    "icg": 1.857,
+    "voto_naive": 37.13,
+    "voto_calibrado": 37.72
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2019-07-01",
+    "icg": 1.97,
+    "voto_naive": 39.39,
+    "voto_calibrado": 39.01
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2019-08-01",
+    "icg": 2.201,
+    "voto_naive": 44.03,
+    "voto_calibrado": 41.64
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2019-09-01",
+    "icg": 1.91,
+    "voto_naive": 38.2,
+    "voto_calibrado": 38.33
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2019-10-01",
+    "icg": 2.009,
+    "voto_naive": 40.18,
+    "voto_calibrado": 39.45
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2019-11-01",
+    "icg": 1.977,
+    "voto_naive": 39.53,
+    "voto_calibrado": 39.08
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2019-12-01",
+    "icg": 1.967,
+    "voto_naive": 39.34,
+    "voto_calibrado": 38.98
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2020-01-01",
+    "icg": 2.323,
+    "voto_naive": 46.47,
+    "voto_calibrado": 43.03
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2020-02-01",
+    "icg": 2.27,
+    "voto_naive": 45.4,
+    "voto_calibrado": 42.43
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2020-03-01",
+    "icg": 2.218,
+    "voto_naive": 44.36,
+    "voto_calibrado": 41.83
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2020-04-01",
+    "icg": 3.287,
+    "voto_naive": 65.74,
+    "voto_calibrado": 53.99
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2020-05-01",
+    "icg": 3.002,
+    "voto_naive": 60.03,
+    "voto_calibrado": 50.75
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2020-06-01",
+    "icg": 2.77,
+    "voto_naive": 55.4,
+    "voto_calibrado": 48.12
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2020-07-01",
+    "icg": 2.53,
+    "voto_naive": 50.59,
+    "voto_calibrado": 45.38
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2020-08-01",
+    "icg": 2.378,
+    "voto_naive": 47.56,
+    "voto_calibrado": 43.65
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2020-09-01",
+    "icg": 2.266,
+    "voto_naive": 45.32,
+    "voto_calibrado": 42.38
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2020-10-01",
+    "icg": 1.992,
+    "voto_naive": 39.85,
+    "voto_calibrado": 39.26
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2020-11-01",
+    "icg": 2.019,
+    "voto_naive": 40.39,
+    "voto_calibrado": 39.57
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2020-12-01",
+    "icg": 1.854,
+    "voto_naive": 37.08,
+    "voto_calibrado": 37.69
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2021-01-01",
+    "icg": 1.875,
+    "voto_naive": 37.5,
+    "voto_calibrado": 37.93
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2021-02-01",
+    "icg": 1.817,
+    "voto_naive": 36.33,
+    "voto_calibrado": 37.26
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2021-03-01",
+    "icg": 1.784,
+    "voto_naive": 35.68,
+    "voto_calibrado": 36.89
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2021-04-01",
+    "icg": 1.733,
+    "voto_naive": 34.66,
+    "voto_calibrado": 36.31
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2021-05-01",
+    "icg": 1.932,
+    "voto_naive": 38.64,
+    "voto_calibrado": 38.58
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2021-06-01",
+    "icg": 1.703,
+    "voto_naive": 34.07,
+    "voto_calibrado": 35.97
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2021-07-01",
+    "icg": 1.698,
+    "voto_naive": 33.96,
+    "voto_calibrado": 35.92
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2021-08-01",
+    "icg": 1.852,
+    "voto_naive": 37.04,
+    "voto_calibrado": 37.67
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2021-09-01",
+    "icg": 1.579,
+    "voto_naive": 31.59,
+    "voto_calibrado": 34.56
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2021-10-01",
+    "icg": 1.524,
+    "voto_naive": 30.48,
+    "voto_calibrado": 33.93
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2021-11-01",
+    "icg": 1.454,
+    "voto_naive": 29.07,
+    "voto_calibrado": 33.13
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2021-12-01",
+    "icg": 1.423,
+    "voto_naive": 28.46,
+    "voto_calibrado": 32.78
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2022-01-01",
+    "icg": 1.544,
+    "voto_naive": 30.88,
+    "voto_calibrado": 34.16
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2022-02-01",
+    "icg": 1.494,
+    "voto_naive": 29.88,
+    "voto_calibrado": 33.59
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2022-03-01",
+    "icg": 1.508,
+    "voto_naive": 30.15,
+    "voto_calibrado": 33.75
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2022-04-01",
+    "icg": 1.436,
+    "voto_naive": 28.72,
+    "voto_calibrado": 32.93
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2022-05-01",
+    "icg": 1.303,
+    "voto_naive": 26.06,
+    "voto_calibrado": 31.42
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2022-06-01",
+    "icg": 1.402,
+    "voto_naive": 28.03,
+    "voto_calibrado": 32.54
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2022-07-01",
+    "icg": 1.117,
+    "voto_naive": 22.33,
+    "voto_calibrado": 29.3
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2022-08-01",
+    "icg": 1.183,
+    "voto_naive": 23.65,
+    "voto_calibrado": 30.05
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2022-09-01",
+    "icg": 1.231,
+    "voto_naive": 24.61,
+    "voto_calibrado": 30.59
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2022-10-01",
+    "icg": 1.282,
+    "voto_naive": 25.63,
+    "voto_calibrado": 31.18
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2022-11-01",
+    "icg": 1.19,
+    "voto_naive": 23.79,
+    "voto_calibrado": 30.13
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2022-12-01",
+    "icg": 1.251,
+    "voto_naive": 25.03,
+    "voto_calibrado": 30.83
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2023-01-01",
+    "icg": 1.274,
+    "voto_naive": 25.48,
+    "voto_calibrado": 31.09
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2023-02-01",
+    "icg": 1.171,
+    "voto_naive": 23.43,
+    "voto_calibrado": 29.92
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2023-03-01",
+    "icg": 1.178,
+    "voto_naive": 23.55,
+    "voto_calibrado": 29.99
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2023-04-01",
+    "icg": 1.071,
+    "voto_naive": 21.41,
+    "voto_calibrado": 28.77
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2023-05-01",
+    "icg": 1.132,
+    "voto_naive": 22.65,
+    "voto_calibrado": 29.48
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2023-06-01",
+    "icg": 1.12,
+    "voto_naive": 22.39,
+    "voto_calibrado": 29.33
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2023-07-01",
+    "icg": 1.199,
+    "voto_naive": 23.98,
+    "voto_calibrado": 30.23
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2023-08-01",
+    "icg": 1.266,
+    "voto_naive": 25.32,
+    "voto_calibrado": 31.0
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2023-09-01",
+    "icg": 1.032,
+    "voto_naive": 20.65,
+    "voto_calibrado": 28.34
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2023-10-01",
+    "icg": 1.223,
+    "voto_naive": 24.46,
+    "voto_calibrado": 30.51
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2023-11-01",
+    "icg": 1.414,
+    "voto_naive": 28.28,
+    "voto_calibrado": 32.68
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2023-12-01",
+    "icg": 2.858,
+    "voto_naive": 57.16,
+    "voto_calibrado": 49.12
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2024-01-01",
+    "icg": 2.61,
+    "voto_naive": 52.2,
+    "voto_calibrado": 46.29
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2024-02-01",
+    "icg": 2.572,
+    "voto_naive": 51.45,
+    "voto_calibrado": 45.86
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2024-03-01",
+    "icg": 2.561,
+    "voto_naive": 51.21,
+    "voto_calibrado": 45.73
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2024-04-01",
+    "icg": 2.449,
+    "voto_naive": 48.98,
+    "voto_calibrado": 44.46
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2024-05-01",
+    "icg": 2.514,
+    "voto_naive": 50.28,
+    "voto_calibrado": 45.2
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2024-06-01",
+    "icg": 2.462,
+    "voto_naive": 49.24,
+    "voto_calibrado": 44.61
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2024-07-01",
+    "icg": 2.372,
+    "voto_naive": 47.44,
+    "voto_calibrado": 43.58
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2024-08-01",
+    "icg": 2.537,
+    "voto_naive": 50.74,
+    "voto_calibrado": 45.46
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2024-09-01",
+    "icg": 2.161,
+    "voto_naive": 43.22,
+    "voto_calibrado": 41.18
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2024-10-01",
+    "icg": 2.425,
+    "voto_naive": 48.5,
+    "voto_calibrado": 44.19
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2024-11-01",
+    "icg": 2.664,
+    "voto_naive": 53.28,
+    "voto_calibrado": 46.91
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2024-12-01",
+    "icg": 2.655,
+    "voto_naive": 53.1,
+    "voto_calibrado": 46.8
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2025-01-01",
+    "icg": 2.605,
+    "voto_naive": 52.1,
+    "voto_calibrado": 46.23
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2025-02-01",
+    "icg": 2.558,
+    "voto_naive": 51.16,
+    "voto_calibrado": 45.7
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2025-03-01",
+    "icg": 2.42,
+    "voto_naive": 48.4,
+    "voto_calibrado": 44.13
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2025-04-01",
+    "icg": 2.331,
+    "voto_naive": 46.62,
+    "voto_calibrado": 43.12
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2025-05-01",
+    "icg": 2.448,
+    "voto_naive": 48.96,
+    "voto_calibrado": 44.45
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2025-06-01",
+    "icg": 2.336,
+    "voto_naive": 46.72,
+    "voto_calibrado": 43.17
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2025-07-01",
+    "icg": 2.451,
+    "voto_naive": 49.02,
+    "voto_calibrado": 44.48
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2025-08-01",
+    "icg": 2.118,
+    "voto_naive": 42.36,
+    "voto_calibrado": 40.69
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2025-09-01",
+    "icg": 1.944,
+    "voto_naive": 38.88,
+    "voto_calibrado": 38.71
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2025-10-01",
+    "icg": 2.101,
+    "voto_naive": 42.02,
+    "voto_calibrado": 40.5
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2025-11-01",
+    "icg": 2.468,
+    "voto_naive": 49.37,
+    "voto_calibrado": 44.68
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2025-12-01",
+    "icg": 2.465,
+    "voto_naive": 49.29,
+    "voto_calibrado": 44.64
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2026-01-01",
+    "icg": 2.397,
+    "voto_naive": 47.94,
+    "voto_calibrado": 43.87
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2026-02-01",
+    "icg": 2.383,
+    "voto_naive": 47.67,
+    "voto_calibrado": 43.71
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2026-03-01",
+    "icg": 2.301,
+    "voto_naive": 46.02,
+    "voto_calibrado": 42.77
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2026-04-01",
+    "icg": 2.023,
+    "voto_naive": 40.46,
+    "voto_calibrado": 39.61
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2026-05-01",
+    "icg": 1.99,
+    "voto_naive": 39.8,
+    "voto_calibrado": 39.24
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2026-06-01",
+    "icg": 2.07,
+    "voto_naive": 41.4,
+    "voto_calibrado": 40.15
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
+    "periodo": "2026-07-01",
+    "icg": 1.936,
+    "voto_naive": 38.71,
+    "voto_calibrado": 38.62
+  },
+  {
+    "fecha_deteccion": "2026-09-09",
     "periodo": "2026-08-01",
-    "icg": 2.06,
-    "voto_naive": 41.2,
-    "voto_calibrado": 40.02,
-    "nota": "Dato semilla verificado contra la publicación de UTDT de agosto 2026. En la próxima corrida del workflow, el script detecta que hay pocos registros y baja la serie histórica completa desde la API de ArgentinaDatos automáticamente."
+    "icg": 2.059,
+    "voto_naive": 41.17,
+    "voto_calibrado": 40.02
   }
 ]
