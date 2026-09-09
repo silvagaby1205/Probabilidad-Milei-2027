@@ -60,7 +60,7 @@
   #chartContainer, #icgChartContainer{position:relative;}
   svg.chart{width:100%;height:auto;overflow:visible;display:block;}
   .hover-dot{pointer-events:none;transition:opacity .05s;}
-  #hoverRect{cursor:crosshair;}
+  #hoverRect{cursor:default;}
   .chart-tooltip{
     position:absolute;pointer-events:none;transform:translateX(-50%);
     background:var(--paper);color:var(--ink);font-family:'IBM Plex Mono', monospace;
@@ -155,9 +155,15 @@
   <section>
     <h2>Indicadores complementarios: intención de voto (ICG)</h2>
     <p class="notes" id="icgCurrent" style="margin-bottom:20px">Cargando el último dato…</p>
-    <iframe src="https://e.infogram.com/icg-utdt-1hzj4oeljzxo2pw?src=embed" title="Índice de Confianza en el Gobierno — Universidad Torcuato Di Tella" width="100%" height="500" style="border:none;background:var(--paper);border-radius:2px" scrolling="no" frameborder="0"></iframe>
-    <p class="chart-caption">Serie histórica completa (desde 2001), gráfico oficial de la Universidad Torcuato Di Tella — no reconstruido por este proyecto.</p>
-    <p class="notes" style="margin-top:20px">El ICG mide confianza en el gobierno, no intención de voto directa ni probabilidad de nada. El número de arriba es una conversión ajustada con la regresión de una nota de Ámbito (16,59 + 0,569 × ICG×20), no la multiplicación cruda por 20. No pasa por el sistema de balotaje, y queda deliberadamente separado de los cuatro modelos de arriba: no es una probabilidad, es un indicador externo de contexto.</p>
+    <div id="icgChartContainer">
+      <div class="chart-empty">Cargando…</div>
+    </div>
+    <p class="chart-caption">Línea sólida: intención de voto ajustada (regresión de Ámbito). Línea punteada: multiplicación cruda ICG × 20, sin ajustar.</p>
+    <p class="notes" style="margin-top:20px">El ICG de la UTDT mide confianza en el gobierno, no intención de voto directa ni probabilidad de nada. El gráfico de arriba ya aplica la conversión ajustada de una nota de Ámbito (16,59 + 0,569 × ICG×20) — el número sin ajustar (la multiplicación cruda por 20) se muestra al pasar el mouse por cada punto. No pasa por el sistema de balotaje, y queda deliberadamente separado de los cuatro modelos de arriba: no es una probabilidad, es un indicador externo de contexto.</p>
+    <details style="margin-top:16px">
+      <summary style="cursor:pointer;color:var(--text-on-navy-dim);font-size:0.85rem">Ver el índice ICG original (sin convertir), fuente UTDT</summary>
+      <iframe src="https://e.infogram.com/icg-utdt-1hzj4oeljzxo2pw?src=embed" title="Índice de Confianza en el Gobierno — Universidad Torcuato Di Tella" width="100%" height="500" style="border:none;background:var(--paper);border-radius:2px;margin-top:14px" scrolling="no" frameborder="0"></iframe>
+    </details>
   </section>
 
   <section>
@@ -354,7 +360,7 @@
           dot.setAttribute('cy', y(pt.value));
           dot.style.opacity = '1';
           const tag = pt.estimado ? ' (estimado)' : '';
-          lines.push(`${s.name}: ${pt.value}%${tag}`);
+          lines.push(`<span style="color:${s.color}">${s.name}: ${pt.value}%${tag}</span>`);
         } else {
           dot.style.opacity = '0';
         }
@@ -379,13 +385,99 @@
   }
 
   function drawIcgChart(hist){
+    const container = document.getElementById('icgChartContainer');
     const el = document.getElementById('icgCurrent');
     if(!Array.isArray(hist) || hist.length === 0){
       el.textContent = 'Sin datos del ICG todavía.';
+      container.innerHTML = '<div class="chart-empty">Sin datos todavía.</div>';
       return;
     }
+
     const last = hist[hist.length - 1];
     el.innerHTML = `Último dato: <strong style="color:var(--text-on-navy)">${fmtMes(last.periodo)} — ${last.voto_calibrado}% ajustado</strong> (${last.voto_naive}% sin ajustar).`;
+
+    if(hist.length < 2){
+      container.innerHTML = '<div class="chart-empty">Va a aparecer un gráfico apenas se acumule más de un mes.</div>';
+      return;
+    }
+
+    const w = 700, h = 220, padL = 32, padR = 10, padT = 14, padB = 26;
+    const periodos = hist.map(h => h.periodo).sort();
+    const tMin = new Date(periodos[0] + 'T00:00:00').getTime();
+    const tMax = new Date(periodos[periodos.length-1] + 'T00:00:00').getTime();
+    const x = t => padL + (w - padL - padR) * (tMax === tMin ? 0.5 : (t - tMin) / (tMax - tMin));
+    const maxVal = Math.max(100, ...hist.map(h => h.voto_naive));
+    const y = v => padT + (h - padT - padB) * (1 - v / maxVal);
+    const px = rec => x(new Date(rec.periodo + 'T00:00:00').getTime());
+
+    let calLine = '', naiveLine = '';
+    for(let i = 0; i < hist.length - 1; i++){
+      const a = hist[i], b = hist[i+1];
+      calLine += `<line stroke="var(--steel)" stroke-width="2" fill="none" x1="${px(a)}" y1="${y(a.voto_calibrado)}" x2="${px(b)}" y2="${y(b.voto_calibrado)}"/>`;
+      naiveLine += `<line stroke="var(--steel)" stroke-width="1.3" stroke-dasharray="3,3" opacity="0.5" fill="none" x1="${px(a)}" y1="${y(a.voto_naive)}" x2="${px(b)}" y2="${y(b.voto_naive)}"/>`;
+    }
+    const endLast = hist[hist.length-1];
+    const endDot = `<circle cx="${px(endLast)}" cy="${y(endLast.voto_calibrado)}" r="4" fill="var(--steel)"/>`;
+
+    const uniqueTimes = periodos.map(p => new Date(p + 'T00:00:00').getTime());
+    const hoverDot = `<circle class="hover-dot" id="icgHoverDot" r="4" fill="var(--steel)" style="opacity:0"/>`;
+
+    const svg = `
+      <svg class="chart" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+        <text class="chart-label" x="${padL-6}" y="${y(maxVal)+4}" text-anchor="end">${maxVal.toFixed(0)}%</text>
+        <text class="chart-label" x="${padL-6}" y="${y(0)+4}" text-anchor="end">0%</text>
+        <line class="chart-axis" x1="${padL}" y1="${padT}" x2="${padL}" y2="${h-padB}"/>
+        ${naiveLine}
+        ${calLine}
+        ${endDot}
+        <line id="icgCrosshair" x1="${padL}" y1="${padT}" x2="${padL}" y2="${h-padB}" stroke="var(--text-on-navy-dim)" stroke-width="1" style="opacity:0"/>
+        ${hoverDot}
+        <text class="chart-label" x="${padL}" y="${h-6}" text-anchor="start">${fmtMes(periodos[0])}</text>
+        <text class="chart-label" x="${w-padR}" y="${h-6}" text-anchor="end">${fmtMes(periodos[periodos.length-1])}</text>
+        <rect id="icgHoverRect" x="${padL}" y="${padT}" width="${w-padL-padR}" height="${h-padT-padB}" fill="transparent"/>
+      </svg>
+      <div class="chart-tooltip" id="icgTooltip"></div>`;
+    container.innerHTML = svg;
+
+    const svgEl = container.querySelector('svg.chart');
+    const rect = container.querySelector('#icgHoverRect');
+    const crosshair = container.querySelector('#icgCrosshair');
+    const tooltip = container.querySelector('#icgTooltip');
+    const dot = container.querySelector('#icgHoverDot');
+
+    function nearestIdx(t){
+      let best = 0, bestDist = Infinity;
+      uniqueTimes.forEach((ut, i) => {
+        const d = Math.abs(ut - t);
+        if(d < bestDist){ bestDist = d; best = i; }
+      });
+      return best;
+    }
+
+    function show(evt){
+      const box = svgEl.getBoundingClientRect();
+      const clientX = evt.touches ? evt.touches[0].clientX : evt.clientX;
+      const relX = (clientX - box.left) / box.width * w;
+      const clamped = Math.max(padL, Math.min(w - padR, relX));
+      const t = tMin + (clamped - padL) / (w - padL - padR) * (tMax - tMin);
+      const idx = nearestIdx(t);
+      const rec = hist[idx];
+      const xPix = px(rec);
+
+      crosshair.setAttribute('x1', xPix); crosshair.setAttribute('x2', xPix); crosshair.style.opacity = '1';
+      dot.setAttribute('cx', xPix); dot.setAttribute('cy', y(rec.voto_calibrado)); dot.style.opacity = '1';
+
+      tooltip.innerHTML = `${fmtMes(rec.periodo)}<br><span style="color:var(--steel)">${rec.voto_calibrado}% ajustado</span><br><span style="opacity:0.7">${rec.voto_naive}% sin ajustar (ICG ${rec.icg})</span>`;
+      tooltip.style.left = (xPix / w * 100) + '%';
+      tooltip.style.top = '8%';
+      tooltip.style.opacity = '1';
+    }
+    function hide(){ crosshair.style.opacity='0'; dot.style.opacity='0'; tooltip.style.opacity='0'; }
+
+    rect.addEventListener('pointermove', show);
+    rect.addEventListener('pointerdown', show);
+    rect.addEventListener('pointerenter', show);
+    rect.addEventListener('pointerleave', hide);
   }
 
   async function fetchJson(path){
