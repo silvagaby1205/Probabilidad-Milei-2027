@@ -5,13 +5,6 @@
     "icg": 2.06,
     "voto_naive": 41.2,
     "voto_calibrado": 40.02,
-    "nota": "Dato semilla verificado contra la publicación de UTDT de agosto 2026, antes de activar el chequeo automático diario. La serie histórica completa se muestra con el gráfico oficial de la UTDT (Infogram embebido), no reconstruida por este proyecto."
-  },
-  {
-    "fecha_deteccion": "2026-09-08",
-    "periodo": "2026-08-01",
-    "icg": 2.059,
-    "voto_naive": 41.17,
-    "voto_calibrado": 40.02
+    "nota": "Dato semilla verificado contra la publicación de UTDT de agosto 2026. En la próxima corrida del workflow, el script detecta que hay pocos registros y baja la serie histórica completa desde la API de ArgentinaDatos automáticamente."
   }
 ]
