@@ -179,8 +179,7 @@
     </div>
 
     <p class="notes" style="margin-top:20px">Para comprobar el paso 4 a mano: entrá a <a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026" target="_blank" rel="noopener">la tabla oficial del Tesoro de EE.UU.</a>, buscá la última fila (fecha más reciente) y anotá las columnas "1 Yr", "2 Yr" y "3 Yr" — son los tres números que ves arriba en "curva:".</p>
-    <p class="notes">¿Por qué interpolar? El Tesoro solo publica tasas para plazos redondos (1, 2, 3 años...), pero AO27C vence en 1,145 años, no en 1 año exacto. Interpolar es estimar qué tasa habría a ese plazo intermedio, trazando una línea recta entre el punto de 1 año y el de 2 años: como 1,145 está un 14,5% del camino entre 1 y 2, la tasa estimada también se mueve un 14,5% del camino entre las dos tasas conocidas. Con tus números de hoy: 4,13% + 0,145 × (4,37% − 4,13%) = 4,165%. Mismo cálculo para AO28C (2,153 años), pero entre los puntos de 2 y 3 años.</p>
-    <p class="notes">Una vez interpolados esos dos puntos (4,165% y 4,382%), se les aplica exactamente la misma fórmula del paso 3 — no un promedio simple — para sacar la tasa forward implícita entre ellos. Por eso el resultado (4,6%) no queda entre 4,165% y 4,382%: una tasa forward compensa que el tramo más corto rinde menos, así que tiene que ser más alta que ambos puntos para que capitalizar el tramo corto y después el forward dé lo mismo que capitalizar directo al plazo largo.</p>
+    <div id="interpExplain"></div>
 
     <div class="controls">
       <p>El último paso pasa el riesgo país forward por una regla de tres entre dos escenarios de referencia. Esa elección es una hipótesis del analista, no un dato de mercado — movela y mirá cuánto cambia el resultado.</p>
@@ -511,6 +510,13 @@
       if(last.ust_1y != null){
         document.getElementById('stepUstDetail').textContent =
           ` — curva: 1a ${last.ust_1y}% / 2a ${last.ust_2y}% / 3a ${last.ust_3y}% → interpolado a t=${last.t27_years}a: ${last.y27_ust}%, t=${last.t28_years}a: ${last.y28_ust}%`;
+
+        const frac27 = (last.t27_years - 1) * 100;
+        const frac28 = (last.t28_years - 2) * 100;
+        const fmtN = n => n.toLocaleString('es-AR', {minimumFractionDigits:2, maximumFractionDigits:3});
+        document.getElementById('interpExplain').innerHTML = `
+          <p class="notes">¿Por qué interpolar? El Tesoro solo publica tasas para plazos redondos (1, 2, 3 años...), pero AO27C vence en ${fmtN(last.t27_years)} años, no en 1 año exacto. Interpolar es estimar qué tasa habría a ese plazo intermedio, trazando una línea recta entre el punto de 1 año y el de 2 años: como ${fmtN(last.t27_years)} está un ${fmtN(frac27)}% del camino entre 1 y 2, la tasa estimada también se mueve un ${fmtN(frac27)}% del camino entre las dos tasas conocidas. Con los números de hoy: ${fmtN(last.ust_1y)}% + ${(frac27/100).toFixed(3)} × (${fmtN(last.ust_2y)}% − ${fmtN(last.ust_1y)}%) = ${fmtN(last.y27_ust)}%. Mismo cálculo para AO28C (${fmtN(last.t28_years)} años), pero entre los puntos de 2 y 3 años.</p>
+          <p class="notes">Una vez interpolados esos dos puntos (${fmtN(last.y27_ust)}% y ${fmtN(last.y28_ust)}%), se les aplica exactamente la misma fórmula del paso 3 — no un promedio simple — para sacar la tasa forward implícita entre ellos. Por eso el resultado (${fmtN(last.forward_ust)}%) no queda entre esos dos puntos: una tasa forward compensa que el tramo más corto rinde menos, así que tiene que ser más alta que ambos para que capitalizar el tramo corto y después el forward dé lo mismo que capitalizar directo al plazo largo.</p>`;
       }
       document.getElementById('stepRp').textContent = '≈' + Math.round(last.riesgo_pais_forward_bps).toLocaleString('es-AR') + ' pb';
       document.getElementById('stepProb').textContent = last.prob_milei.toFixed(1) + '%';
