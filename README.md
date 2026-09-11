@@ -99,7 +99,6 @@ El objetivo de esta comparación no es decidir cuál es "la correcta", sino most
 - El resultado depende de los anclajes de escenario elegidos, que son una hipótesis del analista, no un dato de mercado
 - Una tasa forward no equivale directamente a una probabilidad electoral "pura" — es una probabilidad implícita en precios, sujeta a todo lo anterior
 - El tramo estimado de la serie histórica de bonos (mayo–agosto 2026) viene de leer un gráfico ya publicado, no de precios crudos propios
-- El ICG, mirado elección por elección, es un predictor bastante más flojo que en el agregado de largo plazo (ver nota de Ámbito citada arriba)
 
 ---
 
