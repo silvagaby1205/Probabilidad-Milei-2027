@@ -136,8 +136,6 @@
       <div class="hero-range">
         último dato
         <span class="range-val" id="heroDate">–</span>
-        <span style="display:block;margin-top:14px;font-size:0.8rem">escenario alternativo (Yosovitch/EMBI)</span>
-        <span class="range-val" id="heroAlt">–</span>
       </div>
     </div>
   </section>
@@ -149,7 +147,7 @@
     </div>
     <div class="chart-legend" id="chartLegend"></div>
     <p class="chart-caption" id="chartCaption" style="display:none">Tramo punteado: leído a ojo del gráfico que publicó GMA Capital (mayo–agosto 2026), con la curva UST asumida constante — no calculado desde precios crudos. Tramo sólido: calculado día a día desde el lanzamiento del sitio, con datos reales.</p>
-    <p class="notes" style="margin-top:20px">El modelo de bonos tiene historia desde mayo porque se pudo reconstruir de un gráfico ya publicado; Polymarket y el spot arrancan el día que se automatizaron, así que por ahora son apenas unos días de serie. El método spot depende por completo de a quién se imagine como rival: contra un PJ extremo da un número muy alto, contra una oposición moderada da casi la mitad — ninguno de los dos separa cuánto del riesgo país de hoy es incertidumbre pre-electoral y cuánto es el resultado en sí. La tasa forward sí lo hace, y por eso queda más moderada y más cerca de Polymarket.</p>
+    <p class="notes" style="margin-top:20px">El modelo de bonos tiene historia desde mayo porque se pudo reconstruir de un gráfico ya publicado; Polymarket y el spot arrancan el día que se automatizaron, así que por ahora son apenas unos días de serie. El método spot (Fernando Marull / FMyA) toma el riesgo país de hoy tal cual y lo pasa por la misma regla de tres que el modelo de bonos, pero con sus propios anclajes: Milei en 200 pb, contra un PJ extremo en 2.000 pb o una oposición moderada en 800 pb, según la variante. Por eso el mismo dato de hoy da un número muy alto contra el escenario extremo y casi la mitad contra el moderado — ninguna de las dos variantes separa cuánto del riesgo país es incertidumbre pre-electoral de cuánto es el resultado en sí, algo que la tasa forward sí hace, por eso su resultado queda más moderado, más cerca de Polymarket.</p>
   </section>
 
   <section>
@@ -159,6 +157,7 @@
       <div class="chart-empty">Cargando…</div>
     </div>
     <p class="chart-caption">Línea sólida: intención de voto ajustada (regresión de Ámbito). Línea punteada: multiplicación cruda ICG × 20, sin ajustar.</p>
+    <p class="notes" style="margin-top:14px">Mirando la serie completa desde 2001, el ICG viene mostrando una correlación visible con el resultado electoral del oficialismo de turno en cada gobierno — aunque la relación es bastante más floja mirada elección por elección que en el agregado de largo plazo: en 7 de las últimas 13 elecciones, un pronóstico basado en el ICG erró por más de 3 puntos (nota de Ámbito, 29/10/2025).</p>
     <p class="notes" style="margin-top:20px">El ICG de la UTDT mide confianza en el gobierno, no intención de voto directa ni probabilidad de nada. El gráfico de arriba ya aplica la conversión ajustada de una nota de Ámbito (16,59 + 0,569 × ICG×20) — el número sin ajustar (la multiplicación cruda por 20) se muestra al pasar el mouse por cada punto. No pasa por el sistema de balotaje, y queda deliberadamente separado de los cuatro modelos de arriba: no es una probabilidad, es un indicador externo de contexto.</p>
     <details style="margin-top:16px">
       <summary style="cursor:pointer;color:var(--text-on-navy-dim);font-size:0.85rem">Ver el índice ICG original (sin convertir), fuente UTDT</summary>
@@ -203,8 +202,8 @@
 
   <section class="notes">
     <h2>Limitaciones</h2>
-    <p>Una tasa forward no equivale directamente a una probabilidad electoral "pura": el riesgo país soberano incorpora prima por plazo, liquidez y convexidad de los bonos, además de factores macroeconómicos que no son exclusivamente electorales. El resultado depende de dos anclajes de escenario — una hipótesis del analista, no un dato de mercado — y moverlos cambia el número, como muestra la tabla de sensibilidad de arriba: es la misma cuenta la que separa la lectura de GMA Capital de la de Marull, no dos metodologías distintas.</p>
-    <p>Ojo con la intuición ahí: si estirás el ancla de Milei hacia un escenario todavía más optimista, el dato de hoy queda relativamente más lejos de ese extremo y la probabilidad calculada puede bajar, aunque el escenario en sí sea "mejor" — la fórmula mide posición relativa entre los dos anclajes, no qué tan bueno es cada uno. El tramo estimado de la serie histórica de bonos (mayo–agosto 2026) viene de leer un gráfico ya publicado, no de precios crudos propios. Nada de esto invalida la señal — la vuelve una señal entre varias, no un oráculo.</p>
+    <p>Una tasa forward no equivale directamente a una probabilidad electoral "pura": el riesgo país soberano incorpora prima por plazo, liquidez y convexidad de los bonos, además de factores macroeconómicos que no son exclusivamente electorales. El resultado depende de dos anclajes de escenario — una hipótesis del analista, no un dato de mercado — y moverlos cambia el número, como se puede probar con los sliders de arriba: es la misma cuenta la que separa la lectura de GMA Capital (el modelo de bonos) de la de Marull (el método spot), no dos metodologías distintas.</p>
+    <p>El tramo estimado de la serie histórica de bonos (mayo–agosto 2026) viene de leer un gráfico ya publicado, no de precios crudos propios. Nada de esto invalida la señal — la vuelve una señal entre varias, no un oráculo.</p>
   </section>
 
   <footer>
@@ -504,7 +503,6 @@
         `Actualizado el ${fmtDate(last.date)}, con datos de mercado del cierre del día.`;
       document.getElementById('heroNum').innerHTML = last.prob_milei.toFixed(0) + '<small>%</small>';
       document.getElementById('heroDate').textContent = fmtDate(last.date);
-      if(last.prob_milei_alt != null) document.getElementById('heroAlt').textContent = last.prob_milei_alt.toFixed(1) + '%';
       if(last.ao27c_tir != null) document.getElementById('stepY27').textContent = last.ao27c_tir.toFixed(2) + '%';
       if(last.ao28c_tir != null) document.getElementById('stepY28').textContent = last.ao28c_tir.toFixed(2) + '%';
       if(last.forward_soberano != null) document.getElementById('stepFsob').textContent = last.forward_soberano.toFixed(1) + '%';
