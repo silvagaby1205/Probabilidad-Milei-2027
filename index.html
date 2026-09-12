@@ -147,7 +147,7 @@
     </div>
     <div class="chart-legend" id="chartLegend"></div>
     <p class="chart-caption" id="chartCaption" style="display:none">Tramo punteado: leído a ojo del gráfico que publicó GMA Capital (mayo–agosto 2026), con la curva UST asumida constante — no calculado desde precios crudos. Tramo sólido: calculado día a día desde el lanzamiento del sitio, con datos reales.</p>
-    <p class="notes" style="margin-top:20px">El modelo de bonos tiene historia desde mayo porque se pudo reconstruir de un gráfico ya publicado; Polymarket y el spot arrancan el día que se automatizaron, así que por ahora son apenas unos días de serie. El método spot (Fernando Marull / FMyA) toma el riesgo país de hoy tal cual y lo pasa por la misma regla de tres que el modelo de bonos, pero con sus propios anclajes: Milei en 200 pb, contra un PJ extremo en 2.000 pb o una oposición moderada en 800 pb, según la variante. Por eso el mismo dato de hoy da un número muy alto contra el escenario extremo y casi la mitad contra el moderado — ninguna de las dos variantes separa cuánto del riesgo país es incertidumbre pre-electoral de cuánto es el resultado en sí, algo que la tasa forward sí hace, por eso su resultado queda más moderado, más cerca de Polymarket.</p>
+    <p class="notes" style="margin-top:20px">El modelo de bonos arranca el 24 de agosto porque ese es el dato preciso más antiguo que se pudo conseguir, reportado por GMA Capital en una nota de Infobae; Polymarket y el spot arrancan el día que se automatizaron, así que por ahora son apenas unos días de serie. El método spot (Fernando Marull / FMyA) toma el riesgo país de hoy tal cual y lo pasa por la misma regla de tres que el modelo de bonos, pero con sus propios anclajes: Milei en 200 pb, contra un PJ extremo en 2.000 pb o una oposición moderada en 800 pb, según la variante. Por eso el mismo dato de hoy da un número muy alto contra el escenario extremo y casi la mitad contra el moderado — ninguna de las dos variantes separa cuánto del riesgo país es incertidumbre pre-electoral de cuánto es el resultado en sí, algo que la tasa forward sí hace, por eso su resultado queda más moderado, más cerca de Polymarket.</p>
   </section>
 
   <section>
@@ -203,7 +203,7 @@
   <section class="notes">
     <h2>Limitaciones</h2>
     <p>Una tasa forward no equivale directamente a una probabilidad electoral "pura": el riesgo país soberano incorpora prima por plazo, liquidez y convexidad de los bonos, además de factores macroeconómicos que no son exclusivamente electorales. El resultado depende de dos anclajes de escenario — una hipótesis del analista, no un dato de mercado — y moverlos cambia el número, como se puede probar con los sliders de arriba: es la misma cuenta la que separa la lectura de GMA Capital (el modelo de bonos) de la de Marull (el método spot), no dos metodologías distintas.</p>
-    <p>El tramo estimado de la serie histórica de bonos (mayo–agosto 2026) viene de leer un gráfico ya publicado, no de precios crudos propios. Nada de esto invalida la señal — la vuelve una señal entre varias, no un oráculo.</p>
+    <p>El primer dato de la serie de bonos (24/08/2026) es una cifra reportada por GMA Capital, no calculada desde precios crudos por este proyecto — coincide con la fórmula acá usada, pero no es un cálculo propio como los del resto de la serie. Nada de esto invalida la señal — la vuelve una señal entre varias, no un oráculo.</p>
   </section>
 
   <footer>
@@ -310,7 +310,12 @@
 
     legend.innerHTML = series
       .filter(s => s.points.length > 0)
-      .map(s => `<span class="legend-item"><span class="legend-swatch" style="background:${s.color}"></span>${s.name}</span>`)
+      .map(s => {
+        const label = s.url
+          ? `<a href="${s.url}" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">${s.name}</a>`
+          : s.name;
+        return `<span class="legend-item"><span class="legend-swatch" style="background:${s.color}"></span>${label}</span>`;
+      })
       .join('');
 
     const caption = document.getElementById('chartCaption');
@@ -529,7 +534,7 @@
 
     const series = [
       {name:'Tasas forward', color:'var(--green)', points: history.map(h => ({date:h.date, value:h.prob_milei, estimado: !!h.estimado}))},
-      {name:'Polymarket', color:'var(--ochre)', points: poly.map(h => ({date:h.date, value:h.prob_milei}))},
+      {name:'Polymarket', color:'var(--ochre)', url:'https://polymarketanalytics.com/event/argentina-presidential-election-winner', points: poly.map(h => ({date:h.date, value:h.prob_milei}))},
       {name:'Spot vs. PJ extremo', color:'var(--wine)', points: spot.map(h => ({date:h.date, value:h.prob_vs_extremo}))},
       {name:'Spot vs. moderado', color:'var(--wine-light)', points: spot.map(h => ({date:h.date, value:h.prob_vs_moderado}))},
     ];

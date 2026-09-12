@@ -29,7 +29,7 @@ Fuentes primarias:
 Este repositorio no reimplementa esas metodologías como si fueran propias. Lo que agrega:
 - Reimplementación desde cero en Python, a partir de precios y curvas crudas — no de un número ya publicado
 - Automatización diaria end-to-end, sin intervención manual
-- Reconstrucción histórica de la serie de bonos (mayo–agosto 2026), marcada explícitamente como estimada
+- Serie histórica anclada a una cifra precisa y citable (GMA Capital, 24/08/2026) en vez de a un número inventado
 - Comparación sistemática entre bonos, Polymarket, riesgo país spot (dos variantes de rival) y el ICG de la UTDT
 - Código fuente auditable y reproducible
 
@@ -98,7 +98,7 @@ El objetivo de esta comparación no es decidir cuál es "la correcta", sino most
 - Diferencias de duración entre los bonos usados
 - El resultado depende de los anclajes de escenario elegidos, que son una hipótesis del analista, no un dato de mercado
 - Una tasa forward no equivale directamente a una probabilidad electoral "pura" — es una probabilidad implícita en precios, sujeta a todo lo anterior
-- El tramo estimado de la serie histórica de bonos (mayo–agosto 2026) viene de leer un gráfico ya publicado, no de precios crudos propios
+- El primer dato de la serie de bonos (24/08/2026) es una cifra reportada por GMA Capital, no calculada desde precios crudos por este proyecto
 
 ---
 
