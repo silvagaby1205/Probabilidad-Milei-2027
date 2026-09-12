@@ -61,12 +61,11 @@
   svg.chart{width:100%;height:auto;overflow:visible;display:block;}
   .hover-dot{pointer-events:none;transition:opacity .05s;}
   #hoverRect{cursor:default;}
-  .chart-tooltip{
-    position:absolute;pointer-events:none;transform:translateX(-50%);
-    background:var(--paper);color:var(--ink);font-family:'IBM Plex Mono', monospace;
-    font-size:0.76rem;padding:6px 10px;border-radius:3px;white-space:nowrap;
-    line-height:1.5;text-align:left;
-    opacity:0;transition:opacity 0.1s;z-index:5;
+  .chart-info-bar{
+    min-height:2.6em;padding:8px 12px;margin-bottom:10px;
+    background:rgba(255,255,255,0.03);border:1px solid var(--line-dark);border-radius:3px;
+    font-family:'IBM Plex Mono', monospace;font-size:0.8rem;color:var(--text-on-navy-dim);
+    line-height:1.6;
   }
   .chart-axis{stroke:var(--line-dark);stroke-width:1;}
   .chart-label{font-family:'IBM Plex Mono', monospace;font-size:11px;fill:var(--text-on-navy-dim);}
@@ -148,7 +147,7 @@
     <div class="chart-legend" id="chartLegend"></div>
     <p class="chart-caption" id="chartCaption" style="display:none">Tramo punteado: leído a ojo del gráfico que publicó GMA Capital (mayo–agosto 2026), con la curva UST asumida constante — no calculado desde precios crudos. Tramo sólido: calculado día a día desde el lanzamiento del sitio, con datos reales.</p>
     <p class="notes" style="margin-top:20px">El modelo de bonos arranca el 24 de agosto porque ese es el dato preciso más antiguo que se pudo conseguir, reportado por <a href="https://www.infobae.com/economia/2026/08/24/cual-es-la-probabilidad-de-que-milei-sea-reelecto-segun-el-precio-de-los-bonos-los-numeros-de-una-financiera-local/" target="_blank" rel="noopener">GMA Capital</a>; <a href="https://polymarketanalytics.com/event/argentina-presidential-election-winner" target="_blank" rel="noopener">Polymarket</a> y el spot arrancan el día que se automatizaron, así que por ahora son apenas unos días de serie. El método spot (Fernando Marull / FMyA) usa el mismo tipo de cuenta que el modelo de bonos — la misma regla de tres entre dos escenarios:</p>
-    <p class="notes" style="text-align:center;font-family:'IBM Plex Mono',monospace;font-size:0.9rem;color:var(--text-on-navy)">p = (RP_rival − RP_hoy) / (RP_rival − RP_Milei)</p>
+    <p class="notes" style="text-align:center;font-family:'IBM Plex Mono',monospace;font-size:0.9rem;color:var(--text-on-navy)">p = (RP<sub>rival</sub> − RP<sub>hoy</sub>) / (RP<sub>rival</sub> − RP<sub>Milei</sub>)</p>
     <p class="notes">pero en vez de una tasa forward usa directamente el riesgo país de hoy, el número que publican los diarios todos los días. Con esa base y sus propios anclajes (Milei en 200 pb, PJ extremo en 2.000 pb, oposición moderada en 800 pb), calcula dos versiones: una contra cada rival posible.</p>
     <img src="assets/marull-spot.jpg" alt="Cálculo del spot de Marull/FMyA, con los anclajes Milei 200pb, PJ extremo 2.000pb, oposición moderada 800pb" style="width:100%;border-radius:2px;margin:8px 0">
     <p class="chart-caption">Fuente: FMyA, 19/08/2026 — con el riesgo país de aquel día (470 pb), no el de hoy.</p>
@@ -180,7 +179,7 @@
       <div class="step"><div class="n">3</div><div class="desc">Tasa forward implícita entre ambos vencimientos<span class="sub">(1+y28)^t28 = (1+y27)^t27 · (1+f)^(t28−t27)</span></div><div class="val" id="stepFsob">–</div></div>
       <div class="step"><div class="n">4</div><div class="desc">Forward de la curva UST para el mismo tramo<span class="sub">interpolado linealmente sobre CMT 1–2–3 años</span><span class="sub" id="stepUstDetail"></span></div><div class="val" id="stepFust">–</div></div>
       <div class="step"><div class="n">5</div><div class="desc">Riesgo país forward implícito<span class="sub">forward soberano menos forward libre de riesgo</span></div><div class="val" id="stepRp">–</div></div>
-      <div class="step"><div class="n">6</div><div class="desc">Probabilidad implícita<span class="sub">p = (RP_oposición − RP_forward) / (RP_oposición − RP_Milei), con los anclajes de abajo</span></div><div class="val" id="stepProb">–</div></div>
+      <div class="step"><div class="n">6</div><div class="desc">Probabilidad implícita<span class="sub">p = (RP<sub>oposición</sub> − RP<sub>forward</sub>) / (RP<sub>oposición</sub> − RP<sub>Milei</sub>), con los anclajes de abajo</span></div><div class="val" id="stepProb">–</div></div>
     </div>
 
     <p class="notes" style="margin-top:20px">Para comprobar el paso 4 a mano: entrá a <a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026" target="_blank" rel="noopener">la tabla oficial del Tesoro de EE.UU.</a>, buscá la última fila (fecha más reciente) y anotá las columnas "1 Yr", "2 Yr" y "3 Yr" — son los tres números que ves arriba en "curva:".</p>
@@ -294,6 +293,7 @@
     ).join('');
 
     const svg = `
+      <div class="chart-info-bar" id="chartTooltip">Pasá el mouse o el dedo por el gráfico para ver el detalle de cada día.</div>
       <svg class="chart" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
         <line class="chart-axis" x1="${padL}" y1="${y(50)}" x2="${w-padR}" y2="${y(50)}" stroke-dasharray="2,3"/>
         <text class="chart-label" x="${padL-6}" y="${y(100)+4}" text-anchor="end">100%</text>
@@ -307,8 +307,7 @@
         <text class="chart-label" x="${padL}" y="${h-6}" text-anchor="start">${fmtDate(dateMinStr)}</text>
         <text class="chart-label" x="${w-padR}" y="${h-6}" text-anchor="end">${fmtDate(dateMaxStr)}</text>
         <rect id="hoverRect" x="${padL}" y="${padT}" width="${w-padL-padR}" height="${h-padT-padB}" fill="transparent"/>
-      </svg>
-      <div class="chart-tooltip" id="chartTooltip"></div>`;
+      </svg>`;
     container.innerHTML = svg;
 
     attachCrosshair(series, uniqueDates, uniqueTimes, x, y, px, w, h, padL, padR);
@@ -375,16 +374,12 @@
         }
       });
 
-      tooltip.innerHTML = lines.join('<br>');
-      tooltip.style.left = (xPix / w * 100) + '%';
-      tooltip.style.top = '8%';
-      tooltip.style.opacity = '1';
+      tooltip.innerHTML = lines.join(' &nbsp;·&nbsp; ');
     }
 
     function hide(){
       crosshair.style.opacity = '0';
       hoverDots.forEach(d => d.style.opacity = '0');
-      tooltip.style.opacity = '0';
     }
 
     rect.addEventListener('pointermove', show);
@@ -432,6 +427,7 @@
     const hoverDot = `<circle class="hover-dot" id="icgHoverDot" r="4" fill="var(--steel)" style="opacity:0"/>`;
 
     const svg = `
+      <div class="chart-info-bar" id="icgTooltip">Pasá el mouse o el dedo por el gráfico para ver el detalle de cada mes.</div>
       <svg class="chart" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
         <text class="chart-label" x="${padL-6}" y="${y(maxVal)+4}" text-anchor="end">${maxVal.toFixed(0)}%</text>
         <text class="chart-label" x="${padL-6}" y="${y(0)+4}" text-anchor="end">0%</text>
@@ -444,8 +440,7 @@
         <text class="chart-label" x="${padL}" y="${h-6}" text-anchor="start">${fmtMes(periodos[0])}</text>
         <text class="chart-label" x="${w-padR}" y="${h-6}" text-anchor="end">${fmtMes(periodos[periodos.length-1])}</text>
         <rect id="icgHoverRect" x="${padL}" y="${padT}" width="${w-padL-padR}" height="${h-padT-padB}" fill="transparent"/>
-      </svg>
-      <div class="chart-tooltip" id="icgTooltip"></div>`;
+      </svg>`;
     container.innerHTML = svg;
 
     const svgEl = container.querySelector('svg.chart');
@@ -476,12 +471,9 @@
       crosshair.setAttribute('x1', xPix); crosshair.setAttribute('x2', xPix); crosshair.style.opacity = '1';
       dot.setAttribute('cx', xPix); dot.setAttribute('cy', y(rec.voto_calibrado)); dot.style.opacity = '1';
 
-      tooltip.innerHTML = `${fmtMes(rec.periodo)}<br><span style="color:var(--steel)">${rec.voto_calibrado}% ajustado</span><br><span style="opacity:0.7">${rec.voto_naive}% sin ajustar (ICG ${rec.icg})</span>`;
-      tooltip.style.left = (xPix / w * 100) + '%';
-      tooltip.style.top = '8%';
-      tooltip.style.opacity = '1';
+      tooltip.innerHTML = `${fmtMes(rec.periodo)} &nbsp;·&nbsp; <span style="color:var(--steel)">${rec.voto_calibrado}% ajustado</span> &nbsp;·&nbsp; <span style="opacity:0.7">${rec.voto_naive}% sin ajustar (ICG ${rec.icg})</span>`;
     }
-    function hide(){ crosshair.style.opacity='0'; dot.style.opacity='0'; tooltip.style.opacity='0'; }
+    function hide(){ crosshair.style.opacity='0'; dot.style.opacity='0'; }
 
     rect.addEventListener('pointermove', show);
     rect.addEventListener('pointerdown', show);
