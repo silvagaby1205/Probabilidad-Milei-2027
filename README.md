@@ -124,7 +124,7 @@ calc/calc.py                 → forward de bonos (necesita IOL_USER / IOL_PASS)
 calc/icg_calc.py             → serie del ICG (backfill completo + chequeo diario)
 calc/polymarket_calc.py      → precio diario de Polymarket
 calc/spot_calc.py            → riesgo país spot del día, con los anclajes de Marull
-.github/workflows/           → automatización diaria de los cuatro scripts
+.github/workflows/            → daily-update.yml (bonos, ICG, spot — una vez por día hábil) y polymarket-update.yml (cada 3 horas)
 ```
 
 Tecnologías usadas en el código: Python 3 (`requests`, `zoneinfo`), JavaScript vanilla, SVG generado dinámicamente para los gráficos, GitHub Actions, GitHub Pages.
