@@ -123,7 +123,7 @@
 
   <p class="meta" id="updatedMeta">Cargando datos del día…</p>
   <h1>Probabilidad implícita de reelección de Milei a partir del mercado de bonos</h1>
-  <p class="lede">Indicador diario que compara dos bonos soberanos argentinos que vencen a los dos lados de la elección de 2027 — <strong>AO27C</strong> (vence antes) y <strong>AO28C</strong> (vence después) — para estimar, a partir de la diferencia de tasa entre ambos, cuánto riesgo electoral está incorporando el mercado. Se compara contra <a href="https://polymarketanalytics.com/event/argentina-presidential-election-winner" target="_blank" rel="noopener">Polymarket</a> y otros enfoques. <strong>No es una encuesta ni una predicción personal</strong> — es la transformación de una señal de mercado bajo supuestos explícitos y auditables.</p>
+  <p class="lede">Indicador diario que compara dos bonos soberanos argentinos que vencen antes y después de la elección de 2027 — <strong>AO27C</strong> (vence antes) y <strong>AO28C</strong> (vence después) — para estimar, a partir de la diferencia de tasa entre ambos, cuánto riesgo electoral está incorporando el mercado. Se compara contra <a href="https://polymarketanalytics.com/event/argentina-presidential-election-winner" target="_blank" rel="noopener">Polymarket</a> y otros enfoques. <strong>No es una encuesta ni una predicción personal</strong>, es la transformación de una señal de mercado bajo supuestos explícitos y auditables.</p>
   <p class="notes" style="margin:-30px 0 40px">Metodología original de <a href="https://www.infobae.com/economia/2026/08/24/cual-es-la-probabilidad-de-que-milei-sea-reelecto-segun-el-precio-de-los-bonos-los-numeros-de-una-financiera-local/" target="_blank" rel="noopener">GMA Capital</a>, reimplementada, automatizada y comparada contra otras señales.</p>
 
   <section>
@@ -162,11 +162,8 @@
     <div id="icgChartContainer">
       <div class="chart-empty">Cargando…</div>
     </div>
-    <p class="chart-caption">Línea sólida: estimación de intención de voto, calculada a partir del ICG (regresión de <a href="https://www.ambito.com/negocios/cuidado-el-icg-la-utdt-y-su-uso-la-proyeccion-eleccionaria-n6207654" target="_blank" rel="noopener">Ámbito</a>). Línea punteada: multiplicación cruda ICG × 20, sin ajustar.</p>
-    <p class="notes" style="margin-top:20px">Mirando la serie completa desde 2001, el ICG viene mostrando una correlación visible con el resultado electoral del oficialismo de turno en cada gobierno:</p>
-    <img src="assets/icg-vs-elecciones.jpg" alt="Confianza de Gobierno de UTDT y Resultado de Elecciones, 2001-2025" style="width:100%;border-radius:2px;margin-top:8px">
-    <p class="chart-caption">Fuente: FMyA en base a UTDT.</p>
-    <p class="notes" style="margin-top:20px">El ICG mide confianza en el gobierno, no intención de voto directamente — pero es un excelente proxy para la intención de voto, como se ve arriba. La línea sólida del primer gráfico es una <em>estimación</em> de esa intención de voto, derivada de la confianza con la conversión ajustada de <a href="https://www.ambito.com/negocios/cuidado-el-icg-la-utdt-y-su-uso-la-proyeccion-eleccionaria-n6207654" target="_blank" rel="noopener">la nota de Ámbito</a> (16,59 + 0,569 × ICG×20), no la confianza cruda.</p>
+    <p class="chart-caption">Línea sólida: estimación de intención de voto, calculada a partir del ICG (regresión de <a href="https://www.ambito.com/negocios/cuidado-el-icg-la-utdt-y-su-uso-la-proyeccion-eleccionaria-n6207654" target="_blank" rel="noopener">Ámbito</a>). Línea punteada: multiplicación cruda ICG × 20, sin ajustar. Puntos rojos: resultado electoral real del oficialismo de turno en cada elección desde 2001 (comparación original de FMyA en base a UTDT).</p>
+    <p class="notes" style="margin-top:20px">Mirando la serie completa desde 2001, el ICG viene mostrando una correlación visible con el resultado electoral del oficialismo de turno en cada gobierno. El ICG en sí mide confianza en el gobierno, no intención de voto directamente — pero es un excelente proxy para la intención de voto, como se ve arriba. La línea sólida es una <em>estimación</em> de esa intención de voto, derivada de la confianza con la conversión ajustada de <a href="https://www.ambito.com/negocios/cuidado-el-icg-la-utdt-y-su-uso-la-proyeccion-eleccionaria-n6207654" target="_blank" rel="noopener">la nota de Ámbito</a> (16,59 + 0,569 × ICG×20), no la confianza cruda.</p>
     <details style="margin-top:16px">
       <summary style="cursor:pointer;color:var(--text-on-navy-dim);font-size:0.85rem">Ver el índice ICG original (sin convertir), fuente UTDT</summary>
       <iframe src="https://e.infogram.com/icg-utdt-1hzj4oeljzxo2pw?src=embed" title="Índice de Confianza en el Gobierno — Universidad Torcuato Di Tella" width="100%" height="500" style="border:none;background:var(--paper);border-radius:2px;margin-top:14px" scrolling="no" frameborder="0"></iframe>
@@ -390,6 +387,22 @@
     rect.addEventListener('pointerleave', hide);
   }
 
+  const RESULTADOS_ELECTORALES = [
+    {date:'2001-10-01', valor:23, nombre:'Legislativas 2001'},
+    {date:'2003-04-01', valor:22, nombre:'Presidencial 2003 (1a vuelta)'},
+    {date:'2005-10-01', valor:39, nombre:'Legislativas 2005'},
+    {date:'2007-10-01', valor:45, nombre:'Presidencial 2007'},
+    {date:'2009-06-01', valor:29, nombre:'Legislativas 2009'},
+    {date:'2011-10-01', valor:54, nombre:'Presidencial 2011'},
+    {date:'2013-10-01', valor:33, nombre:'Legislativas 2013'},
+    {date:'2015-10-01', valor:37, nombre:'Presidencial 2015 (1a vuelta)'},
+    {date:'2017-10-01', valor:42, nombre:'Legislativas 2017'},
+    {date:'2019-10-01', valor:40, nombre:'Presidencial 2019 (1a vuelta)'},
+    {date:'2021-11-01', valor:34, nombre:'Legislativas 2021'},
+    {date:'2023-10-01', valor:37, nombre:'Presidencial 2023 (1a vuelta)'},
+    {date:'2025-10-01', valor:41, nombre:'Legislativas 2025'},
+  ];
+
   function drawIcgChart(hist){
     const container = document.getElementById('icgChartContainer');
     const el = document.getElementById('icgCurrent');
@@ -402,24 +415,21 @@
     const last = hist[hist.length - 1];
     el.innerHTML = `Último dato: <strong style="color:var(--text-on-navy)">${fmtMes(last.periodo)} — ${last.voto_calibrado}% ajustado</strong> (${last.voto_naive}% sin ajustar).`;
 
-    if(hist.length < 2){
-      container.innerHTML = '<div class="chart-empty">Va a aparecer un gráfico apenas se acumule más de un mes.</div>';
-      return;
-    }
-
-    const w = 700, h = 280, padL = 36, padR = 10, padT = 14, padB = 26;
+    const w = 700, h = 340, padL = 36, padR = 10, padT = 14, padB = 26;
     const periodos = hist.map(h => h.periodo).sort();
-    const tMin = new Date(periodos[0] + 'T00:00:00').getTime();
-    const tMax = new Date(periodos[periodos.length-1] + 'T00:00:00').getTime();
+    const todasFechas = [...periodos, ...RESULTADOS_ELECTORALES.map(e => e.date)].sort();
+    const tMin = new Date(todasFechas[0] + 'T00:00:00').getTime();
+    const tMax = new Date(todasFechas[todasFechas.length-1] + 'T00:00:00').getTime();
     const x = t => padL + (w - padL - padR) * (tMax === tMin ? 0.5 : (t - tMin) / (tMax - tMin));
-    const todosValores = hist.flatMap(h => [h.voto_calibrado, h.voto_naive]);
+    const todosValores = [...hist.flatMap(h => [h.voto_calibrado, h.voto_naive]), ...RESULTADOS_ELECTORALES.map(e => e.valor)];
     const dataMin = Math.min(...todosValores);
     const dataMax = Math.max(...todosValores);
-    const pad = Math.max(3, (dataMax - dataMin) * 0.15);
+    const pad = Math.max(3, (dataMax - dataMin) * 0.1);
     const minVal = Math.max(0, Math.floor((dataMin - pad) / 5) * 5);
     const maxVal = Math.ceil((dataMax + pad) / 5) * 5;
     const y = v => padT + (h - padT - padB) * (1 - (v - minVal) / (maxVal - minVal));
     const px = rec => x(new Date(rec.periodo + 'T00:00:00').getTime());
+    const pxDate = dateStr => x(new Date(dateStr + 'T00:00:00').getTime());
 
     let calLine = '', naiveLine = '';
     for(let i = 0; i < hist.length - 1; i++){
@@ -430,22 +440,27 @@
     const endLast = hist[hist.length-1];
     const endDot = `<circle cx="${px(endLast)}" cy="${y(endLast.voto_calibrado)}" r="4" fill="var(--steel)"/>`;
 
+    const eleccionDots = RESULTADOS_ELECTORALES.map(e =>
+      `<circle cx="${pxDate(e.date)}" cy="${y(e.valor)}" r="4" fill="var(--wine)" stroke="var(--navy)" stroke-width="1"><title>${e.nombre}: ${e.valor}% (resultado real del oficialismo)</title></circle>`
+    ).join('');
+
     const uniqueTimes = periodos.map(p => new Date(p + 'T00:00:00').getTime());
     const hoverDot = `<circle class="hover-dot" id="icgHoverDot" r="4" fill="var(--steel)" style="opacity:0"/>`;
 
     const svg = `
-      <div class="chart-info-bar" id="icgTooltip">Pasá el mouse o el dedo por el gráfico para ver el detalle de cada mes.</div>
+      <div class="chart-info-bar" id="icgTooltip">Pasá el mouse o el dedo por el gráfico para ver el detalle de cada mes. Los puntos rojos son resultados electorales reales.</div>
       <svg class="chart" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
         <text class="chart-label" x="${padL-6}" y="${y(maxVal)+4}" text-anchor="end">${maxVal.toFixed(0)}%</text>
         <text class="chart-label" x="${padL-6}" y="${y(minVal)+4}" text-anchor="end">${minVal.toFixed(0)}%</text>
         <line class="chart-axis" x1="${padL}" y1="${padT}" x2="${padL}" y2="${h-padB}"/>
         ${naiveLine}
         ${calLine}
+        ${eleccionDots}
         ${endDot}
         <line id="icgCrosshair" x1="${padL}" y1="${padT}" x2="${padL}" y2="${h-padB}" stroke="var(--text-on-navy-dim)" stroke-width="1" style="opacity:0"/>
         ${hoverDot}
-        <text class="chart-label" x="${padL}" y="${h-6}" text-anchor="start">${fmtMes(periodos[0])}</text>
-        <text class="chart-label" x="${w-padR}" y="${h-6}" text-anchor="end">${fmtMes(periodos[periodos.length-1])}</text>
+        <text class="chart-label" x="${padL}" y="${h-6}" text-anchor="start">${fmtMes(todasFechas[0])}</text>
+        <text class="chart-label" x="${w-padR}" y="${h-6}" text-anchor="end">${fmtMes(todasFechas[todasFechas.length-1])}</text>
         <rect id="icgHoverRect" x="${padL}" y="${padT}" width="${w-padL-padR}" height="${h-padT-padB}" fill="transparent"/>
       </svg>`;
     container.innerHTML = svg;
