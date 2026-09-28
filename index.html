@@ -162,8 +162,12 @@
     <div id="icgChartContainer">
       <div class="chart-empty">Cargando…</div>
     </div>
-    <p class="chart-caption">Línea sólida: estimación de intención de voto, calculada a partir del ICG (regresión de <a href="https://www.ambito.com/negocios/cuidado-el-icg-la-utdt-y-su-uso-la-proyeccion-eleccionaria-n6207654" target="_blank" rel="noopener">Ámbito</a>). Línea punteada: multiplicación cruda ICG × 20, sin ajustar. Puntos rojos: resultado electoral real del oficialismo de turno en cada elección desde 2001 (comparación original de FMyA en base a UTDT).</p>
-    <p class="notes" style="margin-top:20px">Mirando la serie completa desde 2001, el ICG viene mostrando una correlación visible con el resultado electoral del oficialismo de turno en cada gobierno. El ICG en sí mide confianza en el gobierno, no intención de voto directamente — pero es un excelente proxy para la intención de voto, como se ve arriba. La línea sólida es una <em>estimación</em> de esa intención de voto, derivada de la confianza con la conversión ajustada de <a href="https://www.ambito.com/negocios/cuidado-el-icg-la-utdt-y-su-uso-la-proyeccion-eleccionaria-n6207654" target="_blank" rel="noopener">la nota de Ámbito</a> (16,59 + 0,569 × ICG×20), no la confianza cruda.</p>
+    <div class="chart-legend">
+      <span class="legend-item"><svg width="20" height="10" style="flex:none"><line x1="0" y1="5" x2="20" y2="5" stroke="var(--steel)" stroke-width="2"/></svg> Intención de voto estimada (regresión de <a href="https://www.ambito.com/negocios/cuidado-el-icg-la-utdt-y-su-uso-la-proyeccion-eleccionaria-n6207654" target="_blank" rel="noopener">Ámbito</a>)</span>
+      <span class="legend-item"><svg width="20" height="10" style="flex:none"><line x1="0" y1="5" x2="20" y2="5" stroke="var(--steel)" stroke-width="1.3" stroke-dasharray="3,3" opacity="0.6"/></svg> ICG × 20, sin ajustar</span>
+      <span class="legend-item"><svg width="10" height="10" style="flex:none"><circle cx="5" cy="5" r="4" fill="var(--wine)" stroke="var(--navy)" stroke-width="1"/></svg> Resultado electoral real (FMyA en base a UTDT)</span>
+    </div>
+    <p class="notes" style="margin-top:20px">El ICG viene mostrando una correlación visible con el resultado electoral del oficialismo de turno en cada gobierno. El ICG mide confianza en el gobierno, no intención de voto directa, pero es un excelente proxy para la intención de voto.</p>
     <details style="margin-top:16px">
       <summary style="cursor:pointer;color:var(--text-on-navy-dim);font-size:0.85rem">Ver el índice ICG original (sin convertir), fuente UTDT</summary>
       <iframe src="https://e.infogram.com/icg-utdt-1hzj4oeljzxo2pw?src=embed" title="Índice de Confianza en el Gobierno — Universidad Torcuato Di Tella" width="100%" height="500" style="border:none;background:var(--paper);border-radius:2px;margin-top:14px" scrolling="no" frameborder="0"></iframe>
@@ -440,9 +444,16 @@
     const endLast = hist[hist.length-1];
     const endDot = `<circle cx="${px(endLast)}" cy="${y(endLast.voto_calibrado)}" r="4" fill="var(--steel)"/>`;
 
-    const eleccionDots = RESULTADOS_ELECTORALES.map(e =>
-      `<circle cx="${pxDate(e.date)}" cy="${y(e.valor)}" r="4" fill="var(--wine)" stroke="var(--navy)" stroke-width="1"><title>${e.nombre}: ${e.valor}% (resultado real del oficialismo)</title></circle>`
-    ).join('');
+    let prevXElec = null, arribaElec = true;
+    const eleccionDots = RESULTADOS_ELECTORALES.map(e => {
+      const cx = pxDate(e.date), cy = y(e.valor);
+      if(prevXElec !== null && Math.abs(cx - prevXElec) < 28) arribaElec = !arribaElec;
+      else arribaElec = true;
+      prevXElec = cx;
+      const labelY = arribaElec ? cy - 9 : cy + 16;
+      return `<circle cx="${cx}" cy="${cy}" r="4" fill="var(--wine)" stroke="var(--navy)" stroke-width="1"><title>${e.nombre}: ${e.valor}% (resultado real del oficialismo)</title></circle>` +
+             `<text class="chart-label" x="${cx}" y="${labelY}" text-anchor="middle" fill="var(--wine)">${e.valor}</text>`;
+    }).join('');
 
     const uniqueTimes = periodos.map(p => new Date(p + 'T00:00:00').getTime());
     const hoverDot = `<circle class="hover-dot" id="icgHoverDot" r="4" fill="var(--steel)" style="opacity:0"/>`;
