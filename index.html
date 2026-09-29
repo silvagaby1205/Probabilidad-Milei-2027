@@ -407,6 +407,16 @@
     {date:'2025-10-01', valor:41, nombre:'Legislativas 2025'},
   ];
 
+  const PRESIDENCIAS = [
+    {sigla:'DLR/DUH', inicio:'2001-01-01', fin:'2003-05-25'},
+    {sigla:'NK',      inicio:'2003-05-25', fin:'2007-12-10'},
+    {sigla:'CFK I',   inicio:'2007-12-10', fin:'2011-12-10'},
+    {sigla:'CFK II',  inicio:'2011-12-10', fin:'2015-12-10'},
+    {sigla:'MM',      inicio:'2015-12-10', fin:'2019-12-10'},
+    {sigla:'AF',      inicio:'2019-12-10', fin:'2023-12-10'},
+    {sigla:'JM',      inicio:'2023-12-10', fin:'2099-01-01'},
+  ];
+
   function drawIcgChart(hist){
     const container = document.getElementById('icgChartContainer');
     const el = document.getElementById('icgCurrent');
@@ -419,7 +429,7 @@
     const last = hist[hist.length - 1];
     el.innerHTML = `Último dato: <strong style="color:var(--text-on-navy)">${fmtMes(last.periodo)} — ${last.voto_calibrado}% ajustado</strong> (${last.voto_naive}% sin ajustar).`;
 
-    const w = 700, h = 340, padL = 36, padR = 10, padT = 14, padB = 26;
+    const w = 700, h = 340, padL = 36, padR = 10, padT = 30, padB = 26;
     const periodos = hist.map(h => h.periodo).sort();
     const todasFechas = [...periodos, ...RESULTADOS_ELECTORALES.map(e => e.date)].sort();
     const tMin = new Date(todasFechas[0] + 'T00:00:00').getTime();
@@ -444,15 +454,47 @@
     const endLast = hist[hist.length-1];
     const endDot = `<circle cx="${px(endLast)}" cy="${y(endLast.voto_calibrado)}" r="4" fill="var(--steel)"/>`;
 
-    let prevXElec = null, arribaElec = true;
+    // Líneas verticales y siglas de cada gobierno (como en el gráfico de FMyA)
+    const t0 = tMin, t1 = tMax;
+    let gobiernosSvg = '';
+    PRESIDENCIAS.forEach((p, i) => {
+      const ini = new Date(p.inicio + 'T00:00:00').getTime();
+      const fin = new Date(p.fin + 'T00:00:00').getTime();
+      if(i > 0 && ini > t0 && ini < t1){
+        gobiernosSvg += `<line x1="${x(ini)}" y1="2" x2="${x(ini)}" y2="${h-padB}" stroke="var(--text-on-navy-dim)" stroke-width="1" opacity="0.35"/>`;
+      }
+      const a = Math.max(ini, t0), b = Math.min(fin, t1);
+      if(b > a){
+        gobiernosSvg += `<text x="${(x(a) + x(b)) / 2}" y="${padT - 18}" text-anchor="middle" style="font-family:'IBM Plex Mono',monospace;font-size:10px;fill:var(--text-on-navy-dim)">${p.sigla}</text>`;
+      }
+    });
+
+    // Para ubicar cada número: del lado (arriba/abajo) donde la línea del ICG queda más lejos.
+    const histTimes = hist.map(h => new Date(h.periodo + 'T00:00:00').getTime());
+    const nearestHist = t => {
+      let best = -1, bd = Infinity;
+      histTimes.forEach((ht, i) => { const d = Math.abs(ht - t); if(d < bd){ bd = d; best = i; } });
+      return best >= 0 && bd < 60 * 86400000 ? hist[best] : null;
+    };
+
+    let prevXElec = null, prevDir = null;
     const eleccionDots = RESULTADOS_ELECTORALES.map(e => {
       const cx = pxDate(e.date), cy = y(e.valor);
-      if(prevXElec !== null && Math.abs(cx - prevXElec) < 28) arribaElec = !arribaElec;
-      else arribaElec = true;
-      prevXElec = cx;
-      const labelY = arribaElec ? cy - 9 : cy + 16;
+      let dir = 'up';
+      const near = nearestHist(new Date(e.date + 'T00:00:00').getTime());
+      if(near){
+        const ys = [y(near.voto_calibrado), y(near.voto_naive)];
+        const arriba = ys.filter(v => v < cy - 2);
+        const abajo = ys.filter(v => v > cy + 2);
+        const libreArriba = arriba.length ? cy - Math.max(...arriba) : 999;
+        const libreAbajo = abajo.length ? Math.min(...abajo) - cy : 999;
+        dir = libreArriba >= libreAbajo ? 'up' : 'down';
+      }
+      if(prevXElec !== null && Math.abs(cx - prevXElec) < 30 && dir === prevDir) dir = dir === 'up' ? 'down' : 'up';
+      prevXElec = cx; prevDir = dir;
+      const labelY = Math.min(h - padB - 4, Math.max(padT + 10, dir === 'up' ? cy - 15 : cy + 23));
       return `<circle cx="${cx}" cy="${cy}" r="4" fill="var(--wine)" stroke="var(--navy)" stroke-width="1"><title>${e.nombre}: ${e.valor}% (resultado real del oficialismo)</title></circle>` +
-             `<text class="chart-label" x="${cx}" y="${labelY}" text-anchor="middle" fill="var(--wine)">${e.valor}</text>`;
+             `<text x="${cx}" y="${labelY}" text-anchor="middle" style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;fill:#E4908A;stroke:var(--navy);stroke-width:3px;paint-order:stroke">${e.valor}</text>`;
     }).join('');
 
     const uniqueTimes = periodos.map(p => new Date(p + 'T00:00:00').getTime());
@@ -464,6 +506,7 @@
         <text class="chart-label" x="${padL-6}" y="${y(maxVal)+4}" text-anchor="end">${maxVal.toFixed(0)}%</text>
         <text class="chart-label" x="${padL-6}" y="${y(minVal)+4}" text-anchor="end">${minVal.toFixed(0)}%</text>
         <line class="chart-axis" x1="${padL}" y1="${padT}" x2="${padL}" y2="${h-padB}"/>
+        ${gobiernosSvg}
         ${naiveLine}
         ${calLine}
         ${eleccionDots}
