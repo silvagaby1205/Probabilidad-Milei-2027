@@ -438,5 +438,26 @@
     "escenario_alt_milei_bps": 217,
     "escenario_alt_oposicion_bps": 1600,
     "prob_milei_alt": 10.09
+  },
+  {
+    "date": "2026-10-02",
+    "ao27c_tir": 8.857,
+    "ao28c_tir": 14.12,
+    "forward_soberano": 20.007,
+    "t27_years": 1.074,
+    "t28_years": 2.082,
+    "ust_1y": 4.46,
+    "ust_2y": 4.83,
+    "ust_3y": 4.96,
+    "y27_ust": 4.487,
+    "y28_ust": 4.841,
+    "forward_ust": 5.218,
+    "riesgo_pais_forward_bps": 1478.8,
+    "milei_anchor_bps": 250,
+    "peronismo_anchor_bps": 2000,
+    "prob_milei": 29.78,
+    "escenario_alt_milei_bps": 217,
+    "escenario_alt_oposicion_bps": 1600,
+    "prob_milei_alt": 8.76
   }
 ]
