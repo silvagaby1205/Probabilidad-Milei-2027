@@ -2357,5 +2357,12 @@
     "icg": 1.955,
     "voto_naive": 39.09,
     "voto_calibrado": 38.83
+  },
+  {
+    "fecha_deteccion": "2026-11-03",
+    "periodo": "2026-10-01",
+    "icg": 1.955,
+    "voto_naive": 39.09,
+    "voto_calibrado": 38.83
   }
 ]
