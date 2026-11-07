@@ -1,10 +1,12 @@
-name: Actualización de Polymarket (cada 3 horas)
+name: Actualización frecuente (Polymarket e ICG, cada 3 horas)
 
 on:
   schedule:
-    # Cada 3 horas — Polymarket es un mercado en vivo, se mueve todo el día,
-    # a diferencia de los otros tres (que dependen del cierre diario o son mensuales).
-    - cron: '0 */3 * * *'
+    # Cada 3 horas, en el minuto 17 (no justo en punto, para no chocar con la corrida diaria
+    # ni con el horario de mayor carga de GitHub).
+    # Polymarket es un mercado en vivo; el ICG sale una vez por mes, pero la fuente puede
+    # cargarlo con algunas horas o días de demora, así que se revisa seguido.
+    - cron: '17 */3 * * *'
   workflow_dispatch: {}
 
 permissions:
@@ -25,10 +27,25 @@ jobs:
       - name: Traer el precio de Polymarket
         run: python calc/polymarket_calc.py
 
-      - name: Commitear si cambió
+      - name: Chequear si hay ICG nuevo (solo escribe si cambió)
+        if: always()
+        run: python calc/icg_calc.py
+
+      - name: Commitear lo que haya cambiado
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/polymarket_history.json
-          git diff --quiet --cached || git commit -m "Polymarket $(date -u +'%Y-%m-%d %H:%M UTC')"
-          git push
+          git add data/polymarket_history.json data/icg_history.json
+          if git diff --quiet --cached; then
+            echo "Sin cambios para guardar"
+          else
+            git commit -m "Polymarket e ICG $(date -u +'%Y-%m-%d %H:%M UTC')"
+            ok=0
+            for i in 1 2 3 4 5; do
+              if git pull --rebase origin main && git push; then ok=1; break; fi
+              echo "Push rechazado, reintentando ($i)..."
+              sleep 5
+            done
+            [ "$ok" = 1 ] || { echo "No se pudo hacer push después de 5 intentos"; exit 1; }
+          fi
