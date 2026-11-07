@@ -2,8 +2,8 @@ name: Actualización diaria de probabilidad
 
 on:
   schedule:
-    # 21:00 UTC = 18:00 ART, de lunes a viernes (después del cierre del mercado)
-    - cron: '0 21 * * 1-5'
+    # 21:05 UTC = 18:05 ART, de lunes a viernes (después del cierre del mercado)
+    - cron: '5 21 * * 1-5'
   workflow_dispatch: {}
 
 permissions:
@@ -27,16 +27,25 @@ jobs:
           IOL_PASS: ${{ secrets.IOL_PASS }}
         run: python calc/calc.py
 
-      - name: Chequear si hay ICG nuevo (solo escribe si UTDT publicó)
-        run: python calc/icg_calc.py
-
       - name: Traer el riesgo país spot (método Marull/FMyA)
+        if: always()
         run: python calc/spot_calc.py
 
       - name: Commitear lo que haya cambiado
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/history.json data/icg_history.json data/spot_history.json
-          git diff --quiet --cached || git commit -m "Actualización diaria $(date +'%Y-%m-%d')"
-          git push
+          git add data/history.json data/spot_history.json
+          if git diff --quiet --cached; then
+            echo "Sin cambios para guardar"
+          else
+            git commit -m "Actualización diaria $(date +'%Y-%m-%d')"
+            ok=0
+            for i in 1 2 3 4 5; do
+              if git pull --rebase origin main && git push; then ok=1; break; fi
+              echo "Push rechazado, reintentando ($i)..."
+              sleep 5
+            done
+            [ "$ok" = 1 ] || { echo "No se pudo hacer push después de 5 intentos"; exit 1; }
+          fi
