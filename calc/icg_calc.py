@@ -76,13 +76,21 @@ def chequeo_incremental():
 
     icg = float(data["valor"])
     periodo = data.get("fecha")
-    ya_cargado = any(abs(h["icg"] - icg) < 1e-9 and h.get("periodo") == periodo for h in history)
-    if ya_cargado:
+
+    # Se compara por mes (AAAA-MM), no por la fecha exacta: así no se duplica
+    # si la fuente cambia el día que usa, y se corrige si la UTDT revisa un valor.
+    mes = (periodo or "")[:7]
+    existente = next((h for h in history if (h.get("periodo") or "")[:7] == mes), None)
+    if existente is not None and abs(existente["icg"] - icg) < 1e-9:
         print(f"Sin novedades: {periodo} / ICG {icg} ya está cargado.")
         return
 
     record = to_record(data)
-    history.append(record)
+    if existente is not None:
+        history[history.index(existente)] = record
+        print(f"Se corrigió el valor ya cargado de {mes}: {existente['icg']} -> {icg}")
+    else:
+        history.append(record)
     history.sort(key=lambda h: h["periodo"])
     with open(DATA_PATH, "w", encoding="utf-8") as f:
         json.dump(history, f, indent=2, ensure_ascii=False)

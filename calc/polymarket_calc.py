@@ -78,6 +78,7 @@ def find_milei_price():
         raise RuntimeError(f"El evento '{EVENT_SLUG}' no tiene mercados. Respuesta: {json.dumps(event)[:500]}")
 
     elegido = elegir_mercado_milei(markets)
+
     outcomes = json.loads(elegido["outcomes"])
     prices = json.loads(elegido["outcomePrices"])
     idx = outcomes.index("Yes") if "Yes" in outcomes else 0
