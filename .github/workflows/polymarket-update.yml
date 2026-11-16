@@ -1,12 +1,12 @@
-name: Actualización frecuente (Polymarket e ICG, cada 3 horas)
+name: Actualización frecuente (Polymarket e ICG, cada 1 hora)
 
 on:
   schedule:
-    # Cada 3 horas, en el minuto 17 (no justo en punto, para no chocar con la corrida diaria
+    # Cada 1 hora, en el minuto 17 (para no chocar con la corrida diaria
     # ni con el horario de mayor carga de GitHub).
     # Polymarket es un mercado en vivo; el ICG sale una vez por mes, pero la fuente puede
-    # cargarlo con algunas horas o días de demora, así que se revisa seguido.
-    - cron: '17 */3 * * *'
+    # cargarlo con algunas horas o días de demora, así que se revisa de forma horaria.
+    - cron: '17 * * * *'
   workflow_dispatch: {}
 
 permissions:
