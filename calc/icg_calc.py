@@ -7,10 +7,13 @@ directamente de la serie de la UTDT. API pública, documentada, sin
 necesidad de autenticación.
 
 Primera corrida (o si el archivo tiene muy pocos registros): baja la SERIE
-HISTÓRICA COMPLETA de una vez, para no depender de reconstruir los datos a
-mano. Corridas siguientes: solo chequea el último valor publicado y agrega
-un registro nuevo si cambió — el ICG sale una vez por mes, así que la
-mayoría de los días no hace nada.
+HISTÓRICA COMPLETA de una vez. Corridas siguientes: solo chequea el último
+valor publicado y lo agrega (o lo corrige) si cambió — el ICG sale una vez
+por mes, así que la mayoría de las veces no hace nada.
+
+Se mantiene un único registro por mes. La fuente entrega el valor con 6
+decimales y acá se guarda redondeado a 3, así que las comparaciones se hacen
+siempre con el mismo redondeo (si no, cada corrida creería que el dato cambió).
 
 Fórmulas de conversión (fuente: nota de Ámbito, "Cuidado con el ICG de la
 UTDT y su uso en la proyección eleccionaria", 29/10/2025, sobre 13
@@ -36,6 +39,10 @@ def hoy_arg():
     return datetime.now(ZoneInfo("America/Argentina/Buenos_Aires")).date()
 
 
+def mes_de(periodo):
+    return (periodo or "")[:7]
+
+
 def to_record(item):
     icg = float(item["valor"])
     periodo = item.get("fecha")
@@ -50,6 +57,26 @@ def to_record(item):
     }
 
 
+def deduplicar_por_mes(history):
+    """Deja un solo registro por mes (el más reciente de los guardados)."""
+    por_mes = {}
+    for h in history:
+        por_mes[mes_de(h.get("periodo"))] = h
+    return sorted(por_mes.values(), key=lambda h: h.get("periodo") or "")
+
+
+def cargar():
+    if os.path.exists(DATA_PATH):
+        with open(DATA_PATH, encoding="utf-8") as f:
+            return json.load(f)
+    return []
+
+
+def guardar(history):
+    with open(DATA_PATH, "w", encoding="utf-8") as f:
+        json.dump(history, f, indent=2, ensure_ascii=False)
+
+
 def backfill_completo():
     r = requests.get(URL_HISTORICO, timeout=30)
     r.raise_for_status()
@@ -57,10 +84,8 @@ def backfill_completo():
     if not isinstance(items, list) or not items:
         raise RuntimeError(f"La serie histórica de ICG vino vacía o con formato inesperado: {items!r:.500}")
 
-    history = [to_record(item) for item in items]
-    history.sort(key=lambda h: h["periodo"])
-    with open(DATA_PATH, "w", encoding="utf-8") as f:
-        json.dump(history, f, indent=2, ensure_ascii=False)
+    history = deduplicar_por_mes([to_record(item) for item in items])
+    guardar(history)
     print(f"Backfill completo: {len(history)} registros cargados desde la serie histórica.")
 
 
@@ -69,41 +94,38 @@ def chequeo_incremental():
     r.raise_for_status()
     data = r.json()
 
-    history = []
-    if os.path.exists(DATA_PATH):
-        with open(DATA_PATH, encoding="utf-8") as f:
-            history = json.load(f)
+    original = cargar()
+    history = deduplicar_por_mes(original)
+    sobraban = len(original) - len(history)
+    if sobraban:
+        print(f"Se eliminaron {sobraban} registros repetidos del mismo mes.")
 
     icg = float(data["valor"])
     periodo = data.get("fecha")
+    mes = mes_de(periodo)
 
-    # Se compara por mes (AAAA-MM), no por la fecha exacta: así no se duplica
-    # si la fuente cambia el día que usa, y se corrige si la UTDT revisa un valor.
-    mes = (periodo or "")[:7]
-    existente = next((h for h in history if (h.get("periodo") or "")[:7] == mes), None)
-    if existente is not None and abs(existente["icg"] - icg) < 1e-9:
-        print(f"Sin novedades: {periodo} / ICG {icg} ya está cargado.")
+    # Se compara por mes (no por la fecha exacta) y con el mismo redondeo con el que se guarda.
+    existente = next((h for h in history if mes_de(h.get("periodo")) == mes), None)
+    if existente is not None and abs(existente["icg"] - round(icg, 3)) < 1e-9:
+        print(f"Sin novedades: {mes} / ICG {round(icg, 3)} ya está cargado.")
+        if sobraban:
+            guardar(history)
         return
 
     record = to_record(data)
     if existente is not None:
         history[history.index(existente)] = record
-        print(f"Se corrigió el valor ya cargado de {mes}: {existente['icg']} -> {icg}")
+        print(f"Se corrigió el valor de {mes}: {existente['icg']} -> {record['icg']}")
     else:
         history.append(record)
-    history.sort(key=lambda h: h["periodo"])
-    with open(DATA_PATH, "w", encoding="utf-8") as f:
-        json.dump(history, f, indent=2, ensure_ascii=False)
-    print(f"Nuevo dato de ICG cargado: {json.dumps(record, ensure_ascii=False)}")
+        print(f"Nuevo dato de ICG cargado: {json.dumps(record, ensure_ascii=False)}")
+
+    history.sort(key=lambda h: h.get("periodo") or "")
+    guardar(history)
 
 
 def main():
-    history = []
-    if os.path.exists(DATA_PATH):
-        with open(DATA_PATH, encoding="utf-8") as f:
-            history = json.load(f)
-
-    if len(history) < UMBRAL_BACKFILL:
+    if len(cargar()) < UMBRAL_BACKFILL:
         backfill_completo()
     else:
         chequeo_incremental()
