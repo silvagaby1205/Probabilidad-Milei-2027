@@ -377,5 +377,12 @@
     "riesgo_pais": 848.0,
     "prob_vs_extremo": 64.0,
     "prob_vs_moderado": 0.0
+  },
+  {
+    "date": "2026-11-20",
+    "fecha_fuente": "2026-11-19",
+    "riesgo_pais": 931.0,
+    "prob_vs_extremo": 59.4,
+    "prob_vs_moderado": 0.0
   }
 ]
