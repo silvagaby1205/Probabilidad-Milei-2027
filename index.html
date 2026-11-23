@@ -51,6 +51,7 @@
   .lede strong{color:var(--text-on-navy);font-weight:500;}
   section{margin-bottom:56px;}
   h2{font-size:1.15rem;font-style:italic;margin:0 0 22px;font-weight:500;}
+  h3{font-family:'Newsreader', serif;font-size:1.02rem;font-style:italic;margin:34px 0 12px;font-weight:500;color:var(--text-on-navy);}
 
   .hero{
     background:var(--paper);color:var(--ink);border-radius:2px;
@@ -59,7 +60,11 @@
   }
   .hero-figure .num{font-size:clamp(3.2rem, 11vw, 4.6rem);line-height:1;color:var(--ink);}
   .hero-figure .num small{font-size:0.32em;font-family:'IBM Plex Sans', sans-serif;color:var(--ink-soft);font-weight:500;margin-left:6px;}
-  .hero-figure .caption{margin-top:10px;font-size:0.92rem;color:var(--ink-soft);max-width:36ch;}
+  .hero-figure .caption{margin-top:10px;font-size:0.92rem;color:var(--ink-soft);max-width:42ch;}
+  .hero-floor-note{
+    display:none;margin-top:12px;padding-left:10px;border-left:2px solid var(--wine);
+    font-size:0.84rem;color:var(--ink);max-width:48ch;line-height:1.45;
+  }
   .hero-range{font-family:'IBM Plex Mono', monospace;font-size:0.85rem;color:var(--ink-soft);text-align:right;padding-bottom:6px;}
   .hero-range .range-val{display:block;font-size:1.1rem;color:var(--ink);margin-top:4px;}
 
@@ -67,10 +72,10 @@
     border:1px dashed var(--line-dark);padding:28px;font-size:0.92rem;
     color:var(--text-on-navy-dim);text-align:center;
   }
-  #chartContainer, #icgChartContainer{position:relative;}
+  #chartContainer, #icgChartContainer, #icgPresChartContainer{position:relative;}
   svg.chart{width:100%;height:auto;overflow:visible;display:block;}
   .hover-dot{pointer-events:none;transition:opacity .05s;}
-  #hoverRect{cursor:default;}
+  #hoverRect, #icgHoverRect, #icgPresHoverRect{cursor:default;touch-action:pan-y;}
   .chart-info-bar{
     min-height:2.6em;padding:8px 12px;margin-bottom:10px;
     background:rgba(255,255,255,0.03);border:1px solid var(--line-dark);border-radius:3px;
@@ -102,7 +107,7 @@
   input[type=range]:focus-visible{outline:2px solid var(--focus);outline-offset:3px;}
   .result-line{margin-top:22px;padding-top:18px;border-top:1px solid var(--line-dark);display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:10px;}
   .result-line .num{font-size:1.9rem;color:var(--text-on-navy);}
-  .result-line .lbl{font-size:0.85rem;color:var(--text-on-navy-dim);max-width:32ch;}
+  .result-line .lbl{font-size:0.85rem;color:var(--text-on-navy-dim);max-width:34ch;}
 
   .scenario-btn{
     background:transparent;border:1px solid var(--line-dark);color:var(--text-on-navy);
@@ -110,11 +115,6 @@
     border-radius:3px;cursor:pointer;transition:border-color .15s;
   }
   .scenario-btn:hover, .scenario-btn:focus-visible{border-color:var(--ochre);outline:none;}
-  .sens-table{width:100%;border-collapse:collapse;font-family:'IBM Plex Mono', monospace;font-size:0.8rem;}
-  .sens-table th, .sens-table td{padding:7px 8px;text-align:center;border-bottom:1px solid var(--line-dark);}
-  .sens-table th{color:var(--text-on-navy-dim);font-weight:500;}
-  .sens-table td:first-child, .sens-table th:first-child{text-align:left;color:var(--text-on-navy-dim);}
-  .sens-table .hl{color:var(--green);font-weight:500;}
 
   .notes{font-size:0.92rem;color:var(--text-on-navy-dim);}
   .notes p{margin:0 0 14px;}
@@ -123,8 +123,11 @@
   footer p{margin:0 0 8px;}
 
   @media (max-width:560px){
-    .hero{flex-direction:column;align-items:flex-start;}
+    .wrap{padding:44px 18px 72px;}
+    .hero{flex-direction:column;align-items:flex-start;padding:26px 22px 22px;}
     .hero-range{text-align:left;}
+    .step{grid-template-columns:22px 1fr auto;gap:10px;}
+    .step .val{font-size:0.92rem;}
   }
 </style>
 </head>
@@ -133,14 +136,15 @@
 
   <p class="meta" id="updatedMeta">Cargando datos del día…</p>
   <h1>Probabilidad implícita de reelección de Milei a partir del mercado de bonos</h1>
-  <p class="lede">Indicador diario que compara dos bonos soberanos argentinos que vencen antes y después de la elección de 2027 — <strong>AO27C</strong> (vence antes) y <strong>AO28C</strong> (vence después) — para estimar, a partir de la diferencia de tasa entre ambos, cuánto riesgo electoral está incorporando el mercado. Se compara contra <a href="https://polymarketanalytics.com/event/argentina-presidential-election-winner" target="_blank" rel="noopener">Polymarket</a> y otros enfoques. <strong>No es una encuesta ni una predicción personal</strong>, es la transformación de una señal de mercado bajo supuestos explícitos y auditables.</p>
+  <p class="lede">Indicador diario que compara dos bonos soberanos argentinos que vencen antes y después de la elección de 2027, <strong>AO27C</strong> (vence antes) y <strong>AO28C</strong> (vence después), para estimar, a partir de la diferencia de tasa entre ambos, cuánto riesgo electoral está incorporando el mercado. Se compara contra <a href="https://polymarketanalytics.com/event/argentina-presidential-election-winner" target="_blank" rel="noopener">Polymarket</a> y otros enfoques. <strong>No es una encuesta ni una predicción personal</strong>: es la transformación de una señal de mercado bajo supuestos explícitos y auditables.</p>
   <p class="notes" style="margin:-30px 0 40px">Metodología original de <a href="https://www.infobae.com/economia/2026/08/24/cual-es-la-probabilidad-de-que-milei-sea-reelecto-segun-el-precio-de-los-bonos-los-numeros-de-una-financiera-local/" target="_blank" rel="noopener">GMA Capital</a>, reimplementada, automatizada y comparada contra otras señales.</p>
 
   <section>
     <div class="hero">
       <div class="hero-figure">
         <div class="num" id="heroNum">–<small>%</small></div>
-        <p class="caption">Probabilidad implícita de reelección de Milei, según el modelo, escenario base (GMA). Resultado condicionado a los anclajes de riesgo país seleccionados — no es una probabilidad electoral observable ni una encuesta.</p>
+        <p class="caption">Probabilidad implícita de reelección de Milei según el modelo de bonos, escenario base (GMA). Resultado condicionado a los anclajes de riesgo país seleccionados; no es una probabilidad electoral observable ni una encuesta.</p>
+        <p class="hero-floor-note" id="heroFloorNote"></p>
       </div>
       <div class="hero-range">
         último dato
@@ -151,19 +155,18 @@
 
   <section>
     <h2>Evolución diaria de los cuatro modelos</h2>
-    <p class="notes" style="margin-top:-10px;margin-bottom:20px">Probabilidad de reelección de Milei según cada modelo, día a día — no es un promedio ni un consenso, son cuatro formas distintas de leer al mercado.</p>
+    <p class="notes" style="margin-top:-10px;margin-bottom:20px">Probabilidad implícita de reelección de Milei según cada modelo, día a día. No es un promedio ni un consenso, sino cuatro formas distintas de leer al mercado.</p>
     <div id="chartContainer">
       <div class="chart-empty">La serie se va a ir completando a medida que la automatización corra.</div>
     </div>
     <div class="chart-legend" id="chartLegend"></div>
-    <p class="chart-caption" id="chartCaption" style="display:none">Tramo punteado: leído a ojo del gráfico que publicó GMA Capital (mayo–agosto 2026), con la curva UST asumida constante — no calculado desde precios crudos. Tramo sólido: calculado día a día desde el lanzamiento del sitio, con datos reales.</p>
     <p class="notes" style="margin-top:20px">El modelo de bonos arranca el 24 de agosto porque ese es el dato preciso más antiguo que se pudo conseguir, reportado por <a href="https://www.infobae.com/economia/2026/08/24/cual-es-la-probabilidad-de-que-milei-sea-reelecto-segun-el-precio-de-los-bonos-los-numeros-de-una-financiera-local/" target="_blank" rel="noopener">GMA Capital</a>.</p>
     <p class="notes">El método spot (Fernando Marull / FMyA) usa la misma regla de tres entre dos escenarios:</p>
     <p class="notes" style="text-align:center;font-family:'IBM Plex Mono',monospace;font-size:0.9rem;color:var(--text-on-navy)">p = (RP<sub>rival</sub> − RP<sub>hoy</sub>) / (RP<sub>rival</sub> − RP<sub>Milei</sub>)</p>
     <p class="notes">pero en vez de una tasa forward usa directamente el riesgo país de hoy, el número que publican los diarios todos los días. Con esa base y sus propios anclajes (Milei en 200 pb, PJ extremo en 2.000 pb, oposición moderada en 800 pb), calcula dos versiones: una contra cada rival posible.</p>
-    <img src="assets/marull-spot.jpg" alt="Cálculo del spot de Marull/FMyA, con los anclajes Milei 200pb, PJ extremo 2.000pb, oposición moderada 800pb" style="width:100%;border-radius:2px;margin:8px 0">
-    <p class="chart-caption">Fuente: FMyA, 19/08/2026 — con el riesgo país de aquel día (470 pb), no el de hoy.</p>
-    <p class="notes">Por eso el mismo dato de hoy da un número muy alto contra el escenario extremo y casi la mitad contra el moderado — ninguna de las dos versiones separa cuánto del riesgo país es incertidumbre pre-electoral de cuánto es el resultado en sí, algo que la tasa forward sí hace, por eso su resultado queda más moderado, más cerca de Polymarket.</p>
+    <img src="assets/marull-spot.jpg" alt="Cálculo del spot de Marull/FMyA, con los anclajes Milei 200 pb, PJ extremo 2.000 pb y oposición moderada 800 pb" style="width:100%;border-radius:2px;margin:8px 0">
+    <p class="chart-caption">Fuente: FMyA, 19/08/2026 (con el riesgo país de aquel día, 470 pb, no el de hoy).</p>
+    <p class="notes">Por eso el mismo dato de hoy da un número mucho más alto contra el escenario extremo que contra el moderado. Ninguna de las dos versiones separa cuánto del riesgo país responde a incertidumbre preelectoral o de corto plazo de cuánto corresponde al resultado en sí, algo que la tasa forward intenta aislar al enfocarse en el tramo posterior a la elección.</p>
   </section>
 
   <section>
@@ -173,11 +176,19 @@
       <div class="chart-empty">Cargando…</div>
     </div>
     <div class="chart-legend">
-      <span class="legend-item"><svg width="20" height="10" style="flex:none"><line x1="0" y1="5" x2="20" y2="5" stroke="var(--steel)" stroke-width="2"/></svg> Intención de voto estimada (regresión de <a href="https://www.ambito.com/negocios/cuidado-el-icg-la-utdt-y-su-uso-la-proyeccion-eleccionaria-n6207654" target="_blank" rel="noopener">Ámbito</a>)</span>
-      <span class="legend-item"><svg width="20" height="10" style="flex:none"><line x1="0" y1="5" x2="20" y2="5" stroke="var(--steel)" stroke-width="1.3" stroke-dasharray="3,3" opacity="0.6"/></svg> ICG × 20, sin ajustar</span>
-      <span class="legend-item"><svg width="10" height="10" style="flex:none"><circle cx="5" cy="5" r="4" fill="var(--wine)" stroke="var(--navy)" stroke-width="1"/></svg> Resultado electoral real (FMyA en base a UTDT)</span>
+      <span class="legend-item"><svg width="20" height="10" style="flex:none" aria-hidden="true"><line x1="0" y1="5" x2="20" y2="5" stroke="var(--steel)" stroke-width="2"/></svg> Intención de voto estimada (regresión de <a href="https://www.ambito.com/negocios/cuidado-el-icg-la-utdt-y-su-uso-la-proyeccion-eleccionaria-n6207654" target="_blank" rel="noopener">Ámbito</a>)</span>
+      <span class="legend-item"><svg width="20" height="10" style="flex:none" aria-hidden="true"><line x1="0" y1="5" x2="20" y2="5" stroke="var(--steel)" stroke-width="1.3" stroke-dasharray="3,3" opacity="0.6"/></svg> ICG × 20, sin ajustar</span>
+      <span class="legend-item"><svg width="10" height="10" style="flex:none" aria-hidden="true"><circle cx="5" cy="5" r="4" fill="var(--wine)" stroke="var(--navy)" stroke-width="1"/></svg> Resultado electoral real (FMyA en base a UTDT)</span>
     </div>
-    <p class="notes" style="margin-top:20px">El ICG viene mostrando una correlación visible con el resultado electoral del oficialismo de turno en cada gobierno. El ICG mide confianza en el gobierno, no intención de voto directa, pero es un buen proxy para la intención de voto.</p>
+    <p class="notes" style="margin-top:20px">El ICG viene mostrando una correlación visible con el resultado electoral del oficialismo de turno en cada gobierno. Mide confianza en el gobierno, no intención de voto directa ni probabilidad electoral, pero funciona como un buen proxy de intención de voto.</p>
+
+    <h3>Confianza en el Gobierno por presidencia (comparación por mes de mandato)</h3>
+    <p class="notes" id="icgPresSummary" style="margin-bottom:16px">Comparación del nivel del ICG (escala 0 a 5) de cada presidencia desde el mes 1 de gestión, replicando el formato de la <a href="https://www.utdt.edu/ver_contenido.php?id_contenido=1439&id_item_menu=2964" target="_blank" rel="noopener">Universidad Torcuato Di Tella</a>. El mes 46 corresponde a la elección presidencial siguiente.</p>
+    <div id="icgPresChartContainer">
+      <div class="chart-empty">Cargando…</div>
+    </div>
+    <div class="chart-legend" id="icgPresLegend"></div>
+    <p class="chart-caption">Fuente: elaboración propia con la serie mensual del ICG (<a href="https://www.utdt.edu/ver_contenido.php?id_contenido=1439&id_item_menu=2964" target="_blank" rel="noopener">UTDT</a>, vía ArgentinaDatos). Para los gobiernos asumidos en diciembre se alinea el mes 1 en enero del primer año completo, siguiendo el criterio del informe mensual de la Di Tella. Se actualiza automáticamente todos los meses.</p>
   </section>
 
   <section>
@@ -185,17 +196,17 @@
     <div class="ledger" id="ledger">
       <div class="step"><div class="n">1</div><div class="desc">TIR de <span class="tick">AO27C</span>, vence 29/10/2027</div><div class="val" id="stepY27">–</div></div>
       <div class="step"><div class="n">2</div><div class="desc">TIR de <span class="tick">AO28C</span>, vence 31/10/2028</div><div class="val" id="stepY28">–</div></div>
-      <div class="step"><div class="n">3</div><div class="desc">Tasa forward implícita entre ambos vencimientos<span class="sub">(1+y28)^t28 = (1+y27)^t27 · (1+f)^(t28−t27)</span></div><div class="val" id="stepFsob">–</div></div>
+      <div class="step"><div class="n">3</div><div class="desc">Tasa forward implícita entre ambos vencimientos<span class="sub">(1+y<sub>28</sub>)<sup>t<sub>28</sub></sup> = (1+y<sub>27</sub>)<sup>t<sub>27</sub></sup> · (1+f)<sup>t<sub>28</sub>−t<sub>27</sub></sup></span></div><div class="val" id="stepFsob">–</div></div>
       <div class="step"><div class="n">4</div><div class="desc">Forward de la curva UST para el mismo tramo<span class="sub">interpolado linealmente sobre CMT 1–2–3 años</span><span class="sub" id="stepUstDetail"></span></div><div class="val" id="stepFust">–</div></div>
       <div class="step"><div class="n">5</div><div class="desc">Riesgo país forward implícito<span class="sub">forward soberano menos forward libre de riesgo</span></div><div class="val" id="stepRp">–</div></div>
-      <div class="step"><div class="n">6</div><div class="desc">Probabilidad implícita<span class="sub">p = (RP<sub>oposición</sub> − RP<sub>forward</sub>) / (RP<sub>oposición</sub> − RP<sub>Milei</sub>), con los anclajes de abajo</span></div><div class="val" id="stepProb">–</div></div>
+      <div class="step"><div class="n">6</div><div class="desc">Probabilidad implícita de reelección de Milei<span class="sub">p = (RP<sub>oposición</sub> − RP<sub>forward</sub>) / (RP<sub>oposición</sub> − RP<sub>Milei</sub>), con los anclajes de abajo</span></div><div class="val" id="stepProb">–</div></div>
     </div>
 
-    <p class="notes" style="margin-top:20px">Para comprobar el paso 4 a mano: entrá a <a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026" target="_blank" rel="noopener">la tabla oficial del Tesoro de EE.UU.</a>, buscá la última fila (fecha más reciente) y anotá las columnas "1 Yr", "2 Yr" y "3 Yr" — son los tres números que ves arriba en "curva:".</p>
+    <p class="notes" style="margin-top:20px">Para comprobar el paso 4 a mano: entrá a <a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026" target="_blank" rel="noopener">la tabla oficial del Tesoro de EE.UU.</a>, buscá la última fila (fecha más reciente) y anotá las columnas "1 Yr", "2 Yr" y "3 Yr", que son los tres números que ves arriba en "curva:".</p>
     <div id="interpExplain"></div>
 
     <div class="controls">
-      <p>El último paso pasa el riesgo país forward por una regla de tres entre dos escenarios de referencia. Esa elección es una hipótesis del analista, no un dato de mercado — movela y mirá cuánto cambia el resultado.</p>
+      <p>El último paso pasa el riesgo país forward por una regla de tres entre dos escenarios de referencia. Esa elección es una hipótesis del analista, no un dato de mercado: movela y mirá cuánto cambia el resultado.</p>
       <div class="field" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px">
         <button type="button" id="btnBase" class="scenario-btn">Volver al escenario base (250 / 2.000)</button>
       </div>
@@ -205,23 +216,25 @@
       </div>
       <div class="field">
         <label for="peron"><span>Riesgo país si gana la oposición dura (pb)</span><span id="peronVal">2.000</span></label>
-        <input type="range" id="peron" min="1200" max="2500" step="1" value="2000">
+        <input type="range" id="peron" min="1200" max="3000" step="1" value="2000">
       </div>
       <div class="result-line">
         <div class="num" id="liveResult">–</div>
-        <div class="lbl">probabilidad implícita con estos dos supuestos, aplicada al riesgo país forward del último dato</div>
+        <div class="lbl">probabilidad implícita de reelección de Milei con estos dos supuestos, aplicada al riesgo país forward del último dato</div>
       </div>
+    </div>
   </section>
 
   <section class="notes">
     <h2>Limitaciones</h2>
-    <p>Una tasa forward no equivale directamente a una probabilidad electoral "pura": el riesgo país soberano incorpora prima por plazo, liquidez y convexidad de los bonos, además de factores macroeconómicos que no son exclusivamente electorales. El resultado depende de dos anclajes de escenario — una hipótesis del analista, no un dato de mercado — y moverlos cambia el número, como se puede probar con los sliders de arriba: es la misma cuenta la que separa la lectura de GMA Capital (el modelo de bonos) de la de Marull (el método spot), no dos metodologías distintas.</p>
-    <p>El primer dato de la serie de bonos (24/08/2026) es una cifra reportada por GMA Capital, no calculada desde precios crudos por este proyecto — coincide con la fórmula acá usada, pero no es un cálculo propio como los del resto de la serie. Nada de esto invalida la señal — la vuelve una señal entre varias, no un oráculo.</p>
+    <p>Una tasa forward no equivale directamente a una probabilidad electoral "pura": el riesgo país soberano incorpora prima por plazo, liquidez y convexidad de los bonos, además de factores macroeconómicos que no son exclusivamente electorales. Cuando el estrés financiero lleva el riesgo país forward por encima del escenario adverso elegido, la fórmula toca el piso de 0% aunque la probabilidad real en una urna no sea nula.</p>
+    <p>El resultado depende de dos anclajes de escenario, una hipótesis del analista y no un dato de mercado. Moverlos cambia el número, como se puede probar con los sliders de arriba: esa elección es la que separa el escenario base de otros escenarios alternativos, o a las dos variantes del método spot entre sí. A su vez, lo que diferencia al modelo de bonos (GMA Capital) del método spot (Marull/FMyA) es el insumo de partida: la tasa forward busca aislar el tramo posterior a la elección, mientras que el método spot toma directamente el riesgo país actual.</p>
+    <p>El primer dato de la serie de bonos (24/08/2026) es una cifra reportada por GMA Capital, no calculada desde precios crudos por este proyecto; coincide con la fórmula usada acá, pero no es un cálculo propio como el resto de la serie. Nada de esto invalida la señal: la ubica como una referencia más entre varias, no como un oráculo.</p>
   </section>
 
   <footer>
     <p>Bonos: InvertirOnline. Curva UST: U.S. Department of the Treasury. Riesgo país spot e ICG: ArgentinaDatos. Polymarket: Gamma API. Método spot inspirado en FMyA / Fernando Marull.</p>
-    <p>Modelo y desarrollo: Gabriel Silva (<a href="https://www.linkedin.com/in/gabrielsilvaeconomia/" target="_blank" rel="noopener">LinkedIn</a>). Actualización automática diaria vía GitHub Actions.</p>
+    <p>Modelo y desarrollo: Gabriel Silva (<a href="https://www.linkedin.com/in/gabrielsilvaeconomia/" target="_blank" rel="noopener">LinkedIn</a>). Actualización automática vía GitHub Actions.</p>
   </footer>
 
 </div>
@@ -229,7 +242,11 @@
 <script>
   let RP_FORWARD_BPS = 1193.5; // fallback si todavía no cargó el histórico
 
-  function fmtInt(n){ return n.toLocaleString('es-AR'); }
+  function fmtInt(n){ return Math.round(n).toLocaleString('es-AR'); }
+  function fmtDec(n, minD, maxD){
+    const mx = maxD != null ? maxD : minD;
+    return Number(n).toLocaleString('es-AR', {minimumFractionDigits: minD, maximumFractionDigits: mx});
+  }
   function fmtDate(iso){
     const d = new Date(iso + 'T00:00:00');
     return d.toLocaleDateString('es-AR', {day:'numeric', month:'short', year:'numeric'});
@@ -248,8 +265,7 @@
     document.getElementById('peronVal').textContent = fmtInt(p);
     let prob = (p - RP_FORWARD_BPS) / (p - m);
     prob = Math.max(0, Math.min(1, prob));
-    document.getElementById('liveResult').textContent =
-      (prob*100).toLocaleString('es-AR', {minimumFractionDigits:1, maximumFractionDigits:1}) + '%';
+    document.getElementById('liveResult').textContent = fmtDec(prob * 100, 1) + '%';
   }
 
   function setScenario(milei, oposicion){
@@ -278,7 +294,6 @@
     const px = p => x(new Date(p.date + 'T00:00:00').getTime());
 
     let linesSvg = '', endDotsSvg = '';
-    let hayEstimados = false;
 
     series.forEach(s => {
       const pts = s.points.filter(p => p.value !== null && p.value !== undefined);
@@ -286,14 +301,12 @@
       for(let i = 0; i < pts.length - 1; i++){
         const a = pts[i], b = pts[i+1];
         const dashed = a.estimado || b.estimado;
-        if(dashed) hayEstimados = true;
         linesSvg += `<line class="${dashed ? 'chart-line-dashed' : ''}" stroke="${s.color}" stroke-width="2" fill="none" x1="${px(a)}" y1="${y(a.value)}" x2="${px(b)}" y2="${y(b.value)}"/>`;
       }
       const last = pts[pts.length - 1];
       endDotsSvg += `<circle cx="${px(last)}" cy="${y(last.value)}" r="4.5" fill="${s.color}"/>`;
     });
 
-    // Fechas únicas de todas las series, para que el mouse "trabe" en una fecha real.
     const uniqueDates = [...new Set(allPoints.map(p => p.date))].sort();
     const uniqueTimes = uniqueDates.map(d => new Date(d + 'T00:00:00').getTime());
 
@@ -303,7 +316,7 @@
 
     const svg = `
       <div class="chart-info-bar" id="chartTooltip">Pasá el mouse o el dedo por el gráfico para ver el detalle de cada día.</div>
-      <svg class="chart" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+      <svg class="chart" role="img" aria-label="Evolución diaria de los cuatro modelos de probabilidad implícita de reelección de Milei" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
         <line class="chart-axis" x1="${padL}" y1="${y(50)}" x2="${w-padR}" y2="${y(50)}" stroke-dasharray="2,3"/>
         <text class="chart-label" x="${padL-6}" y="${y(100)+4}" text-anchor="end">100%</text>
         <text class="chart-label" x="${padL-6}" y="${y(50)+4}" text-anchor="end">50%</text>
@@ -330,9 +343,6 @@
         return `<span class="legend-item"><span class="legend-swatch" style="background:${s.color}"></span>${label}</span>`;
       })
       .join('');
-
-    const caption = document.getElementById('chartCaption');
-    if(caption) caption.style.display = hayEstimados ? 'block' : 'none';
   }
 
   function attachCrosshair(series, uniqueDates, uniqueTimes, x, y, px, w, h, padL, padR){
@@ -377,7 +387,7 @@
           dot.setAttribute('cy', y(pt.value));
           dot.style.opacity = '1';
           const tag = pt.estimado ? ' (estimado)' : '';
-          lines.push(`<span style="color:${s.color}">${s.name}: ${pt.value}%${tag}</span>`);
+          lines.push(`<span style="color:${s.color}">${s.name}: ${fmtDec(pt.value, 1)}%${tag}</span>`);
         } else {
           dot.style.opacity = '0';
         }
@@ -423,6 +433,19 @@
     {sigla:'JM',      inicio:'2023-12-10', fin:'2099-01-01'},
   ];
 
+  // Ventanas de mandato según el gráfico "Confianza en el Gobierno por Presidencia" de la UTDT.
+  // Los gobiernos asumidos el 10 de diciembre arrancan su Mes 1 en enero del año siguiente
+  // (así el Mes 46 coincide siempre con la elección presidencial de octubre del cuarto año).
+  const PRESIDENCIAS_UTDT = [
+    {nombre:'E. Duhalde',    inicio:'2002-01', fin:'2003-05', color:'#8FA85A', width:1.6, opacity:0.85},
+    {nombre:'N. Kirchner',   inicio:'2003-06', fin:'2007-12', color:'#C95B5B', width:1.6, opacity:0.85},
+    {nombre:'C. Kirchner I', inicio:'2008-01', fin:'2011-12', color:'#67C3D8', width:1.6, opacity:0.85},
+    {nombre:'C. Kirchner II',inicio:'2012-01', fin:'2015-12', color:'#4B83C3', width:1.6, opacity:0.85},
+    {nombre:'M. Macri',      inicio:'2016-01', fin:'2019-12', color:'#E5C75E', width:1.6, opacity:0.85},
+    {nombre:'A. Fernández',  inicio:'2020-01', fin:'2023-11', color:'#E09662', width:1.6, opacity:0.85},
+    {nombre:'J. Milei',      inicio:'2024-01', fin:'2027-12', color:'#C084FC', width:2.8, opacity:1.0, highlight:true},
+  ];
+
   function drawIcgChart(hist){
     const container = document.getElementById('icgChartContainer');
     const el = document.getElementById('icgCurrent');
@@ -433,7 +456,7 @@
     }
 
     const last = hist[hist.length - 1];
-    el.innerHTML = `Último dato: <strong style="color:var(--text-on-navy)">${fmtMes(last.periodo)} — ${last.voto_calibrado}% ajustado</strong> (${last.voto_naive}% sin ajustar).`;
+    el.innerHTML = `Último dato: <strong style="color:var(--text-on-navy)">${fmtMes(last.periodo)}: ${fmtDec(last.voto_calibrado, 1)}% ajustado</strong> (${fmtDec(last.voto_naive, 1)}% sin ajustar, ICG ${fmtDec(last.icg, 2)}).`;
 
     const w = 700, h = 340, padL = 36, padR = 10, padT = 30, padB = 26;
     const periodos = hist.map(h => h.periodo).sort();
@@ -460,7 +483,6 @@
     const endLast = hist[hist.length-1];
     const endDot = `<circle cx="${px(endLast)}" cy="${y(endLast.voto_calibrado)}" r="4" fill="var(--steel)"/>`;
 
-    // Líneas verticales y siglas de cada gobierno (como en el gráfico de FMyA)
     const t0 = tMin, t1 = tMax;
     let gobiernosSvg = '';
     PRESIDENCIAS.forEach((p, i) => {
@@ -475,7 +497,6 @@
       }
     });
 
-    // Para ubicar cada número: del lado (arriba/abajo) donde la línea del ICG queda más lejos.
     const histTimes = hist.map(h => new Date(h.periodo + 'T00:00:00').getTime());
     const nearestHist = t => {
       let best = -1, bd = Infinity;
@@ -499,7 +520,7 @@
       if(prevXElec !== null && Math.abs(cx - prevXElec) < 30 && dir === prevDir) dir = dir === 'up' ? 'down' : 'up';
       prevXElec = cx; prevDir = dir;
       const labelY = Math.min(h - padB - 4, Math.max(padT + 10, dir === 'up' ? cy - 15 : cy + 23));
-      return `<circle cx="${cx}" cy="${cy}" r="4" fill="var(--wine)" stroke="var(--navy)" stroke-width="1"><title>${e.nombre}: ${e.valor}% (resultado real del oficialismo)</title></circle>` +
+      return `<circle cx="${cx}" cy="${cy}" r="4" fill="var(--wine)" stroke="var(--navy)" stroke-width="1"/>` +
              `<text x="${cx}" y="${labelY}" text-anchor="middle" style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;fill:#E4908A;stroke:var(--navy);stroke-width:3px;paint-order:stroke">${e.valor}</text>`;
     }).join('');
 
@@ -508,7 +529,7 @@
 
     const svg = `
       <div class="chart-info-bar" id="icgTooltip">Pasá el mouse o el dedo por el gráfico para ver el detalle de cada mes. Los puntos rojos son resultados electorales reales.</div>
-      <svg class="chart" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+      <svg class="chart" role="img" aria-label="Serie histórica del ICG convertido a intención de voto estimada frente a resultados electorales reales" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
         <text class="chart-label" x="${padL-6}" y="${y(maxVal)+4}" text-anchor="end">${maxVal.toFixed(0)}%</text>
         <text class="chart-label" x="${padL-6}" y="${y(minVal)+4}" text-anchor="end">${minVal.toFixed(0)}%</text>
         <line class="chart-axis" x1="${padL}" y1="${padT}" x2="${padL}" y2="${h-padB}"/>
@@ -553,7 +574,13 @@
       crosshair.setAttribute('x1', xPix); crosshair.setAttribute('x2', xPix); crosshair.style.opacity = '1';
       dot.setAttribute('cx', xPix); dot.setAttribute('cy', y(rec.voto_calibrado)); dot.style.opacity = '1';
 
-      tooltip.innerHTML = `${fmtMes(rec.periodo)} &nbsp;·&nbsp; <span style="color:var(--steel)">${rec.voto_calibrado}% ajustado</span> &nbsp;·&nbsp; <span style="opacity:0.7">${rec.voto_naive}% sin ajustar (ICG ${rec.icg})</span>`;
+      const ym = (rec.periodo || '').slice(0, 7);
+      const elec = RESULTADOS_ELECTORALES.find(e => e.date.slice(0, 7) === ym);
+      const elecHtml = elec
+        ? ` &nbsp;·&nbsp; <span style="color:#E4908A">${elec.nombre}: ${elec.valor}% (resultado real)</span>`
+        : '';
+
+      tooltip.innerHTML = `${fmtMes(rec.periodo)} &nbsp;·&nbsp; <span style="color:var(--steel)">${fmtDec(rec.voto_calibrado, 1)}% ajustado</span> &nbsp;·&nbsp; <span style="opacity:0.7">${fmtDec(rec.voto_naive, 1)}% sin ajustar (ICG ${fmtDec(rec.icg, 2)})</span>${elecHtml}`;
     }
     function hide(){ crosshair.style.opacity='0'; dot.style.opacity='0'; }
 
@@ -561,6 +588,183 @@
     rect.addEventListener('pointerdown', show);
     rect.addEventListener('pointerenter', show);
     rect.addEventListener('pointerleave', hide);
+  }
+
+  function monthsDiff(ymStart, ymCur){
+    const [y0, m0] = ymStart.split('-').map(Number);
+    const [y1, m1] = ymCur.split('-').map(Number);
+    return (y1 - y0) * 12 + (m1 - m0) + 1;
+  }
+
+  function drawIcgByPresidencyChart(hist){
+    const container = document.getElementById('icgPresChartContainer');
+    const legend = document.getElementById('icgPresLegend');
+    if(!Array.isArray(hist) || hist.length === 0){
+      container.innerHTML = '<div class="chart-empty">Sin datos todavía.</div>';
+      legend.innerHTML = '';
+      return;
+    }
+
+    const series = PRESIDENCIAS_UTDT.map(p => {
+      const pts = [];
+      hist.forEach(rec => {
+        const ym = (rec.periodo || '').slice(0, 7);
+        if(ym >= p.inicio && ym <= p.fin && rec.icg !== null && rec.icg !== undefined){
+          pts.push({
+            mes: monthsDiff(p.inicio, ym),
+            icg: rec.icg,
+            periodo: rec.periodo,
+          });
+        }
+      });
+      pts.sort((a, b) => a.mes - b.mes);
+      return {...p, points: pts};
+    }).filter(s => s.points.length > 0);
+
+    if(series.length === 0){
+      container.innerHTML = '<div class="chart-empty">Sin datos suficientes para comparar presidencias.</div>';
+      legend.innerHTML = '';
+      return;
+    }
+
+    const mileiSerie = series.find(s => s.highlight);
+    const mileiLast = mileiSerie && mileiSerie.points.length ? mileiSerie.points[mileiSerie.points.length - 1] : null;
+    const maxMes = Math.max(55, ...series.flatMap(s => s.points.map(pt => pt.mes)));
+    const minY = 0, maxY = 3.5;
+
+    const w = 700, h = 340, padL = 38, padR = 14, padT = 44, padB = 36;
+    const x = m => padL + (w - padL - padR) * ((m - 1) / (maxMes - 1));
+    const y = v => padT + (h - padT - padB) * (1 - (v - minY) / (maxY - minY));
+
+    let gridSvg = '';
+    for(let gv = 0; gv <= 3.51; gv += 0.5){
+      const yy = y(gv);
+      gridSvg += `<line x1="${padL}" y1="${yy}" x2="${w-padR}" y2="${yy}" stroke="var(--line-dark)" stroke-width="1" opacity="${gv === 0 ? 1 : 0.45}"/>`;
+      gridSvg += `<text class="chart-label" x="${padL-6}" y="${yy+4}" text-anchor="end">${fmtDec(gv, 1)}</text>`;
+    }
+
+    let xTicksSvg = '';
+    for(let m = 1; m <= maxMes; m += 6){
+      xTicksSvg += `<text class="chart-label" x="${x(m)}" y="${h-16}" text-anchor="middle">${m}</text>`;
+    }
+    xTicksSvg += `<text class="chart-label" x="${(padL + w - padR) / 2}" y="${h-2}" text-anchor="middle" style="font-size:10px;opacity:0.75">Mes de mandato</text>`;
+
+    let markersSvg = '';
+    const x46 = x(46);
+    markersSvg += `<line x1="${x46}" y1="${padT-4}" x2="${x46}" y2="${h-padB}" stroke="var(--text-on-navy-dim)" stroke-width="1.3" stroke-dasharray="2,3" opacity="0.8"/>`;
+    markersSvg += `<text x="${x46}" y="${padT-22}" text-anchor="middle" style="font-family:'IBM Plex Mono',monospace;font-size:10px;fill:var(--text-on-navy)">Mes 46: elección</text>`;
+    markersSvg += `<text x="${x46}" y="${padT-10}" text-anchor="middle" style="font-family:'IBM Plex Mono',monospace;font-size:10px;fill:var(--text-on-navy-dim)">presidente siguiente</text>`;
+
+    if(mileiLast){
+      const xm = x(mileiLast.mes);
+      markersSvg += `<line x1="${xm}" y1="${padT-4}" x2="${xm}" y2="${h-padB}" stroke="#C084FC" stroke-width="1.3" stroke-dasharray="2,3" opacity="0.85"/>`;
+      const labelX = Math.abs(xm - x46) < 62 ? xm - 28 : xm;
+      markersSvg += `<text x="${labelX}" y="${padT-10}" text-anchor="middle" style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:500;fill:#C084FC">Mes ${mileiLast.mes}</text>`;
+    }
+
+    let linesSvg = '';
+    series.forEach(s => {
+      if(s.points.length < 2) return;
+      const d = s.points.map((pt, idx) => `${idx === 0 ? 'M' : 'L'}${x(pt.mes).toFixed(2)},${y(pt.icg).toFixed(2)}`).join(' ');
+      linesSvg += `<path d="${d}" fill="none" stroke="${s.color}" stroke-width="${s.width}" opacity="${s.opacity}" stroke-linejoin="round" stroke-linecap="round"/>`;
+    });
+
+    const mileiEndDot = mileiLast
+      ? `<circle cx="${x(mileiLast.mes)}" cy="${y(mileiLast.icg)}" r="4.5" fill="#C084FC" stroke="var(--navy)" stroke-width="1.2"/>`
+      : '';
+
+    const hoverDotsSvg = series.map((s, i) =>
+      `<circle class="hover-dot" data-pres="${i}" r="${s.highlight ? 4.5 : 3.5}" fill="${s.color}" style="opacity:0"/>`
+    ).join('');
+
+    const svg = `
+      <div class="chart-info-bar" id="icgPresTooltip">Pasá el mouse o el dedo por el gráfico para comparar el ICG de cada presidencia en el mismo mes de mandato.</div>
+      <svg class="chart" role="img" aria-label="Evolución del Índice de Confianza en el Gobierno por mes de mandato de cada presidencia argentina" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">
+        ${gridSvg}
+        <line class="chart-axis" x1="${padL}" y1="${padT}" x2="${padL}" y2="${h-padB}"/>
+        ${markersSvg}
+        ${linesSvg}
+        ${mileiEndDot}
+        <line id="icgPresCrosshair" x1="${padL}" y1="${padT}" x2="${padL}" y2="${h-padB}" stroke="var(--text-on-navy-dim)" stroke-width="1" style="opacity:0"/>
+        ${hoverDotsSvg}
+        ${xTicksSvg}
+        <rect id="icgPresHoverRect" x="${padL}" y="${padT}" width="${w-padL-padR}" height="${h-padT-padB}" fill="transparent"/>
+      </svg>`;
+    container.innerHTML = svg;
+
+    legend.innerHTML = series.map(s => {
+      const sw = s.highlight ? 3 : 2;
+      const nameHtml = s.highlight ? `<strong style="color:var(--text-on-navy)">${s.nombre}</strong>` : s.nombre;
+      return `<span class="legend-item"><svg width="20" height="10" style="flex:none" aria-hidden="true"><line x1="0" y1="5" x2="20" y2="5" stroke="${s.color}" stroke-width="${sw}" opacity="${s.opacity}"/></svg> ${nameHtml}</span>`;
+    }).join('');
+
+    const svgEl = container.querySelector('svg.chart');
+    const rect = container.querySelector('#icgPresHoverRect');
+    const crosshair = container.querySelector('#icgPresCrosshair');
+    const tooltip = container.querySelector('#icgPresTooltip');
+    const hoverDots = container.querySelectorAll('.hover-dot');
+
+    function show(evt){
+      const box = svgEl.getBoundingClientRect();
+      const clientX = evt.touches ? evt.touches[0].clientX : evt.clientX;
+      const relX = (clientX - box.left) / box.width * w;
+      const clamped = Math.max(padL, Math.min(w - padR, relX));
+      const mesRaw = 1 + (clamped - padL) / (w - padL - padR) * (maxMes - 1);
+      const mes = Math.max(1, Math.min(maxMes, Math.round(mesRaw)));
+      const xPix = x(mes);
+
+      crosshair.setAttribute('x1', xPix);
+      crosshair.setAttribute('x2', xPix);
+      crosshair.style.opacity = '1';
+
+      const items = [];
+      hoverDots.forEach((dot, i) => {
+        const s = series[i];
+        const pt = s.points.find(p => p.mes === mes);
+        if(pt){
+          dot.setAttribute('cx', xPix);
+          dot.setAttribute('cy', y(pt.icg));
+          dot.style.opacity = '1';
+          const weight = s.highlight ? 'font-weight:600;' : '';
+          items.push({
+            highlight: !!s.highlight,
+            icg: pt.icg,
+            html: `<span style="color:${s.color};${weight}">${s.nombre}: ${fmtDec(pt.icg, 2)}</span>`
+          });
+        } else {
+          dot.style.opacity = '0';
+        }
+      });
+
+      items.sort((a, b) => (b.highlight - a.highlight) || (b.icg - a.icg));
+      const parts = [`<strong style="color:var(--text-on-navy)">Mes ${mes}</strong>`, ...items.map(it => it.html)];
+      tooltip.innerHTML = parts.join(' &nbsp;·&nbsp; ');
+    }
+
+    function hide(){
+      crosshair.style.opacity = '0';
+      hoverDots.forEach(d => d.style.opacity = '0');
+    }
+
+    rect.addEventListener('pointermove', show);
+    rect.addEventListener('pointerdown', show);
+    rect.addEventListener('pointerenter', show);
+    rect.addEventListener('pointerleave', hide);
+  }
+
+  function describeUstInterp(bond, t, yOut, last){
+    if(t < 1){
+      return `Para <strong>${bond}</strong> (${fmtDec(t, 2, 3)} años), como vence en menos de 1 año y la curva cargada arranca en el plazo de 1 año, se toma directamente la tasa de 1 año (${fmtDec(last.ust_1y, 2)}%).`;
+    }
+    if(t <= 2){
+      const frac = t - 1;
+      return `Para <strong>${bond}</strong> (${fmtDec(t, 2, 3)} años), el plazo está un ${fmtDec(frac * 100, 1)}% del camino entre 1 y 2 años: ${fmtDec(last.ust_1y, 2)}% + ${fmtDec(frac, 3)} × (${fmtDec(last.ust_2y, 2)}% − ${fmtDec(last.ust_1y, 2)}%) = ${fmtDec(yOut, 2, 3)}%.`;
+    }
+    if(t <= 3){
+      const frac = t - 2;
+      return `Para <strong>${bond}</strong> (${fmtDec(t, 2, 3)} años), el plazo está un ${fmtDec(frac * 100, 1)}% del camino entre 2 y 3 años: ${fmtDec(last.ust_2y, 2)}% + ${fmtDec(frac, 3)} × (${fmtDec(last.ust_3y, 2)}% − ${fmtDec(last.ust_2y, 2)}%) = ${fmtDec(yOut, 2, 3)}%.`;
+    }
+    return `Para <strong>${bond}</strong> (${fmtDec(t, 2, 3)} años), se toma la tasa de 3 años (${fmtDec(last.ust_3y, 2)}%).`;
   }
 
   async function fetchJson(path){
@@ -585,27 +789,42 @@
       RP_FORWARD_BPS = last.riesgo_pais_forward_bps;
       document.getElementById('updatedMeta').textContent =
         `Actualizado el ${fmtDate(last.date)}, con datos de mercado del cierre del día.`;
-      document.getElementById('heroNum').innerHTML = last.prob_milei.toFixed(0) + '<small>%</small>';
+      document.getElementById('heroNum').innerHTML = Math.round(last.prob_milei) + '<small>%</small>';
       document.getElementById('heroDate').textContent = fmtDate(last.date);
-      if(last.ao27c_tir != null) document.getElementById('stepY27').textContent = last.ao27c_tir.toFixed(2) + '%';
-      if(last.ao28c_tir != null) document.getElementById('stepY28').textContent = last.ao28c_tir.toFixed(2) + '%';
-      if(last.forward_soberano != null) document.getElementById('stepFsob').textContent = last.forward_soberano.toFixed(1) + '%';
-      if(last.forward_ust != null) document.getElementById('stepFust').textContent = last.forward_ust.toFixed(1) + '%';
+
+      const mAnchor = last.milei_anchor_bps || 250;
+      const oAnchor = last.peronismo_anchor_bps || 2000;
+      const floorNote = document.getElementById('heroFloorNote');
+      if(last.riesgo_pais_forward_bps >= oAnchor){
+        floorNote.textContent = `El riesgo país forward (${fmtInt(last.riesgo_pais_forward_bps)} pb) supera el anclaje del escenario adverso (${fmtInt(oAnchor)} pb), por lo que el cálculo toca el piso de 0%. Esto refleja que los bonos están incorporando estrés financiero adicional al riesgo electoral bajo estos supuestos.`;
+        floorNote.style.display = 'block';
+      } else if(last.riesgo_pais_forward_bps <= mAnchor){
+        floorNote.textContent = `El riesgo país forward (${fmtInt(last.riesgo_pais_forward_bps)} pb) se ubica por debajo del anclaje favorable (${fmtInt(mAnchor)} pb), por lo que el cálculo toca el techo de 100%.`;
+        floorNote.style.display = 'block';
+      }
+
+      if(last.ao27c_tir != null) document.getElementById('stepY27').textContent = fmtDec(last.ao27c_tir, 2) + '%';
+      if(last.ao28c_tir != null) document.getElementById('stepY28').textContent = fmtDec(last.ao28c_tir, 2) + '%';
+      if(last.forward_soberano != null) document.getElementById('stepFsob').textContent = fmtDec(last.forward_soberano, 2) + '%';
+      if(last.forward_ust != null) document.getElementById('stepFust').textContent = fmtDec(last.forward_ust, 2) + '%';
       if(last.ust_1y != null){
         document.getElementById('stepUstDetail').textContent =
-          ` — curva: 1a ${last.ust_1y}% / 2a ${last.ust_2y}% / 3a ${last.ust_3y}% → interpolado a t=${last.t27_years}a: ${last.y27_ust}%, t=${last.t28_years}a: ${last.y28_ust}%`;
+          `curva: 1a ${fmtDec(last.ust_1y, 2)}% / 2a ${fmtDec(last.ust_2y, 2)}% / 3a ${fmtDec(last.ust_3y, 2)}% → t=${fmtDec(last.t27_years, 3)}a: ${fmtDec(last.y27_ust, 2, 3)}%, t=${fmtDec(last.t28_years, 3)}a: ${fmtDec(last.y28_ust, 2, 3)}%`;
 
-        const frac27 = (last.t27_years - 1) * 100;
-        const frac28 = (last.t28_years - 2) * 100;
-        const fmtN = n => n.toLocaleString('es-AR', {minimumFractionDigits:2, maximumFractionDigits:3});
+        const desc27 = describeUstInterp('AO27C', last.t27_years, last.y27_ust, last);
+        const desc28 = describeUstInterp('AO28C', last.t28_years, last.y28_ust, last);
+        const fwdRelation = last.forward_ust > Math.max(last.y27_ust, last.y28_ust)
+          ? 'Cuando la curva tiene pendiente positiva, el resultado del paso 4 queda por encima de ambos puntos: la tasa forward tiene que ser más alta para compensar que el tramo corto rinde menos, de modo que capitalizar primero al plazo corto y luego al forward dé lo mismo que capitalizar directo al plazo largo.'
+          : 'Ese resultado del paso 4 no es un promedio simple entre ambos puntos: es la tasa implícita necesaria para que capitalizar primero al plazo corto y luego al forward dé lo mismo que capitalizar directo al plazo largo.';
+
         document.getElementById('interpExplain').innerHTML = `
-          <p class="notes">¿Por qué interpolar? El Tesoro solo publica tasas para plazos redondos (1, 2, 3 años...), pero AO27C vence en ${fmtN(last.t27_years)} años, no en 1 año exacto. Interpolar es estimar qué tasa habría a ese plazo intermedio, trazando una línea recta entre el punto de 1 año y el de 2 años: como ${fmtN(last.t27_years)} está un ${fmtN(frac27)}% del camino entre 1 y 2, la tasa estimada también se mueve un ${fmtN(frac27)}% del camino entre las dos tasas conocidas. Con los números de hoy: ${fmtN(last.ust_1y)}% + ${(frac27/100).toFixed(3)} × (${fmtN(last.ust_2y)}% − ${fmtN(last.ust_1y)}%) = ${fmtN(last.y27_ust)}%. Mismo cálculo para AO28C (${fmtN(last.t28_years)} años), pero entre los puntos de 2 y 3 años.</p>
-          <p class="notes">Una vez interpolados esos dos puntos (${fmtN(last.y27_ust)}% y ${fmtN(last.y28_ust)}%), se les aplica exactamente la misma fórmula del paso 3 — no un promedio simple — para sacar la tasa forward implícita entre ellos. Por eso el resultado del paso 4, de arriba, no queda entre esos dos puntos: una tasa forward tiene que ser más alta que ambos para compensar que el tramo más corto rinde menos — si primero capitalizás al tramo corto y después al forward, tiene que dar lo mismo que capitalizar directo al plazo largo.</p>`;
+          <p class="notes">¿Por qué interpolar? El Tesoro solo publica tasas para plazos redondos (1, 2, 3 años), pero los bonos vencen en fechas intermedias. Interpolar linealmente consiste en estimar la tasa a ese plazo trazando una recta entre los dos nodos más cercanos de la curva. Con los números de hoy: ${desc27} ${desc28}</p>
+          <p class="notes">Una vez obtenidas esas dos tasas (${fmtDec(last.y27_ust, 2, 3)}% y ${fmtDec(last.y28_ust, 2, 3)}%), se les aplica exactamente la misma fórmula del paso 3 para sacar la tasa forward implícita entre ambos vencimientos. ${fwdRelation}</p>`;
       }
-      document.getElementById('stepRp').textContent = '≈' + Math.round(last.riesgo_pais_forward_bps).toLocaleString('es-AR') + ' pb';
-      document.getElementById('stepProb').textContent = last.prob_milei.toFixed(1) + '%';
-      document.getElementById('milei').value = last.milei_anchor_bps || 250;
-      document.getElementById('peron').value = last.peronismo_anchor_bps || 2000;
+      document.getElementById('stepRp').textContent = '≈' + fmtInt(last.riesgo_pais_forward_bps) + ' pb';
+      document.getElementById('stepProb').textContent = fmtDec(last.prob_milei, 1) + '%';
+      document.getElementById('milei').value = mAnchor;
+      document.getElementById('peron').value = oAnchor;
     } else {
       document.getElementById('updatedMeta').textContent = 'Sin datos disponibles todavía.';
     }
@@ -619,6 +838,7 @@
     ];
     drawMultiChart(series);
     drawIcgChart(icg);
+    drawIcgByPresidencyChart(icg);
   }
 
   document.getElementById('milei').addEventListener('input', recompute);
