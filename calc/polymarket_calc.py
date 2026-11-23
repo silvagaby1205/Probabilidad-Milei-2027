@@ -1,23 +1,14 @@
 """
-Trae el precio actual del outcome "Milei" en el mercado de Polymarket
-"Argentina Presidential Election Winner" y lo agrega al histórico.
+Trae el precio actual del outcome "Javier Milei" en el mercado de Polymarket
+"Argentina Presidential Election Winner" y lo agrega al histórico diario.
 
-Corre cada 3 horas (Polymarket es un mercado en vivo). No necesita ningún
+Corre cada 1 hora (Polymarket es un mercado en vivo). No necesita ningún
 Secret: la API pública de Polymarket (Gamma) no pide autenticación para
 leer datos de mercado.
 
 Usa el endpoint documentado /events/slug/{slug} (devuelve el evento como un
-único objeto, no una lista) — la versión anterior de este script usaba
-/events?slug=... como parámetro de búsqueda, que Polymarket parece ignorar
-en varios de sus endpoints, devolviendo una lista genérica en su lugar.
-Eso probablemente explica por qué el precio se había quedado pegado en un
-solo valor: el script encontraba el primer mercado con "milei" en el texto
-de una lista de eventos que no tenía nada que ver con el nuestro.
-
-Si el evento tiene más de un mercado que menciona a Milei, se prioriza el
-que tiene groupItemTitle == "Javier Milei" exacto (así es como Polymarket
-etiqueta cada candidato dentro de un evento con varios mercados) antes que
-una coincidencia parcial de texto.
+único objeto, no una lista), priorizando el mercado con
+groupItemTitle == "Javier Milei" exacto antes de buscar coincidencias parciales.
 """
 
 import json

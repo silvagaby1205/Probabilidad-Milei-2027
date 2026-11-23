@@ -1,24 +1,20 @@
 """
-Calcula la probabilidad implícita "método spot" (Fernando Marull / FMyA):
-toma el riesgo país de hoy tal cual —sin pasar por tasas forward— y lo pasa
-por la misma regla de tres, usando los anclajes de su propia lámina:
+Calcula la probabilidad implícita de reelección de Milei con el "método spot"
+(Fernando Marull / FMyA): toma directamente el riesgo país spot de hoy, sin
+pasar por tasas forward, y aplica la misma regla de tres con los anclajes de
+su lámina:
   Milei = 200 pb · Oposición moderada = 800 pb · PJ extremo = 2.000 pb
 
 Fuente del riesgo país: ArgentinaDatos (api.argentinadatos.com), que a su
-vez toma el dato de Ámbito. Es una API pública, documentada, sin necesidad
-de autenticación.
+vez toma el dato de Ámbito. API pública, documentada y sin autenticación.
 
-Corre todos los días junto a los otros cálculos.
+Corre los días hábiles junto al modelo de bonos.
 """
 
 import json
 import os
 from datetime import datetime
 from zoneinfo import ZoneInfo
-
-
-def hoy_arg():
-    return datetime.now(ZoneInfo("America/Argentina/Buenos_Aires")).date()
 
 import requests
 
@@ -28,6 +24,10 @@ DATA_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "spot_history.
 MILEI_ANCHOR = 200
 MODERADO_ANCHOR = 800
 EXTREMO_ANCHOR = 2000
+
+
+def hoy_arg():
+    return datetime.now(ZoneInfo("America/Argentina/Buenos_Aires")).date()
 
 
 def prob(anchor_rival, rp):

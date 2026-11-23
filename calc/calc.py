@@ -2,21 +2,19 @@
 Calcula la probabilidad implícita de reelección de Milei a partir de la tasa
 forward entre AO27C y AO28C, neteada contra la curva forward de UST.
 
-Pensado para correr una vez por día desde GitHub Actions. Necesita dos
-variables de entorno: IOL_USER e IOL_PASS (las credenciales de tu cuenta de
-InvertirOnline — se configuran como Secrets del repo, nunca en el código).
+Pensado para correr una vez por día hábil desde GitHub Actions. Necesita dos
+variables de entorno: IOL_USER e IOL_PASS (las credenciales de la cuenta de
+InvertirOnline, configuradas como Secrets del repo y nunca en el código).
 
-OJO — cosas para verificar en la primera corrida real:
-  1. El endpoint de cotización de IOL (`iol_price`) y el nombre del campo
-     `ultimoPrecio` están tomados de la documentación pública de la API
-     (api.invertironline.com). Si el primer run falla acá, revisá la
-     respuesta cruda que imprime el script y ajustá el nombre del campo.
-  2. Los nombres de los campos de la curva UST (`BC_1YEAR`, `BC_2YEAR`,
-     `BC_3YEAR`) son los que usa el feed XML de home.treasury.gov. También
-     conviene chequearlos una vez con la salida cruda si algo no cierra.
-  3. Los cronogramas de AO27C y AO28C están hardcodeados tal como los
-     devolvió IOL el 04/09/2026. Son bonos bullet (todo el capital al
-     vencimiento), así que no deberían cambiar mientras existan.
+Notas técnicas:
+  - Los precios de cierre se consultan en la API de InvertirOnline
+    (`/api/bCBA/Titulos/{simbolo}/Cotizacion`, campo `ultimoPrecio`).
+  - La curva libre de riesgo toma los par yields CMT de 1, 2 y 3 años del
+    feed XML oficial de home.treasury.gov, con respaldo al año anterior en
+    los primeros feriados de enero.
+  - Los cronogramas de AO27C y AO28C están fijados según las condiciones de
+    emisión verificadas en IOL el 04/09/2026 (bonos bullet con cupón mensual
+    de 0,5 cada 100 VN y amortización íntegra al vencimiento).
 """
 
 import os
@@ -37,10 +35,9 @@ NS = {
 }
 
 # Escenarios de referencia para la conversión riesgo-país -> probabilidad.
-# Son una hipótesis del analista, no un dato de mercado — se pueden ajustar.
-# "Base" sigue la convención de GMA Capital / Marull-FMyA. "Alternativo" usa
-# los anclajes que citó Julián Yosovitch (vía PPI): el EMBI+ Global como
-# referencia de "cielo" y 1.600 pb como referencia de "caos" kirchnerista.
+# Son una hipótesis del analista, no un dato de mercado; se pueden ajustar.
+# "Base" sigue la convención de GMA Capital. "Alternativo" usa los anclajes
+# citados por Julián Yosovitch (vía PPI): EMBI+ Global (217 pb) y 1.600 pb.
 ESCENARIOS = {
     "base": {"milei": 250, "oposicion": 2000},
     "alternativo": {"milei": 217, "oposicion": 1600},
@@ -106,7 +103,7 @@ def irr_from_cashflows(price, cashflows, settlement):
 
     lo, hi = -0.5, 2.0
     if npv(lo) * npv(hi) > 0:
-        raise RuntimeError("No se encontró una TIR en el rango [-50%, 200%] — revisar precio/flujos")
+        raise RuntimeError("No se encontró una TIR en el rango [-50%, 200%]; revisar precio y flujos")
     for _ in range(100):
         mid = (lo + hi) / 2
         if npv(lo) * npv(mid) <= 0:
@@ -117,24 +114,30 @@ def irr_from_cashflows(price, cashflows, settlement):
 
 
 def ust_curve(year):
-    url = (
-        "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/"
-        f"pages/xml?data=daily_treasury_yield_curve&field_tdr_date_value={year}"
-    )
-    r = requests.get(url, timeout=30)
-    r.raise_for_status()
-    root = ET.fromstring(r.content)
-    entries = root.findall("atom:entry", NS)
-    if not entries:
-        raise RuntimeError(f"El feed de UST para {year} no devolvió entradas")
-    last = entries[-1]
-    props = last.find("atom:content/m:properties", NS)
+    """Obtiene la última curva diaria CMT del Tesoro de EE.UU.
+    Si el año calendario recién comienza y el feed del año en curso todavía
+    no tiene filas (por ejemplo, feriado de Año Nuevo), consulta el año previo.
+    """
+    for yr in (year, year - 1):
+        url = (
+            "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/"
+            f"pages/xml?data=daily_treasury_yield_curve&field_tdr_date_value={yr}"
+        )
+        r = requests.get(url, timeout=30)
+        r.raise_for_status()
+        root = ET.fromstring(r.content)
+        entries = root.findall("atom:entry", NS)
+        if entries:
+            last = entries[-1]
+            props = last.find("atom:content/m:properties", NS)
 
-    def get(tag):
-        el = props.find(f"d:{tag}", NS)
-        return float(el.text) / 100.0 if el is not None and el.text else None
+            def get(tag):
+                el = props.find(f"d:{tag}", NS)
+                return float(el.text) / 100.0 if el is not None and el.text else None
 
-    return {1: get("BC_1YEAR"), 2: get("BC_2YEAR"), 3: get("BC_3YEAR")}
+            return {1: get("BC_1YEAR"), 2: get("BC_2YEAR"), 3: get("BC_3YEAR")}
+
+    raise RuntimeError(f"El feed de UST para {year} y {year - 1} no devolvió entradas")
 
 
 def interp(curve, t):
@@ -153,7 +156,7 @@ def forward_rate(y1, t1, y2, t2):
 
 
 def hoy_arg():
-    """Fecha de hoy en Argentina — el runner de GitHub Actions corre en UTC,
+    """Fecha de hoy en Argentina; el runner de GitHub Actions corre en UTC,
     así que usar date.today() a secas puede dar el día siguiente si el
     workflow corre después de las 21hs UTC (18hs ART)."""
     return datetime.now(ZoneInfo("America/Argentina/Buenos_Aires")).date()
